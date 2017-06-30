@@ -1,0 +1,22 @@
+{
+    "name": "kristuff/patabase",
+    "description": "SQL query builder",
+    "homepage": "https://patabase.kristuff.fr",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kristuff",
+            "homepage": "https://github.com/kristuff"
+        }
+    ],
+     "require": {
+		"php": ">=5.6.0"
+    },
+     "autoload": {
+        "psr-4": {"Kristuff\\Patabase\\": "lib/"}
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.7.*"
+    }
+}

@@ -1,0 +1,35 @@
+<phpunit
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.5/phpunit.xsd"
+   colors="true"
+   stopOnError="false"
+   stopOnFailure="false">
+   <testsuites>
+    <testsuite name="common">
+     <file>base/DriverFactoryTest.php</file>
+    </testsuite>
+    <testsuite name="sqlite">
+     <file>sqlite/SqliteDriverTest.php</file>
+     <file>sqlite/SqliteDatabaseTest.php</file>
+    </testsuite>
+    <testsuite name="pgsql">
+     <file>pgsql/PgsqlDriverTest.php</file>
+     <file>pgsql/PgsqlServerTest.php</file>
+     <file>pgsql/PgsqlDatabaseTest.php</file>
+     <file>pgsql/PgsqlDropDatabaseTest.php</file>
+    </testsuite>
+    <testsuite name="mysql">
+     <file>mysql/MysqlDriverTest.php</file>
+     <file>mysql/MysqlServerTest.php</file>
+     <file>mysql/MysqlDatabaseTest.php</file>
+     <file>mysql/MysqlDatabaseDropTest.php</file>
+    </testsuite>
+     <testsuite name="mssql">
+    </testsuite> 
+   </testsuites>
+    <filter>
+      <whitelist processUncoveredFilesFromWhitelist="true">
+        <directory suffix=".php">../lib/</directory>
+      </whitelist>
+    </filter>
+</phpunit>
