@@ -5,7 +5,7 @@
 A database/server SQL query builder for PHP.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/398308d1225049f58ae583065608c460)](https://www.codacy.com/app/kristuff_/patabase?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kristuff/patabase&amp;utm_campaign=Badge_Grade)
-[![Code Climate](https://codeclimate.com/github/kristuff/patabase/badges/gpa.svg)](https://codeclimate.com/github/Kristuff/patabase)
+[![Code Climate](https://codeclimate.com/github/kristuff/patabase/badges/gpa.svg)](https://codeclimate.com/github/kristuff/patabase)
 [![Build Status](https://travis-ci.org/kristuff/patabase.svg?branch=master)](https://travis-ci.org/kristuff/patabase)
 [![codecov](https://codecov.io/gh/kristuff/patabase/branch/master/graph/badge.svg)](https://codecov.io/gh/kristuff/patabase)
 
