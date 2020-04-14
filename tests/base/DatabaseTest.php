@@ -211,9 +211,17 @@ abstract class DatabaseTest extends PHPUnit_Framework_TestCase
                     self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
                 break;
             case 'sqlite':
-                // known issue for boolean except str "TRUE"
-                $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":"TRUE","bigint":922337203685477580,"smallint":0}]', 
+
+                // known issue for boolean, exepect str "TRUE" before php 7.3
+                if (version_compare(PHP_VERSION, '7.3.0') >= 0) {
+                    $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":1,"bigint":922337203685477580,"smallint":0}]', 
                     self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
+                } else {
+                    // since php 7.3 it returns int 
+                    $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":"TRUE","bigint":922337203685477580,"smallint":0}]', 
+                    self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
+                }
+
                 break;
             case 'mssql':
                 //TODO
