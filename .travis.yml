@@ -5,6 +5,10 @@ php:
   - '7.0'
   - '7.1'
 
+services:
+    - mysql
+    - postgresql
+
 before_install:
   - composer install
   - cd tests
