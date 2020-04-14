@@ -3,8 +3,9 @@
 require_once __DIR__.'/../../vendor/autoload.php';
 
 use Kristuff\Patabase\Server;
+use PHPUnit\Framework\TestCase;
 
-abstract class ServerTest extends PHPUnit_Framework_TestCase
+abstract class ServerTest extends TestCase
 {
 
     /**

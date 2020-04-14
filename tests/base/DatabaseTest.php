@@ -7,8 +7,10 @@ use Kristuff\Patabase\Table;
 use Kristuff\Patabase\SqlException;
 use Kristuff\Patabase\Query\CreateTable;
 use Kristuff\Patabase\Query\Update;
+use PHPUnit\Framework\TestCase;
 
-abstract class DatabaseTest extends PHPUnit_Framework_TestCase
+
+abstract class DatabaseTest extends TestCase
 {
 
     /**

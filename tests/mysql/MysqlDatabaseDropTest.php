@@ -5,8 +5,9 @@ require_once __DIR__.'/../base/ServerTest.php';
 
 use Kristuff\Patabase\Database;
 use Kristuff\Patabase\Server;
+use PHPUnit\Framework\TestCase;
 
-class MysqlDatabaseDropTest extends PHPUnit_Framework_TestCase
+class MysqlDatabaseDropTest extends TestCase
 {
 
     /**

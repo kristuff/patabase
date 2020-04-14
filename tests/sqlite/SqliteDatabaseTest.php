@@ -5,6 +5,7 @@ require_once __DIR__.'/../base/DatabaseTest.php';
 
 use Kristuff\Patabase\Database;
 use Kristuff\Patabase\Driver\Sqlite;
+use PHPUnit\Framework\TestCase;
 
 class SqliteDatabaseTest extends DatabaseTest
 {

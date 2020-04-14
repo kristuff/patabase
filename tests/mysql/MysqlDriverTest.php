@@ -3,8 +3,9 @@
 require_once __DIR__.'/../../vendor/autoload.php';
 
 use Kristuff\Patabase\Server;
+use PHPUnit\Framework\TestCase;
 
-class MysqlDriverTest extends PHPUnit_Framework_TestCase
+class MysqlDriverTest extends TestCase
 {
 
     /**

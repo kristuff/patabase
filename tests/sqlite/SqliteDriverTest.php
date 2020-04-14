@@ -3,6 +3,7 @@
 require_once __DIR__.'/../../vendor/autoload.php';
 
 use Kristuff\Patabase\Database;
+use PHPUnit\Framework\TestCase;
 
 class SqliteDriverTest extends PHPUnit_Framework_TestCase
 {
