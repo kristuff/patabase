@@ -5,13 +5,17 @@ php:
   - '7.0'
   - '7.1'
 
+services:
+    - mysql
+    - postgresql
+
 before_install:
   - composer install
   - cd tests
 
 before_script:
  # - psql -c "DROP DATABASE IF EXISTS patabaseTest;" -U postgres
- # - mysql -e "DROP DATABASE IF EXISTS patabaseTest;" -uroot
+ # - mysql -e "DROP DATABASE IF EXISTS patabaseTest;" -u root
 
 script: 
   - ../vendor/bin/phpunit --debug --configuration phpunit.xml --coverage-text --coverage-clover=coverage.xml
