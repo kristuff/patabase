@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class MysqlServerTest extends ServerTest
 {
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
         $settings = [
             'driver'    => 'mysql', 

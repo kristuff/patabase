@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class MysqlDatabaseTest extends DatabaseTest
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
         self::$sqlJoin       = 'SELECT `name` AS `userName`, `user_role`.`role_name` AS `userRole` FROM `user` LEFT OUTER JOIN `user_role` ON `user`.`role`=`user_role`.`role_id`';
         self::$sqlSubSelect  = 'SELECT `name` AS `userName`, `role` AS `userRole`, (SELECT COUNT(*) AS `count_role` FROM `user_role`) AS `test_count` FROM `user`';

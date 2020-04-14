@@ -13,7 +13,7 @@ class MysqlDriverTest extends TestCase
      */
     private static $srv;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
         $settings = [
             'driver'    => 'mysql', 
