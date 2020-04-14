@@ -104,7 +104,7 @@ abstract class SelectBase extends QueryBuilder
      * Constructor
      *
      * @access public
-     * @param  DatabaseDriver   $driver   The driver instance
+     * @param  Driver\DatabaseDriver   $driver   The driver instance
      * @param  Query        $query    The top query parent in case of subquery. Default is NULL
      * @param  array        $args     Columns arguments. Default is empty array
      */

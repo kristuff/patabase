@@ -18,7 +18,6 @@ use Kristuff\Patabase;
 use Kristuff\Patabase\Query\QueryBuilder;
 use Kristuff\Patabase\Query\QueryFilter;
 use Kristuff\Patabase\Query\Select;
-use Kristuff\Patabase\Query\WhereBase;
 use Kristuff\Patabase\Driver\DatabaseDriver;
 
 /**
@@ -26,8 +25,16 @@ use Kristuff\Patabase\Driver\DatabaseDriver;
  *
  * Handle SQL [WHERE] conditions
  */
-class Where extends WhereBase
+class Where extends QueryFilter
 {
+    /**
+     * sql base: WHERE or HAVING
+     *
+     * @access protected
+     * @var    string
+     */
+    protected $sqlBase = 'WHERE';   
+
     /**
      * Equal to condition
      *
