@@ -25,7 +25,7 @@ class PgsqlServerTest extends ServerTest
         self::$srv->dropUser('tototo', true);
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         self::$srv =  NULL;  
     }

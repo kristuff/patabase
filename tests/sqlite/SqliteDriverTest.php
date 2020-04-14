@@ -13,7 +13,7 @@ class SqliteDriverTest extends TestCase
      */
     private static $db;
 
-    public static function setUpBeforeClass() : void : void
+    public static function setUpBeforeClass() : void
     {
         self::$db = new Database(array('driver' => 'sqlite', 'database' => ':memory:'));
     }
@@ -38,7 +38,7 @@ class SqliteDriverTest extends TestCase
         $this->assertTrue(self::$db->getDriver()->isForeignKeyEnabled());
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         self::$db = null;   
     }

@@ -25,7 +25,7 @@ class PgsqlDatabaseTest extends DatabaseTest
         self::$db = new Database($settings);
     }
    
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         self::$db = null;
     }

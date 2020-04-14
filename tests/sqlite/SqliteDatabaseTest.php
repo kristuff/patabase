@@ -38,7 +38,7 @@ class SqliteDatabaseTest extends DatabaseTest
         $db = null;
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         self::$db = null;   
     }

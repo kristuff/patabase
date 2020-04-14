@@ -39,7 +39,7 @@ class MysqlDriverTest extends TestCase
         $this->assertEquals(array('`a`', '`b`'), self::$srv->getDriver()->escapeList(array('a', 'b')));
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         self::$srv =  NULL;   
     }

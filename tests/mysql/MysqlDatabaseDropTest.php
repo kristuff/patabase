@@ -46,7 +46,7 @@ class MysqlDatabaseDropTest extends TestCase
         $this->assertFalse(self::$srv->databaseExists('patabaseTest'));
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         self::$srv = null;   
     }
