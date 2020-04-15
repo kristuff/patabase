@@ -20,7 +20,6 @@ class SqliteDatabaseTest extends DatabaseTest
         //$this->sqlCreateTable = 'CREATE TABLE  "testTable" ("id" INTEGER  NOT NULL PRIMARY KEY, "name" string(50) NOT NULL, "opt" string(50) NULL)';
     }
    
-
     public function testDerivedClass()
     {
         $path = self::$writablePath . 'patabasetest.db';

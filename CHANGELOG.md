@@ -16,7 +16,6 @@ All notable changes to this project will be documented in this file.
 ## [v0.1] - 2017-06-30
 
 ### Initial release
-
 - Support for Sqlite, Mysql, Postgresql
 
 
