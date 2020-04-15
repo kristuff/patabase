@@ -17,7 +17,6 @@ namespace Kristuff\Patabase\Query;
 use Kristuff\Patabase;
 use Kristuff\Patabase\Query\QueryBuilder;
 use Kristuff\Patabase\Query\QueryFilter;
-use Kristuff\Patabase\Query\Select;
 use Kristuff\Patabase\Driver\DatabaseDriver;
 
 /**

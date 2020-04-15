@@ -2,6 +2,7 @@
 
 require_once __DIR__.'/../../vendor/autoload.php';
 
+use Kristuff\Patabase;
 use Kristuff\Patabase\Database;
 use Kristuff\Patabase\Table;
 use Kristuff\Patabase\SqlException;
@@ -384,6 +385,25 @@ abstract class DatabaseTest extends TestCase
         $this->assertTrue($insert->values(array('orderId' => 10309,  'customerId' => 1, 'orderDate' => "2016-09-20"))->execute());
         $this->assertTrue($insert->values(array('orderId' => 10310,  'customerId' => 1, 'orderDate' => "2016-10-04"))->execute());
 
+    }
+
+    /**
+     * @depends testSelectJoin
+     */
+    public function testCountInSubQuery()
+    {
+      //prepare query
+      $query = self::db()->select('customerName')->from('customer')->orderBy('customerId');
+
+        // sub query To get song number for given artist artist
+        $query->select('orderNumber')
+            ->count('orderNumber')
+            ->from('order')
+            ->whereEqual('order.customerId', Patabase\Query\QueryFilter::PATABASE_COLUMN_LITERALL . 'customer.customerId');
+
+        $this->assertTrue($query->execute());
+        $this->assertEquals('[{"customerName":"customerB","orderNumber":2},{"customerName":"customerZ","orderNumber":1},{"customerName":"customerA","orderId":0}]', $query->getAll('json'));
+     
     }
 
     /**

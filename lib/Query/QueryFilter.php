@@ -27,6 +27,11 @@ use Kristuff\Patabase\Exception;
 abstract class QueryFilter
 {
 
+   /**
+     * TODO      
+     */
+    const PATABASE_COLUMN_LITERALL = 'PATABASE_COLUMN_LITERALL';
+
     /**
      * QueryBuilder instance
      *
@@ -268,15 +273,27 @@ abstract class QueryFilter
                         break;
 
                     default:
-                        $arg = $this->getArgumentName($item['column']);
-                        $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
-                        $sql .=  $item['sql'] . $arg;
-                       
-                        // set parameters
-                        $this->topQuery->setSqlParameter($arg, $item['value']); 
+                        // support for column literral 
+                        if (is_string($item['value']) && 
+                            strlen($item['value']) >  strlen(self::PATABASE_COLUMN_LITERALL) &&
+                            substr($item['value'], 0, strlen(self::PATABASE_COLUMN_LITERALL) === 
+                                                             self::PATABASE_COLUMN_LITERALL)) {
+
+                            $arg = substr($item['value'], strlen(self::PATABASE_COLUMN_LITERALL));
+                            $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
+                            $sql .=  $item['sql'] . $this->query->escape($arg);
+
+                            }   else {
+                                // *normal* value 
+                                $arg = $this->getArgumentName($item['column']);
+                                $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
+                                $sql .=  $item['sql'] . $arg;
+                               
+                                // set parameters
+                                $this->topQuery->setSqlParameter($arg, $item['value']); 
+                            }
                         break;
                 }
-
             }
         }
         // now return
