@@ -1,8 +1,9 @@
 <?php
 
 require_once __DIR__.'/../../vendor/autoload.php';
+use PHPUnit\Framework\TestCase;
 
-class DriverFactoryTest extends PHPUnit_Framework_TestCase
+class DriverFactoryTest extends TestCase
 {
 
     /**

@@ -3,8 +3,9 @@
 require_once __DIR__.'/../../vendor/autoload.php';
 
 use Kristuff\Patabase\Server;
+use PHPUnit\Framework\TestCase;
 
-class MysqlDriverTest extends PHPUnit_Framework_TestCase
+class MysqlDriverTest extends TestCase
 {
 
     /**
@@ -12,7 +13,7 @@ class MysqlDriverTest extends PHPUnit_Framework_TestCase
      */
     private static $srv;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
         $settings = [
             'driver'    => 'mysql', 
@@ -38,7 +39,7 @@ class MysqlDriverTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('`a`', '`b`'), self::$srv->getDriver()->escapeList(array('a', 'b')));
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         self::$srv =  NULL;   
     }

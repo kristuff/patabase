@@ -1,6 +1,12 @@
 <?php
 
 /*
+ *   ____         _          _
+ *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
+ *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
+ *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
+ *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
+ *  
  * This file is part of Kristuff\Patabase.
  *
  * (c) Kristuff <contact@kristuff.fr>
@@ -8,8 +14,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.1.0
- * @copyright  2017 Kristuff
+ * @version    0.2.0
+ * @copyright  2017-2020 Kristuff
  */
 
 namespace Kristuff\Patabase\Query;
@@ -104,7 +110,7 @@ abstract class SelectBase extends QueryBuilder
      * Constructor
      *
      * @access public
-     * @param  DatabaseDriver   $driver   The driver instance
+     * @param  Driver\DatabaseDriver   $driver   The driver instance
      * @param  Query        $query    The top query parent in case of subquery. Default is NULL
      * @param  array        $args     Columns arguments. Default is empty array
      */
@@ -375,7 +381,8 @@ abstract class SelectBase extends QueryBuilder
 
     /**
      * Add a WHERE column = value condition
-     *
+     * It's an alias for ->where()->equal($column, $value)
+     * 
      * @access public
      * @return Query\Where
      */
@@ -501,5 +508,4 @@ abstract class SelectBase extends QueryBuilder
         }
         return $this;
     }
-
 }

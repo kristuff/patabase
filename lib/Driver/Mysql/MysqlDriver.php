@@ -1,6 +1,12 @@
 <?php
 
 /*
+ *   ____         _          _
+ *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
+ *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
+ *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
+ *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
+ *  
  * This file is part of Kristuff\Patabase.
  *
  * (c) Kristuff <contact@kristuff.fr>
@@ -8,8 +14,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.1.0
- * @copyright  2017 Kristuff
+* @version    0.2.0
+ *
+ * @copyright  2017-2020 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver\Mysql;
@@ -81,10 +88,9 @@ class MysqlDriver extends ServerDriver
         $charset = !empty($settings['charset'])  ?  ';charset='.$settings['charset']  : ';charset=utf8';
         $port    = !empty($settings['port'])     ?  ';port='.$settings['port']        : '';
         $dbname  = !empty($settings['database']) ?  ';dbname='.$settings['database']  : '';
-        $dsn     = 'mysql:host='.$settings['hostname'] .$port .$dbname .$charset ;
 
         $this->pdo = new \PDO(
-            $dsn,
+            'mysql:host='.$settings['hostname'] .$port .$dbname .$charset,
             $settings['username'],
             $settings['password'],
             array()
@@ -123,7 +129,6 @@ class MysqlDriver extends ServerDriver
      */
     public function disableForeignKeys()
     {
-        // TODO return $this->prepareAndExecuteSql('SET FOREIGN_KEY_CHECKS=0');
         $this->pdo->exec('SET FOREIGN_KEY_CHECKS=0');
     }
     
@@ -315,8 +320,7 @@ class MysqlDriver extends ServerDriver
      */
     public function sqlRandom($seed = null)
     {
-        $seed = !empty($seed) ? $seed : '';  
-        return sprintf('rand(%s)', $seed);   
+        return sprintf('rand(%s)', !empty($seed) ? $seed : '');   
     }
 
     /**

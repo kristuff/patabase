@@ -5,11 +5,12 @@ require_once __DIR__.'/../base/ServerTest.php';
 
 use Kristuff\Patabase\Database;
 use Kristuff\Patabase\Server;
+use PHPUnit\Framework\TestCase;
 
 class PgsqlServerTest extends ServerTest
 {
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
         $settings = [
             'driver'    => 'pgsql', 
@@ -24,7 +25,7 @@ class PgsqlServerTest extends ServerTest
         self::$srv->dropUser('tototo', true);
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         self::$srv =  NULL;  
     }

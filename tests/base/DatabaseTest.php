@@ -2,13 +2,16 @@
 
 require_once __DIR__.'/../../vendor/autoload.php';
 
+use Kristuff\Patabase;
 use Kristuff\Patabase\Database;
 use Kristuff\Patabase\Table;
 use Kristuff\Patabase\SqlException;
 use Kristuff\Patabase\Query\CreateTable;
 use Kristuff\Patabase\Query\Update;
+use PHPUnit\Framework\TestCase;
 
-abstract class DatabaseTest extends PHPUnit_Framework_TestCase
+
+abstract class DatabaseTest extends TestCase
 {
 
     /**
@@ -185,7 +188,7 @@ abstract class DatabaseTest extends PHPUnit_Framework_TestCase
              ->column('opt1',     'int',           'NOT NULL', 'DEFAULT', 2 )
              ->column('opt2',     'real',          'NOT NULL', 'DEFAULT', 2.2 )
              ->column('foo',      'varchar(10)',   'NOT NULL')
-             ->column('bool',     'bool',          'NOT NULL', 'DEFAULT', true)
+             ->column('bool',     'bool',          'NOT NULL', 'DEFAULT', true) // see above
              ->column('bigint',   'bigint',        'NOT NULL', 'DEFAULT', 922337203685477580)
              ->column('smallint', 'smallint',      'NOT NULL', 'DEFAULT', 0);
 
@@ -206,15 +209,28 @@ abstract class DatabaseTest extends PHPUnit_Framework_TestCase
                 $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":1,"bigint":922337203685477580,"smallint":0}]', 
                     self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
                 break;
+
             case 'pgsql':
                 $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":true,"bigint":922337203685477580,"smallint":0}]', 
                     self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
                 break;
+
             case 'sqlite':
-                // known issue for boolean except str "TRUE"
-                $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":"TRUE","bigint":922337203685477580,"smallint":0}]', 
-                    self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
-                break;
+
+                // No bool type in sqlite 
+                // with php 7.3                 retuns  int   1
+                // with php 7.4 and php < 7.3   retuns  str   "TRUE" 
+                $possibleResults = [
+                    '[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":"TRUE","bigint":922337203685477580,"smallint":0}]',
+                    '[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":1,"bigint":922337203685477580,"smallint":0}]'
+                ];
+
+                $queryResult = self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json');
+                $ok = $possibleResults[0] === $queryResult ||
+                      $possibleResults[1] === $queryResult;
+
+                $this->assertTrue($ok);
+                    
             case 'mssql':
                 //TODO
                 break;
@@ -374,6 +390,25 @@ abstract class DatabaseTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($insert->values(array('orderId' => 10309,  'customerId' => 1, 'orderDate' => "2016-09-20"))->execute());
         $this->assertTrue($insert->values(array('orderId' => 10310,  'customerId' => 1, 'orderDate' => "2016-10-04"))->execute());
 
+    }
+
+    /**
+     * @depends testSelectJoin
+     */
+    public function testCountInSubQuery()
+    {
+      //prepare query
+      $query = self::$db->select('customerName')->from('customer')->orderBy('customerId');
+
+        // sub query To get song number for given artist artist
+        $query->select('orderNumber')
+            ->count('orderNumber')
+            ->from('order')
+            ->whereEqual('order.customerId', Patabase\Constants::COLUMN_LITERALL . 'customer.customerId');
+
+       // debug  $this->assertEquals('', $query->sql());
+        $this->assertEquals('[{"customerName":"customerB","orderNumber":2},{"customerName":"customerZ","orderNumber":1},{"customerName":"customerA","orderNumber":0}]', $query->getAll('json'));
+     
     }
 
     /**

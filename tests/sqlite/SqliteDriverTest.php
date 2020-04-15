@@ -3,8 +3,9 @@
 require_once __DIR__.'/../../vendor/autoload.php';
 
 use Kristuff\Patabase\Database;
+use PHPUnit\Framework\TestCase;
 
-class SqliteDriverTest extends PHPUnit_Framework_TestCase
+class SqliteDriverTest extends TestCase 
 {
 
     /**
@@ -12,7 +13,7 @@ class SqliteDriverTest extends PHPUnit_Framework_TestCase
      */
     private static $db;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
         self::$db = new Database(array('driver' => 'sqlite', 'database' => ':memory:'));
     }
@@ -37,7 +38,7 @@ class SqliteDriverTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(self::$db->getDriver()->isForeignKeyEnabled());
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         self::$db = null;   
     }

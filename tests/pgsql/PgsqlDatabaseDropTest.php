@@ -5,8 +5,9 @@ require_once __DIR__.'/../base/ServerTest.php';
 
 use Kristuff\Patabase\Database;
 use Kristuff\Patabase\Server;
+use PHPUnit\Framework\TestCase;
 
-class PgsqlDatabaseDropTest extends PHPUnit_Framework_TestCase
+class PgsqlDatabaseDropTest extends TestCase
 {
 
     /**
@@ -14,7 +15,7 @@ class PgsqlDatabaseDropTest extends PHPUnit_Framework_TestCase
      */
     private static $srv;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
         $settings = [
             'driver'    => 'pgsql', 
@@ -45,7 +46,7 @@ class PgsqlDatabaseDropTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(self::$srv->databaseExists('patabaseTest'));
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         self::$srv = null;   
     }

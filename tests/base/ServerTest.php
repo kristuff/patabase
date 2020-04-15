@@ -3,19 +3,15 @@
 require_once __DIR__.'/../../vendor/autoload.php';
 
 use Kristuff\Patabase\Server;
+use PHPUnit\Framework\TestCase;
 
-abstract class ServerTest extends PHPUnit_Framework_TestCase
+abstract class ServerTest extends TestCase
 {
 
     /**
      * @var Kristuff\Patabase\Server
      */
     protected static $srv;
-
-    public function testVersion()
-    {
-        $this->assertEquals("0.1.0", Server::getVersion()); 
-    }
 
     public function testDriverName()
     {
@@ -124,8 +120,4 @@ abstract class ServerTest extends PHPUnit_Framework_TestCase
     {
        self::$srv= null;
     }
-
-   
-
-
 }

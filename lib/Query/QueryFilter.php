@@ -1,6 +1,12 @@
 <?php
 
 /*
+ *   ____         _          _
+ *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
+ *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
+ *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
+ *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
+ *  
  * This file is part of Kristuff\Patabase.
  *
  * (c) Kristuff <contact@kristuff.fr>
@@ -8,12 +14,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.1.0
- * @copyright  2017 Kristuff
+* @version    0.2.0
+ *
+ * @copyright  2017-2020 Kristuff
  */
 
 namespace Kristuff\Patabase\Query;
 
+use Kristuff\Patabase;
 use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Query\QueryBuilder;
 use Kristuff\Patabase\Driver\DatabaseDriver;
@@ -26,7 +34,6 @@ use Kristuff\Patabase\Exception;
  */
 abstract class QueryFilter
 {
-
     /**
      * QueryBuilder instance
      *
@@ -259,8 +266,8 @@ abstract class QueryFilter
                    case 'NOT_NULL':
                         $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
                         $sql .=  $item['sql'];
-                        
                         break;
+
                     case 'IN':
                     case 'NOT_IN':
                         $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
@@ -268,15 +275,27 @@ abstract class QueryFilter
                         break;
 
                     default:
-                        $arg = $this->getArgumentName($item['column']);
-                        $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
-                        $sql .=  $item['sql'] . $arg;
-                       
-                        // set parameters
-                        $this->topQuery->setSqlParameter($arg, $item['value']); 
-                        break;
-                }
+                        // support for column literral 
+                        if (is_string($item['value']) && 
+                            strlen($item['value']) >  strlen(Patabase\Constants::COLUMN_LITERALL) &&
+                            substr($item['value'], 0, strlen(Patabase\Constants::COLUMN_LITERALL)) === 
+                                                             Patabase\Constants::COLUMN_LITERALL) {
 
+                            $arg = substr($item['value'], strlen(Patabase\Constants::COLUMN_LITERALL));
+                            $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
+                            $sql .=  $item['sql'] . $this->query->escape($arg);
+
+                        }   else {
+                                // *normal* value 
+                                $arg = $this->getArgumentName($item['column']);
+                                $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
+                                $sql .=  $item['sql'] . $arg;
+                               
+                                // set parameters
+                                $this->topQuery->setSqlParameter($arg, $item['value']); 
+                        }
+                    break;
+                }
             }
         }
         // now return

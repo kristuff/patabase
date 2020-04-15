@@ -3,8 +3,9 @@
 require_once __DIR__.'/../../vendor/autoload.php';
 
 use Kristuff\Patabase\Server;
+use PHPUnit\Framework\TestCase;
 
-class PgsqlDriverTest extends PHPUnit_Framework_TestCase
+class PgsqlDriverTest extends TestCase
 {
 
     /**
@@ -12,7 +13,7 @@ class PgsqlDriverTest extends PHPUnit_Framework_TestCase
      */
     private static $srv;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
         $settings = [
             'driver'    => 'pgsql', 
@@ -38,7 +39,7 @@ class PgsqlDriverTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('"a"', '"b"'), self::$srv->getDriver()->escapeList(array('a', 'b')));
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void 
     {
         self::$srv = null;   
     }
