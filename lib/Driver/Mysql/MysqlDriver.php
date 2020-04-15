@@ -128,7 +128,6 @@ class MysqlDriver extends ServerDriver
      */
     public function disableForeignKeys()
     {
-        // TODO return $this->prepareAndExecuteSql('SET FOREIGN_KEY_CHECKS=0');
         $this->pdo->exec('SET FOREIGN_KEY_CHECKS=0');
     }
     
