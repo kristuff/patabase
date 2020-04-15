@@ -21,6 +21,7 @@
 
 namespace Kristuff\Patabase\Query;
 
+use Kristuff\Patabase;
 use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Query\QueryBuilder;
 use Kristuff\Patabase\Driver\DatabaseDriver;
@@ -33,12 +34,6 @@ use Kristuff\Patabase\Exception;
  */
 abstract class QueryFilter
 {
-
-   /**
-     * TODO      
-     */
-    const PATABASE_COLUMN_LITERALL = 'PATABASE_COLUMN_LITERALL';
-
     /**
      * QueryBuilder instance
      *
@@ -282,11 +277,11 @@ abstract class QueryFilter
                     default:
                         // support for column literral 
                         if (is_string($item['value']) && 
-                            strlen($item['value']) >  strlen(self::PATABASE_COLUMN_LITERALL) &&
-                            substr($item['value'], 0, strlen(self::PATABASE_COLUMN_LITERALL)) === 
-                                                             self::PATABASE_COLUMN_LITERALL) {
+                            strlen($item['value']) >  strlen(Patabase\Constants::COLUMN_LITERALL) &&
+                            substr($item['value'], 0, strlen(Patabase\Constants::COLUMN_LITERALL)) === 
+                                                             Patabase\Constants::COLUMN_LITERALL) {
 
-                            $arg = substr($item['value'], strlen(self::PATABASE_COLUMN_LITERALL));
+                            $arg = substr($item['value'], strlen(Patabase\Constants::COLUMN_LITERALL));
                             $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
                             $sql .=  $item['sql'] . $this->query->escape($arg);
 
