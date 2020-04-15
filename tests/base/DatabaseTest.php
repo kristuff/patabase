@@ -401,7 +401,7 @@ abstract class DatabaseTest extends TestCase
             ->from('order')
             ->whereEqual('order.customerId', Patabase\Query\QueryFilter::PATABASE_COLUMN_LITERALL . 'customer.customerId');
 
-        $this->assertTrue($query->execute());
+        $this->assertEquals('', $query->sql());
         $this->assertEquals('[{"customerName":"customerB","orderNumber":2},{"customerName":"customerZ","orderNumber":1},{"customerName":"customerA","orderId":0}]', $query->getAll('json'));
      
     }
