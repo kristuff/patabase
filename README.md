@@ -70,7 +70,7 @@ Server queries (*):
 Requirements
 ------------
 
-- PHP >= 5.6
+- PHP >= 7.1
 - PDO extension: Sqlite, Mysql or Postgresql
 
 
