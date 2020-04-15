@@ -404,7 +404,7 @@ abstract class DatabaseTest extends TestCase
         $query->select('orderNumber')
             ->count('orderNumber')
             ->from('order')
-            ->whereEqual('order.customerId', Patabase\Query\QueryFilter::PATABASE_COLUMN_LITERALL . 'customer.customerId');
+            ->whereEqual('order.customerId', Patabase\Constants::COLUMN_LITERALL . 'customer.customerId');
 
        // debug  $this->assertEquals('', $query->sql());
         $this->assertEquals('[{"customerName":"customerB","orderNumber":2},{"customerName":"customerZ","orderNumber":1},{"customerName":"customerA","orderNumber":0}]', $query->getAll('json'));
