@@ -264,8 +264,8 @@ abstract class QueryFilter
                    case 'NOT_NULL':
                         $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
                         $sql .=  $item['sql'];
-                        
                         break;
+
                     case 'IN':
                     case 'NOT_IN':
                         $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
@@ -276,14 +276,14 @@ abstract class QueryFilter
                         // support for column literral 
                         if (is_string($item['value']) && 
                             strlen($item['value']) >  strlen(self::PATABASE_COLUMN_LITERALL) &&
-                            substr($item['value'], 0, strlen(self::PATABASE_COLUMN_LITERALL) === 
-                                                             self::PATABASE_COLUMN_LITERALL)) {
+                            substr($item['value'], 0, strlen(self::PATABASE_COLUMN_LITERALL)) === 
+                                                             self::PATABASE_COLUMN_LITERALL) {
 
                             $arg = substr($item['value'], strlen(self::PATABASE_COLUMN_LITERALL));
                             $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
                             $sql .=  $item['sql'] . $this->query->escape($arg);
 
-                            }   else {
+                        }   else {
                                 // *normal* value 
                                 $arg = $this->getArgumentName($item['column']);
                                 $sql .=  $isSqlNeedOperator ? ' '.$currentOperator.' ' : '';
@@ -291,8 +291,8 @@ abstract class QueryFilter
                                
                                 // set parameters
                                 $this->topQuery->setSqlParameter($arg, $item['value']); 
-                            }
-                        break;
+                        }
+                    break;
                 }
             }
         }
