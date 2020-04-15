@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - **Possible break change** Drop support for php < 7.1
 - **Possible break change** Columns, other than primary key,  are now nullable by default when creating a table (constraint 'NULL'). In previous releases, columns other than primary key created without explicit 'NULL' or 'NOT NULL' argument was created with 'NOT NULL' constraint. 
+- **Possible break change** Removed DatabaseDriver::getVersion() and Datasource::getVersion().
 
 
 ## [v0.1] - 2017-06-30

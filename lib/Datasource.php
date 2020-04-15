@@ -53,18 +53,6 @@ abstract class Datasource
     abstract protected function openConnection();
 
     /**
-     * Get Patabase Version
-     *
-     * @access public
-     * @method static
-     * @return string  format (0.0.0)
-     */
-    public static function getVersion()
-    {
-        return DatabaseDriver::getVersion();
-    }
-
-    /**
      * Get the current driver name
      *
      * @access public

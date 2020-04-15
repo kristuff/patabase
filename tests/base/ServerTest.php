@@ -13,11 +13,6 @@ abstract class ServerTest extends TestCase
      */
     protected static $srv;
 
-    public function testVersion()
-    {
-        $this->assertEquals("0.1.0", Server::getVersion()); 
-    }
-
     public function testDriverName()
     {
        $name= self::$srv->getDriverName();
@@ -125,8 +120,4 @@ abstract class ServerTest extends TestCase
     {
        self::$srv= null;
     }
-
-   
-
-
 }

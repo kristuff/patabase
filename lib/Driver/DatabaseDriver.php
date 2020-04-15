@@ -31,15 +31,7 @@ use Kristuff\Patabase\Exception;
  */
 abstract class DatabaseDriver
 {
-    /**
-     * Version
-     *
-     * @access protected
-     * @var string
-     */
-    protected static $version = "0.1.0";
-
-    /**
+   /**
      * PDO connection
      *
      * @access protected
@@ -189,17 +181,6 @@ abstract class DatabaseDriver
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->hostname = array_key_exists('hostname',$settings) && $settings['hostname'] ? $settings['hostname'] : '';
         $this->driverName = $settings['driver'];
-    }
-
-    /**
-     * Get the current version (format: 0.0.0)
-     *
-     * @access public
-     * @return string  
-     */
-    public static function getVersion()
-    {
-        return self::$version;
     }
 
     /**
