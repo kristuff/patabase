@@ -402,7 +402,7 @@ abstract class DatabaseTest extends TestCase
             ->whereEqual('order.customerId', Patabase\Query\QueryFilter::PATABASE_COLUMN_LITERALL . 'customer.customerId');
 
        // debug  $this->assertEquals('', $query->sql());
-        $this->assertEquals('[{"customerName":"customerB","orderNumber":2},{"customerName":"customerZ","orderNumber":1},{"customerName":"customerA","orderId":0}]', $query->getAll('json'));
+        $this->assertEquals('[{"customerName":"customerB","orderNumber":2},{"customerName":"customerZ","orderNumber":1},{"customerName":"customerA","orderNumber":0}]', $query->getAll('json'));
      
     }
 
