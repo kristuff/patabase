@@ -1,6 +1,12 @@
 <?php
 
 /*
+ *   ____         _          _
+ *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
+ *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
+ *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
+ *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
+ *  
  * This file is part of Kristuff\Patabase.
  *
  * (c) Kristuff <contact@kristuff.fr>
@@ -9,7 +15,7 @@
  * file that was distributed with this source code.
  *
  * @version    0.1.0
- * @copyright  2017 Kristuff
+ * @copyright  2017-2020 Kristuff
  */
 
 namespace Kristuff\Patabase\Query;
@@ -18,6 +24,7 @@ use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Query\QueryBase;
 use Kristuff\Patabase\Exception;
 use Kristuff\Patabase\SqlException;
+use Kristuff\Patabase\Driver;
 
 /**
  * Class QueryBuilder
@@ -111,7 +118,7 @@ abstract class QueryBuilder extends QueryBase
      * @access public
      * @param  array    $values     The array of values
      *
-     * @return string
+     * @return array
      */
     public function escapeList(array $values)
     {
@@ -219,11 +226,14 @@ abstract class QueryBuilder extends QueryBase
 
                 if (!isset($val)) {
                     $paramType =  \PDO::PARAM_NULL;
+                
                 } elseif (is_int($val)) {
                     $paramType =  \PDO::PARAM_INT;
+                
                 } elseif (is_bool($val)) {
                     $paramType =  \PDO::PARAM_BOOL;
                 } 
+                
                 // bind value
                 $this->pdoStatement->bindValue($key, $val, $paramType);
             }
@@ -289,16 +299,21 @@ abstract class QueryBuilder extends QueryBase
         switch ($ouputFormat){
             case 'asso':    
                 return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
+
             case 'obj':     
-                return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_OBJ) :    NULL;                  
+                return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_OBJ) :    NULL;
+
             case 'cols':     
                 return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_COLUMN) :  array();
+
             case 'json':    
                 $results = $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
                 return json_encode($results, JSON_NUMERIC_CHECK);   
+
             case 'jsonpp':    
                 $results = $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
                 return json_encode($results, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);   
+                
             default:
                 throw new Exception\InvalidArgException('The specified output format is invalid.');
         }
