@@ -188,7 +188,7 @@ abstract class DatabaseTest extends TestCase
              ->column('opt1',     'int',           'NOT NULL', 'DEFAULT', 2 )
              ->column('opt2',     'real',          'NOT NULL', 'DEFAULT', 2.2 )
              ->column('foo',      'varchar(10)',   'NOT NULL')
-             ->column('bool',     'bool',          'NOT NULL', 'DEFAULT', true)
+             ->column('bool',     'bool',          'NOT NULL', 'DEFAULT', true) // see above
              ->column('bigint',   'bigint',        'NOT NULL', 'DEFAULT', 922337203685477580)
              ->column('smallint', 'smallint',      'NOT NULL', 'DEFAULT', 0);
 
@@ -209,23 +209,28 @@ abstract class DatabaseTest extends TestCase
                 $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":1,"bigint":922337203685477580,"smallint":0}]', 
                     self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
                 break;
+
             case 'pgsql':
                 $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":true,"bigint":922337203685477580,"smallint":0}]', 
                     self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
                 break;
+
             case 'sqlite':
 
-                // known issue for boolean, exepect str "TRUE" before php 7.3
-                if (version_compare(PHP_VERSION, '7.3.0') >= 0) {
-                    $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":1,"bigint":922337203685477580,"smallint":0}]', 
-                    self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
-                } else {
-                    // since php 7.3 it returns int 
-                    $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":"TRUE","bigint":922337203685477580,"smallint":0}]', 
-                    self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
-                }
+                // No bool type in sqlite 
+                // with php 7.3                 retuns  int   1
+                // with php 7.4 and php < 7.3   retuns  str   "TRUE" 
+                $possibleResults = [
+                    '[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":"TRUE","bigint":922337203685477580,"smallint":0}]',
+                    '[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":1,"bigint":922337203685477580,"smallint":0}]'
+                ];
 
-                break;
+                $queryResult = self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json');
+                $ok = $possibleResults[0] === $queryResult ||
+                      $possibleResults[1] === $queryResult;
+
+                $this->assertTrue($ok);
+                    
             case 'mssql':
                 //TODO
                 break;
