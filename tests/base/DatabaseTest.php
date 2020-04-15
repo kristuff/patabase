@@ -393,7 +393,7 @@ abstract class DatabaseTest extends TestCase
     public function testCountInSubQuery()
     {
       //prepare query
-      $query = self::$db()->select('customerName')->from('customer')->orderBy('customerId');
+      $query = self::$db->select('customerName')->from('customer')->orderBy('customerId');
 
         // sub query To get song number for given artist artist
         $query->select('orderNumber')
