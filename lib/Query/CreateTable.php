@@ -155,99 +155,94 @@ class CreateTable extends Query\QueryBuilder
             
             // following arguments
             $args       = array_slice($col, 2);
-            $currentIndex       = -1;
+            $currentIndex       = 0;
             $defaultValueIndex  = -1;
 
-            $null          = false;    // NULLABLE?           TODO DEFAULT OPTION
-            $isPk          = false;    // PRIMARY KEY?
-            $isUnique      = false;    // UNIQUE ?
-            $hasDefault    = false;    // DEFAULT VALUE?
-            $defaultValue  = null;
+            $sqlConstraintUnique    = '';       // UNIQUE ?, not by default
+            $sqlConstraintNullable  = 'NULL';   // allow null value by default
+            $isPk                   = false;    // PRIMARY KEY?
+            $sqlDefault             = '';       // DEFAULT VALUE?
 
             foreach ($args as $arg){
 
-                // set current index
-                $currentIndex ++;
-
-                switch ($currentIndex) {
-                    case $defaultValueIndex:
-                        // string
-                        if (is_string($arg)){
-                            
-                            // escape everything except constants
-                            if (in_array(strtoupper($arg), $this->supportedDefaults)){
-                                $defaultValue = 'DEFAULT ' . $arg;
-                            } else {
-                                $defaultValue = 'DEFAULT ' . $this->driver->escapeValue($arg);
-                            }
-                        
-                        // int/float are not escaped
-                        } elseif (is_int($arg) || is_float($arg)){
-                            $defaultValue = 'DEFAULT ' . $arg;
-
-                        // bool Type
-                        } elseif (is_bool($arg)){
-                            $defaultValue = 'DEFAULT ' . ($arg ? 'TRUE' : 'FALSE');                            
-                        }
-
-                        //TODO exception
-                        break;
-
-                    default:
-                        switch (strtoupper($arg)){
-                        
-                            // NULL  /NOT NULL 
-                            case 'NULL':
-                                $null = true;
-                                break;
-
-                            // UNIQUE
-                            case 'UNIQUE':
-                                $isUnique = true;
-                                break;
-
-                            // AUTO INCREMENT
-                            case 'AUTO INCREMENT':
-                            case 'AUTO_INCREMENT':
-                            case 'AI':
-                                $sqlType = $this->driver->sqlColumnAutoIncrement($sqlType);
-                                break;                            
-
-                            // PK
-                            case 'PRIMARY KEY':
-                            case 'PRIMARY_KEY':
-                            case 'PK':
-                                $isPk = true;
-                                break;
-
-                            // DEFAULT
-                            case 'DEFAULT':
-                                // define next index as the DefaultValue index
-                                $defaultValueIndex = $currentIndex +1;
-                                $hasDefault = true;
-                                break;
-                        
-                            // TODO
-                            // INCREM ...
+                // last index was DEFAULT, so the current argument 
+                // is the value for default contsaint
+                if ($currentIndex === $defaultValueIndex){
                     
+                    // string
+                    if (is_string($arg)){
+                            
+                        // escape everything except constants
+                        if (in_array(strtoupper($arg), $this->supportedDefaults)){
+                            $sqlDefault = 'DEFAULT ' . $arg;
+                        } else {
+                            $sqlDefault = 'DEFAULT ' . $this->driver->escapeValue($arg);
                         }
+                        
+                    // int/float are not escaped
+                    } elseif (is_int($arg) || is_float($arg)){
+                        $sqlDefault = 'DEFAULT ' . $arg;
+
+                    // bool Type
+                    } elseif (is_bool($arg)){
+                        $sqlDefault = 'DEFAULT ' . ($arg ? 'TRUE' : 'FALSE');                            
+                    }
+
+
+                } else {
+                    switch (strtoupper($arg)){
+                        
+                        // NULL  /NOT NULL 
+                        case 'NULL':
+                            $sqlConstraintNullable = 'NULL';
+                            break;
+
+
+                        case 'NOT NULL':
+                            $sqlConstraintNullable = 'NOT NULL';
+                            break;
+
+                        // UNIQUE
+                        case 'UNIQUE':
+                            $sqlConstraintUnique = 'UNIQUE';
+                            break;
+
+                        // AUTO INCREMENT
+                        case 'AUTO INCREMENT':
+                        case 'AUTO_INCREMENT':
+                        case 'AI':
+                            $sqlType = $this->driver->sqlColumnAutoIncrement($sqlType);
+                            break;                            
+
+                        // PK
+                        case 'PRIMARY KEY':
+                        case 'PRIMARY_KEY':
+                        case 'PK':
+                            $isPk = true;
+                            break;
+
+                        // DEFAULT
+                        case 'DEFAULT':
+                            // define next index as the DefaultValue index
+                            $defaultValueIndex = $currentIndex +1;
+                            break;
+                    
+                    }
                 }
+
+                // update  current index
+                $currentIndex ++;
             }
 
             // set optional params
             // PK ?, UNIQUE ?, NULL? (PK cannot be null), DEFAULT?
             // AI is handle with sqltype
-            $sqlPk         = $isPk ? 'PRIMARY KEY' : '';
-            $sqlUnique     = $isUnique ? 'UNIQUE' : '';
-            $sqlNull       = !$isPk && $null ? 'NULL' : 'NOT NULL';
-            $sqlDefault    = $hasDefault ? $defaultValue : '';
-
             $result[] = trim(implode(' ', [$sqlName, 
-                                    $sqlType, 
-                                    $sqlNull,
-                                    $sqlPk,
-                                    $sqlUnique,
-                                    $sqlDefault]));
+                                           $sqlType, 
+                                           $isPk ? 'NOT NULL' : $sqlConstraintNullable,
+                                           $isPk ? 'PRIMARY KEY' : '',
+                                           $sqlConstraintUnique,
+                                           $sqlDefault]));
         }
 
         // FK CONSTRANT
