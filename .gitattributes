@@ -6,3 +6,4 @@ vendor/ export-ignore
 composer.* export-ignore
 phpunit.xml export-ignore
 README.* export-ignore
+CHANGELOG.* export-ignore
