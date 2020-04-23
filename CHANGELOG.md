@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 
+## [v0.3] - 2020-04-23
+
+### Changed
+- **Possible break change** Improve output formats definition. Using abstract class Output and its constants. 'ASSO' change to 'ASSOC' for associative arrays. 'COLS' change to 'COLUMN'  
+
 ## [v0.2] - 2020-04-15
 
 ### Added
