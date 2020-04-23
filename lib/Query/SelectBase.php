@@ -180,7 +180,7 @@ abstract class SelectBase extends QueryBuilder
     }
 
     /**
-     * Define the ouputs columns for the select
+     * Define the outputs columns for the select
      *
      * @access public
      * @return $this

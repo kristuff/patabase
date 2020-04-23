@@ -295,9 +295,9 @@ abstract class QueryBuilder extends QueryBase
      * 
      * @return mixed                     
      */
-    protected static function fetchOutput(QueryBuilder $query, $executed, $ouputFormat)
+    protected static function fetchOutput(QueryBuilder $query, $executed, $outputFormat)
     {
-        switch (strtoupper($ouputFormat)){
+        switch (strtoupper($outputFormat)){
 
             case Outpout::ASSOC:    
                 return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();

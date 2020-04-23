@@ -551,7 +551,7 @@ abstract class DatabaseTest extends TestCase
         $this->assertEquals('[{"userName":"Bryan","userRole":1,"test_count":3}]', $query->getOne('json'));
     }
 
-    public function testOuputJson()
+    public function testOutputJson()
     {
         $query = self::$db->table('user')->select('id','name','age')->orderAsc('id')->limit(2);
         $json = '[{"id":1,"name":"Bryan","age":34},{"id":2,"name":"Steve","age":32}]';
@@ -571,7 +571,7 @@ abstract class DatabaseTest extends TestCase
         $this->assertEquals($jsonPP, print_r($query->getAll('jsonpp'), TRUE));
     }
 
-    public function testOuputAssoObj()
+    public function testOutputAssoObj()
     {
         $query = self::$db->table('user')->select('id','name','age')->orderAsc('id')->limit(2);
         
@@ -594,25 +594,25 @@ abstract class DatabaseTest extends TestCase
         $this->assertTrue(is_object($query->getAll('obj')[0]));
     }
 
-    public function testOuputOneColumn()
+    public function testOutputOneColumn()
     {
         $this->assertEquals('Bryan', self::$db->table('user')->select('name')->orderAsc('id')->limit(1)->getColumn());
         $this->assertEquals(NULL, self::$db->table('user')->select('name')->whereEqual('id', 222)->getColumn());
     }
 
-    public function testOuputColumns()
+    public function testOutputColumns()
     {
         $query = self::$db->table('user')->select('name')->orderAsc('id')->limit(2);
         $cols = array('Bryan', 'Steve');
         $this->assertEquals(print_r(json_encode($cols, JSON_PRETTY_PRINT), TRUE), 
-                           print_r(json_encode($query->getAll('col'), JSON_PRETTY_PRINT), true));
+                           print_r(json_encode($query->getAll('column'), JSON_PRETTY_PRINT), true));
 
     }
 
     /**
      * @expectedException Kristuff\Patabase\Exception\InvalidArgException
      */
-    public function tesInvalidOuput()
+    public function tesInvalidOutput()
     {
         self::$db->table('user')->select('name')->getAll('wrong');
     }

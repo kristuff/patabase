@@ -172,13 +172,13 @@ class Select extends SelectBase
      *
      * @return  mixed
      */
-    public function getAll($ouputFormat = 'default')
+    public function getAll(string $outputFormat = 'default')
     {
         // execute query
        $exec = $this->execute();
 
        // format
-       $format = ($ouputFormat === 'default') ? $this->driver->defaultOutputFormat() : $ouputFormat; 
+       $format = ($outputFormat === 'default') ? $this->driver->defaultOutputFormat() : $outputFormat; 
 
         // return output
         return QueryBuilder::fetchOutput($this, $exec, $format);
@@ -192,10 +192,10 @@ class Select extends SelectBase
      * 
      * @return  mixed
      */
-    public function getOne($ouputFormat = 'default')
+    public function getOne(string $outputFormat = 'default')
     {
         $this->limit(1);
-        return $this->getAll($ouputFormat);
+        return $this->getAll($outputFormat);
     }
 
     /**
