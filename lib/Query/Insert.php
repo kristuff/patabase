@@ -72,16 +72,14 @@ class Insert extends InsertBase
     }   
 
     /**
-     * Returns the number of rows affected by the last SQL statement
-     * 
+     * Returns the ID of the last inserted row or sequence value 
      * This function returns false if there is no executed query.
      *
      * @access public
-     * @return int|false     The number of affected rows if any, otherwise false.
+     * @return int|false     The last inserted id if found, otherwise false.
      */
     public function lastId()
     {
         return (empty(!$this->pdoStatement)) ? $this->driver->lastInsertedId() : false;
     }
-    
 }
