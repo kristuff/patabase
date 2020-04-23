@@ -585,11 +585,11 @@ abstract class DatabaseTest extends TestCase
 
         switch (self::$db->getDriver()->getDriverName()){
             case 'sqlite':
-                $this->assertEquals($assoStr, $query->getAll('asso'));
+                $this->assertEquals($assoStr, $query->getAll('assoc'));
                 break;
 
             default:
-                $this->assertEquals($assoInt, $query->getAll('asso'));
+                $this->assertEquals($assoInt, $query->getAll('assoc'));
         }
         $this->assertTrue(is_object($query->getAll('obj')[0]));
     }
@@ -605,7 +605,7 @@ abstract class DatabaseTest extends TestCase
         $query = self::$db->table('user')->select('name')->orderAsc('id')->limit(2);
         $cols = array('Bryan', 'Steve');
         $this->assertEquals(print_r(json_encode($cols, JSON_PRETTY_PRINT), TRUE), 
-                           print_r(json_encode($query->getAll('cols'), JSON_PRETTY_PRINT), true));
+                           print_r(json_encode($query->getAll('col'), JSON_PRETTY_PRINT), true));
 
     }
 

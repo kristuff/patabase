@@ -24,6 +24,7 @@ namespace Kristuff\Patabase\Driver;
 use Kristuff\Patabase;
 use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Exception;
+use Kristuff\Patabase\Outpout;
 
 /**
  *  Class DatabaseDriver
@@ -64,7 +65,7 @@ abstract class DatabaseDriver
      * @access private
      * @var    string
      */
-    private $defaultOutputFormat = 'asso';
+    private $defaultOutputFormat = Outpout::ASSOC;
 
     /**
      * Options for CREATE TABLE 
@@ -126,6 +127,7 @@ abstract class DatabaseDriver
 
     /**
      * Escape a given string with driver escape chars
+     * 
      * @access public
      * @param  string   $str  The value to escape
      *
@@ -143,7 +145,7 @@ abstract class DatabaseDriver
      * @access public
      * @param  array    $values  The array of values
      *
-     * @return string
+     * @return array
      */
     public function escapeList(array $values)
     {
