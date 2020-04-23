@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
-* @version    0.2.0
+* @version    0.3.0
  *
  * @copyright  2017-2020 Kristuff
  */
@@ -60,7 +60,7 @@ abstract class DatabaseDriver
     protected $error = array();
 
     /**
-     * The default ouput format
+     * The default output format
      *
      * @access private
      * @var    string
@@ -79,7 +79,7 @@ abstract class DatabaseDriver
      } 
 
     /**
-     * Gets/returns the default ouput format 
+     * Gets/returns the default output format 
      *
      * @access public
      * @return string
