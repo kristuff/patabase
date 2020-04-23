@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
-* @version    0.2.0
+* @version    0.3.0
  *
  * @copyright  2017-2020 Kristuff
  */
@@ -24,6 +24,7 @@ namespace Kristuff\Patabase\Driver;
 use Kristuff\Patabase;
 use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Exception;
+use Kristuff\Patabase\Outpout;
 
 /**
  *  Class DatabaseDriver
@@ -59,12 +60,12 @@ abstract class DatabaseDriver
     protected $error = array();
 
     /**
-     * The default ouput format
+     * The default output format
      *
      * @access private
      * @var    string
      */
-    private $defaultOutputFormat = 'asso';
+    private $defaultOutputFormat = Outpout::ASSOC;
 
     /**
      * Options for CREATE TABLE 
@@ -78,7 +79,7 @@ abstract class DatabaseDriver
      } 
 
     /**
-     * Gets/returns the default ouput format 
+     * Gets/returns the default output format 
      *
      * @access public
      * @return string
@@ -126,6 +127,7 @@ abstract class DatabaseDriver
 
     /**
      * Escape a given string with driver escape chars
+     * 
      * @access public
      * @param  string   $str  The value to escape
      *
@@ -143,7 +145,7 @@ abstract class DatabaseDriver
      * @access public
      * @param  array    $values  The array of values
      *
-     * @return string
+     * @return array
      */
     public function escapeList(array $values)
     {

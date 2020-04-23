@@ -23,13 +23,32 @@ namespace Kristuff\Patabase;
 /**
  * Class Constants
  * 
- * Define api constants 
+ * Define api output constant constants 
  */
-class Constants
+abstract class Outpout
 {
     /**
-     * Define the constant _PATABASE_COLUMN_LITERALL_ to indicate to the clause WHERE or HAVING in sub queries to refer 
-     * to the result of a main query, instead of a non dynamic value 
+     * Define the constant JSON for json outpout
      */
-    const COLUMN_LITERALL = '_PATABASE_COLUMN_LITERALL_';
+    const JSON = 'JSON';
+
+    /**
+     * Define the constant JSON_PRETTY_PRINT for json pretty print outpout
+     */
+    const JSON_PRETTY_PRINT = 'JSONPP';
+
+    /**
+     * Define the constant OBJ for objects outpout
+     */
+    const OBJ = 'OBJ';
+
+    /**
+     * Define the constant COLUMN for column outpout
+     */
+    const COLUMN = 'COLUMN';
+
+    /**
+     * Define the constant ASSOC for associative array outpout
+     */
+    const ASSOC = 'ASSOC';
 }

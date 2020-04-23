@@ -14,7 +14,7 @@ class PgsqlServerTest extends ServerTest
     {
         $settings = [
             'driver'    => 'pgsql', 
-            'hostname'  => 'localhost', 
+            'hostname'  => 'localhost',     
             'username'  => 'postgres',
             'password'  => ''
         ];

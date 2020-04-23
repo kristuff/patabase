@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.2.0
+ * @version    0.3.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -34,7 +34,7 @@ class DriverFactory
      *
      * @access public
      * @param  array    $settings               The connection settings
-     * @param  bool     $isServerConnection     True for Server connection, default is false
+     * @param  bool    [$isServerConnection]     True for Server connection, default is false
      *
      * @return MysqlDriver|PostgresDriver|SqliteDriver
      * @throw  Exception\InvalidArgException 
@@ -47,12 +47,16 @@ class DriverFactory
 
         // get driver
         switch ($settings['driver']) {
+
             case 'sqlite':
                 return new Driver\Sqlite\SqliteDriver($settings);
+
             case 'mysql':
                 return new Driver\Mysql\MysqlDriver($settings, $isServerConnection);
+
             case 'pgsql':
                 return new Driver\Postgres\PostgresDriver($settings, $isServerConnection);
+
             default:
                 throw new Exception\InvalidArgException('The specified driver is not supported');
         }

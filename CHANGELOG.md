@@ -2,10 +2,15 @@
 All notable changes to this project will be documented in this file.
 
 
+## [v0.3] - 2020-04-23
+
+### Changed
+- **Possible break change** Improve output formats definition. Using abstract class Output and its constants. 'ASSO' change to 'ASSOC' for associative arrays. 'COLS' change to 'COLUMN'  
+
 ## [v0.2] - 2020-04-15
 
 ### Added
-- Best support for sub queries filters : when using the WHERE or HAVING clause, the prefix _PATABASE_COLUMN_LITERALL_ in the filter value allows to match with the result of the main query (insead of a non dynamic value). 
+- Best support for sub queries filters : when using the WHERE or HAVING clause, the prefix _PATABASE_COLUMN_LITERALL_ in the filter value allows to match with the result of the main query (instead of a non dynamic value). 
 
 ### Changed
 - **Possible break change** Drop support for php < 7.1

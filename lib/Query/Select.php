@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.2.0
+ * @version    0.3.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -172,13 +172,13 @@ class Select extends SelectBase
      *
      * @return  mixed
      */
-    public function getAll($ouputFormat = 'default')
+    public function getAll(string $outputFormat = 'default')
     {
         // execute query
        $exec = $this->execute();
 
        // format
-       $format = ($ouputFormat === 'default') ? $this->driver->defaultOutputFormat() : $ouputFormat; 
+       $format = ($outputFormat === 'default') ? $this->driver->defaultOutputFormat() : $outputFormat; 
 
         // return output
         return QueryBuilder::fetchOutput($this, $exec, $format);
@@ -192,10 +192,10 @@ class Select extends SelectBase
      * 
      * @return  mixed
      */
-    public function getOne($ouputFormat = 'default')
+    public function getOne(string $outputFormat = 'default')
     {
         $this->limit(1);
-        return $this->getAll($ouputFormat);
+        return $this->getAll($outputFormat);
     }
 
     /**
