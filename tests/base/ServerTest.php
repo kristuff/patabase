@@ -126,8 +126,9 @@ abstract class ServerTest extends TestCase
 
     }
 
-    public function testDescructor()
-    {
-       self::$srv= null;
-    }
+   // not testable
+   // public function testDescructor()
+   // {
+   //    self::$srv= null;
+   // }
 }
