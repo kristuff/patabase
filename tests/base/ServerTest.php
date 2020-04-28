@@ -117,9 +117,9 @@ abstract class ServerTest extends TestCase
         $this->assertTrue($created);
 
         // debug
-        //if (! $created) {
-            $this->assertEquals(' hello world', print_r(self::$srv->getDatabases()));
-        //}
+        if (! $created) {
+            $this->assertEquals(' hello world', json_encode(self::$srv->getDatabases()));
+        }
 
     }
 

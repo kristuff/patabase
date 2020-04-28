@@ -10,7 +10,7 @@ php:
 
 services:
   - mysql
-  - postgresql
+  - postgresql  
 
 before_install:
   - composer install
@@ -19,6 +19,7 @@ before_install:
 before_script:
  # - psql  -c "DROP DATABASE IF EXISTS patabaseTest;" -U postgres
  # - mysql -e "DROP DATABASE IF EXISTS patabaseTest;" -u root
+
 
 script: 
   - ../vendor/bin/phpunit --debug --configuration phpunit.xml --coverage-text --coverage-clover=coverage.xml
