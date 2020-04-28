@@ -209,17 +209,17 @@ abstract class DatabaseTest extends TestCase
                 $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":1,"bigint":922337203685477580,"smallint":0}]', 
                     self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
                 break;
-
-            case 'pgsql':
+  
+                case 'pgsql':
+                // bool returned as bool
                 $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":true,"bigint":922337203685477580,"smallint":0}]', 
                     self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
                 break;
 
             case 'sqlite':
-
-                // No bool type in sqlite 
-                // with php 7.3                 retuns  int   1
-                // with php 7.4 and php < 7.3   retuns  str   "TRUE" 
+                // No bool type in sqlite: 
+                //  with php 7.3                => retuns int  1
+                //  with php 7.4 and php < 7.3  => retuns str  "TRUE" 
                 $possibleResults = [
                     '[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":"TRUE","bigint":922337203685477580,"smallint":0}]',
                     '[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":1,"bigint":922337203685477580,"smallint":0}]'
@@ -371,6 +371,7 @@ abstract class DatabaseTest extends TestCase
             ->column('orderDate',   'varchar(10)', 'NOT NULL')
             ->fk('fk_order_customer','customerId', 'customer','customerId');
         $created = $createTable->execute();
+        
         // debug
         if (! $created) {
             $this->assertEquals('', $createTable->errorMessage());
@@ -400,7 +401,7 @@ abstract class DatabaseTest extends TestCase
       //prepare query
       $query = self::$db->select('customerName')->from('customer')->orderBy('customerId');
 
-        // sub query To get song number for given artist artist
+        // sub query to get order number for given customer 
         $query->select('orderNumber')
             ->count('orderNumber')
             ->from('order')
@@ -881,6 +882,7 @@ abstract class DatabaseTest extends TestCase
         // not supported in sqlite / 
         if (self::$db->getDriver()->getDriverName() === 'sqlite'){
             $this->assertFalse(self::$db->dropForeignKey('fk_user_userrrole', 'user'));
+        
         } else {
             $dropFk = self::$db->dropForeignKey('fk_user_userrrole', 'user');
             $this->assertTrue($dropFk);
@@ -973,10 +975,11 @@ abstract class DatabaseTest extends TestCase
         $this->assertEquals('[{"name":"Bryan"}]', $query->getAll('json'));
     }
 
-    public function testDescructor()
-    {
-        self::$db = null;
-    }
+    //not testable
+   // public function testDescructor()
+  //  {
+  //      self::$db = null;
+  //  }
 
 
 }
