@@ -93,7 +93,7 @@ class MysqlDriver extends ServerDriver
             'mysql:host='.$settings['hostname'] .$port .$dbname .$charset,
             $settings['username'],
             $settings['password'],
-            array()
+            [\PDO::ATTR_EMULATE_PREPARES => false]
         );
 
         // emulate prepare is true by default in mysql
