@@ -117,12 +117,13 @@ abstract class ServerTest extends TestCase
 
 
         $created = self::$srv->createDatabaseAndUser('patabaseTest','tototo', 'passss');
-        $this->assertTrue($created);
-
+     
         // debug
         if (! $created) {
             $this->assertEquals(' hello world', json_encode(self::$srv->getDatabases()));
         }
+        $this->assertTrue($created);
+
 
     }
 
