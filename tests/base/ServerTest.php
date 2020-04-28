@@ -118,7 +118,7 @@ abstract class ServerTest extends TestCase
 
         // debug
         if (! $created) {
-            $this->assertEquals('', self::$srv->getDatabases());
+            $this->assertEquals(' hello world', self::$srv->getDatabases());
         }
 
     }
