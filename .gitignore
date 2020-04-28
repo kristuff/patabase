@@ -1,0 +1,3 @@
+*.tmp.php
+_old/*
+_tmp/*
