@@ -110,7 +110,10 @@ class PostgresDriver extends ServerDriver
             $settings['password'],
             array()
         );
-        //TODO options, shema
+
+        // make sure emulate prepare is false 
+        $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     /**
