@@ -29,13 +29,13 @@ abstract class DatabaseInjectionTest extends TestCase
     protected static function createTables()
     {
           
-        $this->db->table('test')
+        self::$db->table('test')
                     ->create()
                     ->column('id', 'int', 'pk')
                     ->column('name', 'varchar(255)')
                     ->execute();
 
-            $this->db->table('test_injection')
+        self::$db->table('test_injection')
                 ->create()
                 ->column('id', 'int', 'pk')
                 ->column('name', 'varchar(255)')
