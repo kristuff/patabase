@@ -15,7 +15,7 @@ class SqliteInjectionTest extends DatabaseInjectionTest
 
     }
 
-    public function InjectionDropTableTest()
+    public function testInjectionDropTable()
     {
         $this->assertTrue( self::$db->table('test')
                                     ->create()

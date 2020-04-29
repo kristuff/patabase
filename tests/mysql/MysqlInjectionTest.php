@@ -4,6 +4,7 @@ require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/../base/DatabaseInjectionTest.php';
 
 use Kristuff\Patabase\Database;
+use Kristuff\Patabase\Server;
 
 class MysqlInjectionTest extends DatabaseInjectionTest
 {
@@ -30,7 +31,7 @@ class MysqlInjectionTest extends DatabaseInjectionTest
 
     }
 
-    public function InjectionDropTableTest()
+    public function testInjectionDropTable()
     {
         $this->assertTrue( self::$db->table('test')
                                     ->create()
