@@ -12,27 +12,18 @@ class SqliteInjectionTest extends DatabaseInjectionTest
     public static function setUpBeforeClass() : void
     {   
         self::$db = new Database(array('driver' => 'sqlite', 'database' => ':memory:'));
-
+        $this->createTables();
+  
     }
 
     public function testInjectionDropTable()
     {
-        $this->assertTrue( self::$db->table('test')
-                                    ->create()
-                                    ->ifNotExists()
-                                    ->column('id', 'int', 'pk')
-                                    ->column('name', 'varchar(255)')
-                                    ->execute());
+     
+       // John’; DROP table users_details;’       
+       self::$db->insert('test')
+       ->setValue('name', 'John')
+       ->execute();
 
-        $this->assertTrue( self::$db->table('test_injection')
-                                    ->create()
-                                    ->ifNotExists()
-                                    ->column('id', 'int', 'pk')
-                                    ->column('name', 'varchar(255)')
-                                    ->execute());
-
-
-       // John’; DROP table users_details;’                                    
        $this->assertTrue( self::$db->insert('test')
                                     ->setValue('name', 'John"; DROP table test_injection;"')
                                     ->execute());
@@ -42,6 +33,20 @@ class SqliteInjectionTest extends DatabaseInjectionTest
 
 
     }
+ public function testDebug1()
+    {
+    
+       // debug
+       $this->assertEquals('', self::$db->select('name')->from('test')->getAll('JSON'));
 
+    }
+
+    public function testDebug2()
+    {
+    
+       // debug
+       $this->assertEquals('', json_encode(self::$db->getTables()));
+
+    }   
 
 }

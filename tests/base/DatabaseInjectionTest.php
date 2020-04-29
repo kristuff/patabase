@@ -26,4 +26,19 @@ abstract class DatabaseInjectionTest extends TestCase
     protected static $srv;
 
    
+    protected function createTables()
+    {
+          
+        self::$db->table('test')
+                    ->create()
+                    ->column('id', 'int', 'pk')
+                    ->column('name', 'varchar(255)')
+                    ->execute();
+
+            self::$db->table('test_injection')
+                ->create()
+                ->column('id', 'int', 'pk')
+                ->column('name', 'varchar(255)')
+                ->execute();
+    }
 }

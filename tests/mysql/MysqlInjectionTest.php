@@ -28,20 +28,7 @@ class MysqlInjectionTest extends DatabaseInjectionTest
             'password'  => 'pass'
         ];
         self::$db = new Database($dbsettings);
-        
-        self::$db->table('test')
-        ->create()
-        ->ifNotExists()
-        ->column('id', 'int', 'pk')
-        ->column('name', 'varchar(255)')
-        ->execute();
-
-     self::$db->table('test_injection')
-        ->create()
-        ->ifNotExists()
-        ->column('id', 'int', 'pk')
-        ->column('name', 'varchar(255)')
-        ->execute();
+        $this->createTables();
     }
 
     public function testInjectionDropTable()
@@ -49,14 +36,18 @@ class MysqlInjectionTest extends DatabaseInjectionTest
     
 
 
-       // John’; DROP table users_details;’                                    
+       // John’; DROP table users_details;’       
        self::$db->insert('test')
-            ->setValue('name', 'John`; DROP table test_injection;`')
-            ->execute();
+                ->setValue('name', 'John')
+                ->execute();
+            
+       self::$db->insert('test')
+                ->setValue('name', 'John`; DROP table test_injection;`')
+                ->execute();
 
         self::$db->insert('test')
-            ->setValue('name', "John'; DROP table test_injection;'")
-            ->execute();
+                ->setValue('name', "John'; DROP table test_injection;'")
+                ->execute();
 
        $this->assertTrue( self::$db->table('test_injection')
                                    ->exists());
@@ -70,7 +61,7 @@ class MysqlInjectionTest extends DatabaseInjectionTest
     {
     
        // debug
-       $this->assertEquals('', json_encode(self::$db->select('name')->from('test')->getAll('JSON')));
+       $this->assertEquals('', self::$db->select('name')->from('test')->getAll('JSON'));
 
     }
 
