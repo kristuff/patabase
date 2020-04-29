@@ -17,16 +17,16 @@ abstract class DatabaseInjectionTest extends TestCase
     /**
      * @var Kristuff\Patabase\Database
      */
-    protected  $db;
+    protected static $db;
 
 
     /**
      * @var Kristuff\Patabase\Server
      */
-    protected  $srv;
+    protected static $srv;
 
    
-    protected function createTables()
+    protected static function createTables()
     {
           
         $this->db->table('test')

@@ -8,7 +8,7 @@ use Kristuff\Patabase\Server;
 
 class MysqlInjectionTest extends DatabaseInjectionTest
 {
-    public function setUpBeforeClass() : void
+    public static function setUpBeforeClass() : void
     {   
         $settings = [
             'driver'    => 'mysql', 
@@ -17,8 +17,8 @@ class MysqlInjectionTest extends DatabaseInjectionTest
             'password'  => ''
         ];
       
-        $this->srv = new Server($settings);
-        $this->srv->createDatabaseAndUser('patabaseTestInjection','tutu', 'pass');
+        self::$srv = new Server($settings);
+        self::$srv->createDatabaseAndUser('patabaseTestInjection','tutu', 'pass');
      
         $dbsettings = [
             'driver'    => 'mysql', 
@@ -27,8 +27,8 @@ class MysqlInjectionTest extends DatabaseInjectionTest
             'username'  => 'tutu',
             'password'  => 'pass'
         ];
-        $this->db = new Database($dbsettings);
-        $this->createTables();
+        self::$db = new Database($dbsettings);
+        self::createTables();
     }
 
     public function testInjectionDropTable()
@@ -37,19 +37,19 @@ class MysqlInjectionTest extends DatabaseInjectionTest
 
 
        // John’; DROP table users_details;’       
-       $this->db->insert('test')
-                ->setValue('name', 'John')
-                ->execute();
-            
-       $this->db->insert('test')
+       self::$db->insert('test')
+            ->setValue('name', 'John')
+            ->execute();
+        
+       self::$db->insert('test')
                 ->setValue('name', 'John`; DROP table test_injection;`')
                 ->execute();
 
-        $this->db->insert('test')
+        self::$db->insert('test')
                 ->setValue('name', "John'; DROP table test_injection;'")
                 ->execute();
 
-       $this->assertTrue( $this->db->table('test_injection')
+       $this->assertTrue( self::$db->table('test_injection')
                                    ->exists());
 
 
@@ -61,7 +61,7 @@ class MysqlInjectionTest extends DatabaseInjectionTest
     {
     
        // debug
-       $this->assertEquals('', $this->db->select('name')->from('test')->getAll('JSON'));
+       $this->assertEquals('', self::$db->select('name')->from('test')->getAll('JSON'));
 
     }
 
@@ -69,7 +69,7 @@ class MysqlInjectionTest extends DatabaseInjectionTest
     {
     
        // debug
-       $this->assertEquals('', json_encode($this->db->getTables()));
+       $this->assertEquals('', json_encode(self::$db->getTables()));
 
     }
 
