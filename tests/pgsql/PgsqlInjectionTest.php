@@ -5,7 +5,7 @@ require_once __DIR__.'/../base/DatabaseInjectionTest.php';
 
 use Kristuff\Patabase\Database;
 
-class MysqlInjectionTest extends DatabaseInjectionTest
+class PgsqlInjectionTest extends DatabaseInjectionTest
 {
     public static function setUpBeforeClass() : void
     {   
