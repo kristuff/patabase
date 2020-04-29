@@ -58,7 +58,7 @@ class PgsqlInjectionTest extends DatabaseInjectionTest
     {
     
        // debug
-       $this->assertEquals('', self::$db->select('name')->from('test')->getAll('JSON'));
+       $this->assertEquals('', self::$db->select('id', 'name')->from('test')->getAll('JSON'));
 
     }
 

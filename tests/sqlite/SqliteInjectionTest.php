@@ -21,12 +21,12 @@ class SqliteInjectionTest extends DatabaseInjectionTest
      
        // John’; DROP table users_details;’       
        self::$db->insert('test')
-       ->setValue('name', 'John')
-       ->execute();
+               ->setValue('name', 'John')
+               ->execute();
 
-       $this->assertTrue( self::$db->insert('test')
+       self::$db->insert('test')
                                     ->setValue('name', 'John"; DROP table test_injection;"')
-                                    ->execute());
+                                    ->execute();
 
        $this->assertTrue( self::$db->table('test_injection')
                                     ->exists());
@@ -37,7 +37,7 @@ class SqliteInjectionTest extends DatabaseInjectionTest
     {
     
        // debug
-       $this->assertEquals('', self::$db->select('name')->from('test')->getAll('JSON'));
+       $this->assertEquals('', self::$db->select('id', 'name')->from('test')->getAll('JSON'));
 
     }
 
