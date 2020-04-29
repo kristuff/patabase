@@ -50,7 +50,7 @@ class MysqlInjectionTest extends DatabaseInjectionTest
 
        // John’; DROP table users_details;’                                    
        $this->assertTrue( self::$db->insert('test')
-                                    ->value('name', 'John`; DROP table test_injection;`')
+                                    ->setValue('name', 'John`; DROP table test_injection;`')
                                     ->execute());
 
        $this->assertTrue( self::$db->table('test_injection')
