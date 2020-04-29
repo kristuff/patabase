@@ -89,7 +89,7 @@ class MysqlDriver extends ServerDriver
         $port    = !empty($settings['port'])     ?  ';port='.$settings['port']        : '';
         $dbname  = !empty($settings['database']) ?  ';dbname='.$settings['database']  : '';
         $options = [
-            \PDO::ATTR_EMULATE_PREPARES => false,
+          //  \PDO::ATTR_EMULATE_PREPARES => false,
         ];
 
         $this->pdo = new \PDO(
