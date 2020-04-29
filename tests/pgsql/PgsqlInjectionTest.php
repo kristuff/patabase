@@ -33,22 +33,5 @@ class PgsqlInjectionTest extends DatabaseInjectionTest
   
     }
 
-   
-    public function testDebug1()
-    {
-    
-       // debug
-       $this->assertEquals('', self::$db->select()->from('test')->getAll('JSON'));
-
-    }
-
-    public function testDebug2()
-    {
-    
-       // debug
-       $this->assertEquals('', json_encode(self::$db->getTables()));
-
-    }
-
 
 }
