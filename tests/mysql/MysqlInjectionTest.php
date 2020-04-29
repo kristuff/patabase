@@ -28,30 +28,31 @@ class MysqlInjectionTest extends DatabaseInjectionTest
             'password'  => 'pass'
         ];
         self::$db = new Database($dbsettings);
+        
+        self::$db->table('test')
+        ->create()
+        ->ifNotExists()
+        ->column('id', 'int', 'pk')
+        ->column('name', 'varchar(255)')
+        ->execute();
 
+     self::$db->table('test_injection')
+        ->create()
+        ->ifNotExists()
+        ->column('id', 'int', 'pk')
+        ->column('name', 'varchar(255)')
+        ->execute();
     }
 
     public function testInjectionDropTable()
     {
-        $this->assertTrue( self::$db->table('test')
-                                    ->create()
-                                    ->ifNotExists()
-                                    ->column('id', 'int', 'pk')
-                                    ->column('name', 'varchar(255)')
-                                    ->execute());
-
-        $this->assertTrue( self::$db->table('test_injection')
-                                    ->create()
-                                    ->ifNotExists()
-                                    ->column('id', 'int', 'pk')
-                                    ->column('name', 'varchar(255)')
-                                    ->execute());
+    
 
 
        // John’; DROP table users_details;’                                    
-       $this->assertTrue( self::$db->insert('test')
-                                    ->setValue('name', 'John`; DROP table test_injection;`')
-                                    ->execute());
+       self::$db->insert('test')
+            ->setValue('name', 'John`; DROP table test_injection;`')
+            ->execute();
 
        $this->assertTrue( self::$db->table('test_injection')
                                    ->exists());
