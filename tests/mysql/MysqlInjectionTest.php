@@ -58,6 +58,9 @@ class MysqlInjectionTest extends DatabaseInjectionTest
                                    ->exists());
 
 
+        // debug
+        $this->assertEquals('', json_encode(self::$db->select('name')->from('test')->getAll('JSON')));
+
     }
 
 
