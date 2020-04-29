@@ -31,13 +31,13 @@ abstract class DatabaseInjectionTest extends TestCase
           
         self::$db->table('test')
                     ->create()
-                    ->column('id', 'int', 'pk')
+                    ->column('id', 'int', 'pk', 'ai')
                     ->column('name', 'varchar(255)')
                     ->execute();
 
         self::$db->table('test_injection')
                 ->create()
-                ->column('id', 'int', 'pk')
+                ->column('id', 'int', 'pk', 'ai')
                 ->column('name', 'varchar(255)')
                 ->execute();
     }

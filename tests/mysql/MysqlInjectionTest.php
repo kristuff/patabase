@@ -38,9 +38,9 @@ class MysqlInjectionTest extends DatabaseInjectionTest
 
        // John’; DROP table users_details;’       
        self::$db->insert('test')
-            ->setValue('name', 'John')
-            ->execute();
-        
+                ->setValue('name', 'John')
+                ->execute();
+            
        self::$db->insert('test')
                 ->setValue('name', 'John`; DROP table test_injection;`')
                 ->execute();

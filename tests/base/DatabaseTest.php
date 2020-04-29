@@ -860,12 +860,15 @@ abstract class DatabaseTest extends TestCase
 
     public function testDisableFk()
     {
-        self::$db->disableForeignKeys();
 
         // not supported in pgsql
         if(self::$db->getDriver()->getDriverName() != 'pgsql'){
+            $this->assertTrue(self::$db->disableForeignKeys());
             $this->assertTrue(self::$db->delete('user_role')->whereEqual('role_id', 1)->execute());
             $this->assertTrue(self::$db->delete('user')->whereEqual('id', 7)->execute());
+        
+        } else {
+            $this->assertFalse(self::$db->disableForeignKeys());
         }
     }
 
