@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class SqliteInjectionTest extends DatabaseInjectionTest
 {
-    public function setUpBeforeClass() : void
+    public static function setUpBeforeClass() : void
     {   
         self::$db = new Database(array('driver' => 'sqlite', 'database' => ':memory:'));
         self::createTables();
