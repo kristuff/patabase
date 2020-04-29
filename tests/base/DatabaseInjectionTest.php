@@ -4,6 +4,7 @@ require_once __DIR__.'/../../vendor/autoload.php';
 
 use Kristuff\Patabase;
 use Kristuff\Patabase\Database;
+use Kristuff\Patabase\Server;
 use Kristuff\Patabase\Table;
 use Kristuff\Patabase\SqlException;
 use Kristuff\Patabase\Query\CreateTable;
@@ -19,6 +20,10 @@ abstract class DatabaseInjectionTest extends TestCase
     protected static $db;
 
 
+    /**
+     * @var Kristuff\Patabase\Server
+     */
+    protected static $srv;
 
    
 }

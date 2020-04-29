@@ -17,8 +17,8 @@ class MysqlInjectionTest extends DatabaseInjectionTest
             'password'  => ''
         ];
       
-        $srv = new Server($settings);
-        $srv->createDatabaseAndUser('patabaseTestInjection','tutu', 'pass');
+        self::$srv = new Server($settings);
+        self::$srv->createDatabaseAndUser('patabaseTestInjection','tutu', 'pass');
      
         $dbsettings = [
             'driver'    => 'mysql', 
@@ -62,10 +62,24 @@ class MysqlInjectionTest extends DatabaseInjectionTest
                                    ->exists());
 
 
-        // debug
-        $this->assertEquals('', json_encode(self::$db->select('name')->from('test')->getAll('JSON')));
+      
 
     }
 
+    public function testDebug1()
+    {
+    
+       // debug
+       $this->assertEquals('', json_encode(self::$db->select('name')->from('test')->getAll('JSON')));
+
+    }
+
+    public function testDebug2()
+    {
+    
+       // debug
+       $this->assertEquals('', json_encode(self::$db->getTables()));
+
+    }
 
 }
