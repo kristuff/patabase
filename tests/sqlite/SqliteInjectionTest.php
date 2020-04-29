@@ -9,9 +9,9 @@ use PHPUnit\Framework\TestCase;
 
 class SqliteInjectionTest extends DatabaseInjectionTest
 {
-    public static function setUpBeforeClass() : void
+    public function setUpBeforeClass() : void
     {   
-        self::$db = new Database(array('driver' => 'sqlite', 'database' => ':memory:'));
+        $this->db = new Database(array('driver' => 'sqlite', 'database' => ':memory:'));
         $this->createTables();
   
     }
@@ -20,15 +20,15 @@ class SqliteInjectionTest extends DatabaseInjectionTest
     {
      
        // John’; DROP table users_details;’       
-       self::$db->insert('test')
+       $this->db->insert('test')
        ->setValue('name', 'John')
        ->execute();
 
-       $this->assertTrue( self::$db->insert('test')
+       $this->assertTrue( $this->db->insert('test')
                                     ->setValue('name', 'John"; DROP table test_injection;"')
                                     ->execute());
 
-       $this->assertTrue( self::$db->table('test_injection')
+       $this->assertTrue( $this->db->table('test_injection')
                                     ->exists());
 
 
@@ -37,7 +37,7 @@ class SqliteInjectionTest extends DatabaseInjectionTest
     {
     
        // debug
-       $this->assertEquals('', self::$db->select('name')->from('test')->getAll('JSON'));
+       $this->assertEquals('', $this->db->select('name')->from('test')->getAll('JSON'));
 
     }
 
@@ -45,7 +45,7 @@ class SqliteInjectionTest extends DatabaseInjectionTest
     {
     
        // debug
-       $this->assertEquals('', json_encode(self::$db->getTables()));
+       $this->assertEquals('', json_encode($this->db->getTables()));
 
     }   
 

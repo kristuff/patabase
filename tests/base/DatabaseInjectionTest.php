@@ -17,25 +17,25 @@ abstract class DatabaseInjectionTest extends TestCase
     /**
      * @var Kristuff\Patabase\Database
      */
-    protected static $db;
+    protected  $db;
 
 
     /**
      * @var Kristuff\Patabase\Server
      */
-    protected static $srv;
+    protected  $srv;
 
    
     protected function createTables()
     {
           
-        self::$db->table('test')
+        $this->db->table('test')
                     ->create()
                     ->column('id', 'int', 'pk')
                     ->column('name', 'varchar(255)')
                     ->execute();
 
-            self::$db->table('test_injection')
+            $this->db->table('test_injection')
                 ->create()
                 ->column('id', 'int', 'pk')
                 ->column('name', 'varchar(255)')
