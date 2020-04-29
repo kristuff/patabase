@@ -33,27 +33,7 @@ class PgsqlInjectionTest extends DatabaseInjectionTest
   
     }
 
-    public function testInjectionDropTable()
-    {
-        self::$db->insert('test')
-        ->setValue('name', 'John')
-        ->execute();
-      
-        self::$db->insert('test')
-                ->setValue('name', 'John`; DROP table test_injection;`')
-                ->execute();
-                    
-        self::$db->insert('test')
-                                    ->setValue('name', "John'; DROP table test_injection;'")
-                                    ->execute();
-                    
-
-       $this->assertTrue( self::$db->table('test_injection')
-                                   ->exists());
-
-
-    }
-
+   
     public function testDebug1()
     {
     

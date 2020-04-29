@@ -16,30 +16,14 @@ class SqliteInjectionTest extends DatabaseInjectionTest
   
     }
 
-    public function testInjectionDropTable()
-    {
-     
-       // John’; DROP table users_details;’       
-       self::$db->insert('test')
-               ->setValue('name', 'John')
-               ->execute();
-
-       self::$db->insert('test')
-                                    ->setValue('name', 'John"; DROP table test_injection;"')
-                                    ->execute();
-
-       $this->assertTrue( self::$db->table('test_injection')
-                                    ->exists());
-
-
-    }
- public function testDebug1()
-    {
+   
+   public function testDebug1()
+   {
     
        // debug
        $this->assertEquals('', self::$db->select()->from('test')->getAll('JSON'));
 
-    }
+   }
 
     public function testDebug2()
     {

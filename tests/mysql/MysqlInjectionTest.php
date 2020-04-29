@@ -31,31 +31,7 @@ class MysqlInjectionTest extends DatabaseInjectionTest
         self::createTables();
     }
 
-    public function testInjectionDropTable()
-    {
-    
-
-
-       // John’; DROP table users_details;’       
-       self::$db->insert('test')
-                ->setValue('name', 'John')
-                ->execute();
-            
-       self::$db->insert('test')
-                ->setValue('name', 'John`; DROP table test_injection;`')
-                ->execute();
-
-        self::$db->insert('test')
-                ->setValue('name', "John'; DROP table test_injection;'")
-                ->execute();
-
-       $this->assertTrue( self::$db->table('test_injection')
-                                   ->exists());
-
-
-      
-
-    }
+  
 
     public function testDebug1()
     {

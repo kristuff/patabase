@@ -40,5 +40,30 @@ abstract class DatabaseInjectionTest extends TestCase
                 ->column('id', 'int', 'pk', 'ai')
                 ->column('name', 'varchar(255)')
                 ->execute();
+
+       self::$db->insert('test')
+                ->setValue('name', 'John')
+                ->execute();
+            
+       self::$db->insert('test')
+                ->setValue('name', 'John`; DROP table test_injection;`')
+                ->execute();
+
+        self::$db->insert('test')
+                ->setValue('name', 'John"; DROP table test_injection;"')
+                ->execute();
+
+        self::$db->insert('test')
+                ->setValue('name', "John'; DROP table test_injection;'")
+                ->execute();
+
     }
+
+    public function testInjectionDropTable()
+    {
+       $this->assertTrue( self::$db->table('test_injection')
+                                   ->exists());
+
+    }
+
 }
