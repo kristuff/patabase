@@ -63,8 +63,8 @@ class SqliteDriver extends DatabaseDriver
     {
         $this->pdo = new \PDO('sqlite:'.$settings['database']); 
 
-        $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        //$this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        //$this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
         // Foreign key constraints are disabled by default (for backwards compatibility), 
         // so must be enabled separately for each database connection.

@@ -88,12 +88,15 @@ class MysqlDriver extends ServerDriver
         $charset = !empty($settings['charset'])  ?  ';charset='.$settings['charset']  : ';charset=utf8';
         $port    = !empty($settings['port'])     ?  ';port='.$settings['port']        : '';
         $dbname  = !empty($settings['database']) ?  ';dbname='.$settings['database']  : '';
+        $options = [
+            \PDO::ATTR_EMULATE_PREPARES => false,
+        ];
 
         $this->pdo = new \PDO(
             'mysql:host='.$settings['hostname'] .$port .$dbname .$charset,
             $settings['username'],
             $settings['password'],
-            [\PDO::ATTR_EMULATE_PREPARES => false]
+            $options
         );
 
         // emulate prepare is true by default in mysql
