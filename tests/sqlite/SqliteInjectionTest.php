@@ -37,7 +37,7 @@ class SqliteInjectionTest extends DatabaseInjectionTest
     {
     
        // debug
-       $this->assertEquals('', self::$db->select('id', 'name')->from('test')->getAll('JSON'));
+       $this->assertEquals('', self::$db->select()->from('test')->getAll('JSON'));
 
     }
 
