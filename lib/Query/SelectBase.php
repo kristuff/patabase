@@ -20,11 +20,8 @@
 
 namespace Kristuff\Patabase\Query;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Database;
 use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Query\QueryBuilder;
-use Kristuff\Patabase\Exception;
 
 /**
  * Class SelectBase
@@ -222,6 +219,42 @@ abstract class SelectBase extends QueryBuilder
     {
          $this->columns[] = array(
             'type'  => 'sum',
+            'name'  => $column,
+            'alias' => $alias
+        );
+        return $this;
+    }
+
+    /**
+     * Add a MIN(column) for the select
+     *
+     * @access public
+     * @param  string $column   The column to sum
+     * @param  string $alias    The alias for this column 
+     * @return $this
+     */
+    public function min($column, $alias)
+    {
+         $this->columns[] = array(
+            'type'  => 'min',
+            'name'  => $column,
+            'alias' => $alias
+        );
+        return $this;
+    }
+
+    /**
+     * Add a MAX(column) for the select
+     *
+     * @access public
+     * @param  string $column   The column to sum
+     * @param  string $alias    The alias for this column 
+     * @return $this
+     */
+    public function max($column, $alias)
+    {
+         $this->columns[] = array(
+            'type'  => 'max',
             'name'  => $column,
             'alias' => $alias
         );
