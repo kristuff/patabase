@@ -33,7 +33,7 @@ use Kristuff\Patabase\Outpout;
  */
 abstract class DatabaseDriver
 {
-   /**
+    /**
      * PDO connection
      *
      * @access protected
@@ -74,9 +74,9 @@ abstract class DatabaseDriver
      * @var string
      */
     public function sqlCreateTableOptions()
-     {
+    {
         return '';    
-     } 
+    } 
 
     /**
      * Gets/returns the default output format 
@@ -368,11 +368,11 @@ abstract class DatabaseDriver
      * Get the SQL for RANDOM function
      *
      * @access public
-     * @param  string   $seed   The seed for random function
+     * @param  mixed   $seed   The seed for random function
      *
      * @return string
      */
-    abstract public function sqlRandom($seed);
+    abstract public function sqlRandom();
 
     /**
      * Get the SQL for auto increment column
