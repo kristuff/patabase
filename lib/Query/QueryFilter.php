@@ -25,7 +25,6 @@ use Kristuff\Patabase;
 use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Query\QueryBuilder;
 use Kristuff\Patabase\Driver\DatabaseDriver;
-use Kristuff\Patabase\Exception;
 
 /**
  * Class QueryFilter

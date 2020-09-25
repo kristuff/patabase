@@ -31,14 +31,14 @@ use Kristuff\Patabase\Driver\DatabaseDriver;
  *
  * Represents a [CREATE TABLE] SQL query
  */
-class CreateTable extends Query\QueryBuilder
+class CreateTable extends \Kristuff\Patabase\Query\QueryBuilder
 {
 
     /**
      * Supported string keywords for defaults values     
      *
      * @access private
-     * @var    string       $supportedDefaults
+     * @var    array       $supportedDefaults
      */
     private $supportedDefaults = array('NULL', 'CURRENT_TIMESTAMP');
 

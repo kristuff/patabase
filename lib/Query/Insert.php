@@ -20,17 +20,12 @@
 
 namespace Kristuff\Patabase\Query;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Query;
-use Kristuff\Patabase\Query\InsertBase;
-use Kristuff\Patabase\Database;
-
 /**
  * Class Insert
  *
  * Represents a [INSERT INTO] SQL query
  */
-class Insert extends InsertBase
+class Insert extends \Kristuff\Patabase\Query\InsertBase
 {
     /**
      * Build the SQL INSERT query

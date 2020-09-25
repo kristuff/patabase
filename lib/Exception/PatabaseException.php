@@ -26,4 +26,6 @@ namespace Kristuff\Patabase\Exception;
  *
  * Base class for library custom Exceptions
  */
-class PatabaseException extends \Exception { }
+class PatabaseException extends \Exception 
+{
+}

@@ -21,10 +21,8 @@
 
 namespace Kristuff\Patabase\Query;
 
-use Kristuff\Patabase;
 use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Query\InsertBase;
-use Kristuff\Patabase\Database;
 
 /**
  * Class Update

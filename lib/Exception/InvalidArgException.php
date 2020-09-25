@@ -20,9 +20,9 @@
 
 namespace Kristuff\Patabase\Exception;
 
-use Kristuff\Patabase\Exception\PatabaseException; 
-
 /**
  * Class InvalidArgException
  */
-class InvalidArgException extends PatabaseException { }
+class InvalidArgException extends \Kristuff\Patabase\Exception\PatabaseException
+{
+}

@@ -65,7 +65,7 @@ abstract class ServerDriver extends DatabaseDriver
      *
      * @access public
      * @param  string   $databaseName   The database name.
-     * @param  string   $owner          (optional) The database owner. This parameter is honored in pgsql only.
+     * @param  string   $owner          The database owner. This parameter is honored in pgsql only.
      *
      * @return bool     True if the database has been created, otherwise false.
      */

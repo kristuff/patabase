@@ -20,7 +20,6 @@
 
 namespace Kristuff\Patabase\Driver;
 
-use Kristuff\Patabase;
 use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Exception;
 

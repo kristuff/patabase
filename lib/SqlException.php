@@ -38,6 +38,6 @@ class SqlException extends \Exception
     public function __construct($message, $code = 0, \Exception $previous = null) {
         
         // some drivers may return $code as string => force int 
-        parent::__construct($message, (int) $code, $previous);
+        parent::__construct($message, intval($code), $previous);
     }
 }
