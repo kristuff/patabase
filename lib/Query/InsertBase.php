@@ -102,7 +102,7 @@ abstract class InsertBase extends QueryBuilder
     public function bindValues()
     {
         foreach ($this->parameters as $key => $val) {
-            $arg = self::getArgName($key);
+            $arg = $this->getArgName($key);
             $this->pdoParameters[$arg] = $val;
         }
         parent::bindValues();
