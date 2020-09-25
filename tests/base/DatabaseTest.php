@@ -365,7 +365,7 @@ abstract class DatabaseTest extends TestCase
     public function testSelectMax()
     {
         //sum
-        $this->assertEquals(self::$db->table('user')->select()->max('age', 'max_age')->getOne('json'), '[{"max_age":34}]');
+        $this->assertEquals(self::$db->table('user')->select()->max('age', 'max_age')->getOne('json'), '[{"max_age":38}]');
     }
 
     public function testSelectJoin()
