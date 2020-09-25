@@ -100,8 +100,9 @@ class MysqlDriver extends ServerDriver
         );
 
         // emulate prepare is true by default in mysql
-        //$this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-        //$this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        // TODO 
+        //  $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        //  $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     /**
@@ -201,11 +202,12 @@ class MysqlDriver extends ServerDriver
      *
      * @access public
      * @param  string   $databaseName   The database name
-     * @param  string   $owner          (optional) The database owner. This parameter is not honored in Mysql.
+     * @param  string   $owner          The database owner. This parameter is not honored in Mysql 
+     *                                  but needed for compatibility.
      *
      * @return bool     True if the database has been created, otherwise false.
      */
-    public function createDatabase($databaseName, $owner = null)
+    public function createDatabase($databaseName, $owner)
     {
         $sql = trim(sprintf('CREATE DATABASE %s',  $this->escape($databaseName)));
         return $this->prepareAndExecuteSql($sql);
