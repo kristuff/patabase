@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.3.0
+ * @version    0.4.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -63,9 +63,12 @@ class SqliteDriver extends DatabaseDriver
     {
         $this->pdo = new \PDO('sqlite:'.$settings['database']); 
 
-        // https://www.sqlite.org/foreignkeys.html
+        //$this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        //$this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
         // Foreign key constraints are disabled by default (for backwards compatibility), 
         // so must be enabled separately for each database connection.
+        // @see https://www.sqlite.org/foreignkeys.html
         $this->enableForeignKeys();
     }
 

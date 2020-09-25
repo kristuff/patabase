@@ -209,17 +209,17 @@ abstract class DatabaseTest extends TestCase
                 $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":1,"bigint":922337203685477580,"smallint":0}]', 
                     self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
                 break;
-
-            case 'pgsql':
+  
+                case 'pgsql':
+                // bool returned as bool
                 $this->assertEquals('[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":true,"bigint":922337203685477580,"smallint":0}]', 
                     self::$db->table('testDefault')->select()->whereEqual('id', 1)->getOne('json'));
                 break;
 
             case 'sqlite':
-
-                // No bool type in sqlite 
-                // with php 7.3                 retuns  int   1
-                // with php 7.4 and php < 7.3   retuns  str   "TRUE" 
+                // No bool type in sqlite: 
+                //  with php 7.3                => retuns int  1
+                //  with php 7.4 and php < 7.3  => retuns str  "TRUE" 
                 $possibleResults = [
                     '[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":"TRUE","bigint":922337203685477580,"smallint":0}]',
                     '[{"id":1,"name":"xoxo","opt1":2,"opt2":2.2,"foo":"bar","bool":1,"bigint":922337203685477580,"smallint":0}]'
@@ -356,6 +356,18 @@ abstract class DatabaseTest extends TestCase
         $this->assertEquals(self::$db->table('user')->select()->sum('age', 'total_age')->getOne('json'), '[{"total_age":224}]');
     }
 
+    public function testSelectMin()
+    {
+        //sum
+        $this->assertEquals(self::$db->table('user')->select()->min('age', 'min_age')->getOne('json'), '[{"min_age":16}]');
+    }
+
+    public function testSelectMax()
+    {
+        //sum
+        $this->assertEquals(self::$db->table('user')->select()->max('age', 'max_age')->getOne('json'), '[{"max_age":38}]');
+    }
+
     public function testSelectJoin()
     {
         $tableCustomer = self::$db->table('customer');
@@ -371,6 +383,7 @@ abstract class DatabaseTest extends TestCase
             ->column('orderDate',   'varchar(10)', 'NOT NULL')
             ->fk('fk_order_customer','customerId', 'customer','customerId');
         $created = $createTable->execute();
+        
         // debug
         if (! $created) {
             $this->assertEquals('', $createTable->errorMessage());
@@ -400,7 +413,7 @@ abstract class DatabaseTest extends TestCase
       //prepare query
       $query = self::$db->select('customerName')->from('customer')->orderBy('customerId');
 
-        // sub query To get song number for given artist artist
+        // sub query to get order number for given customer 
         $query->select('orderNumber')
             ->count('orderNumber')
             ->from('order')
@@ -859,12 +872,15 @@ abstract class DatabaseTest extends TestCase
 
     public function testDisableFk()
     {
-        self::$db->disableForeignKeys();
 
         // not supported in pgsql
         if(self::$db->getDriver()->getDriverName() != 'pgsql'){
+            self::$db->disableForeignKeys();
             $this->assertTrue(self::$db->delete('user_role')->whereEqual('role_id', 1)->execute());
             $this->assertTrue(self::$db->delete('user')->whereEqual('id', 7)->execute());
+        
+        } else {
+          //  $this->assertFalse(self::$db->disableForeignKeys());
         }
     }
 
@@ -881,6 +897,7 @@ abstract class DatabaseTest extends TestCase
         // not supported in sqlite / 
         if (self::$db->getDriver()->getDriverName() === 'sqlite'){
             $this->assertFalse(self::$db->dropForeignKey('fk_user_userrrole', 'user'));
+        
         } else {
             $dropFk = self::$db->dropForeignKey('fk_user_userrrole', 'user');
             $this->assertTrue($dropFk);
@@ -973,10 +990,11 @@ abstract class DatabaseTest extends TestCase
         $this->assertEquals('[{"name":"Bryan"}]', $query->getAll('json'));
     }
 
-    public function testDescructor()
-    {
-        self::$db = null;
-    }
+    //not testable
+   // public function testDescructor()
+  //  {
+  //      self::$db = null;
+  //  }
 
 
 }

@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
-* @version    0.3.0
+* @version    0.4.0
  *
  * @copyright  2017-2020 Kristuff
  */
@@ -88,15 +88,21 @@ class MysqlDriver extends ServerDriver
         $charset = !empty($settings['charset'])  ?  ';charset='.$settings['charset']  : ';charset=utf8';
         $port    = !empty($settings['port'])     ?  ';port='.$settings['port']        : '';
         $dbname  = !empty($settings['database']) ?  ';dbname='.$settings['database']  : '';
+        $options = [
+          //  \PDO::ATTR_EMULATE_PREPARES => false,
+        ];
 
         $this->pdo = new \PDO(
             'mysql:host='.$settings['hostname'] .$port .$dbname .$charset,
             $settings['username'],
             $settings['password'],
-            array()
+            $options
         );
 
-        //TODO options, shema...
+        // emulate prepare is true by default in mysql
+        // TODO 
+        //  $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        //  $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     /**
@@ -196,11 +202,12 @@ class MysqlDriver extends ServerDriver
      *
      * @access public
      * @param  string   $databaseName   The database name
-     * @param  string   $owner          (optional) The database owner. This parameter is not honored in Mysql.
+     * @param  string   $owner          The database owner. This parameter is not honored in Mysql 
+     *                                  but needed for compatibility.
      *
      * @return bool     True if the database has been created, otherwise false.
      */
-    public function createDatabase($databaseName, $owner = null)
+    public function createDatabase($databaseName, $owner)
     {
         $sql = trim(sprintf('CREATE DATABASE %s',  $this->escape($databaseName)));
         return $this->prepareAndExecuteSql($sql);

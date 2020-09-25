@@ -1,0 +1,4 @@
+*.tmp.php
+vendor/*
+_old/*
+_tmp/*

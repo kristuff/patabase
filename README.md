@@ -31,7 +31,7 @@ SQL Features
 Database queries:
 ```
 - SELECT FROM:   
-    DISTINCT, all / column(s), columns(s)/alias, function(COUNT, SUM), sub select, 
+    DISTINCT, all / column(s), columns(s)/alias, function(COUNT, SUM, MIN, MAX), sub select, 
     JOIN        (INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN (*), FULL OUTER JOIN (*))
     WHERE       (=, !=, <, <=, >, >=, IN, NOT IN, NULL, NOT NULL), 
     GROUP BY, 

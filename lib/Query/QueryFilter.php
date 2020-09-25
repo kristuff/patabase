@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
-* @version    0.3.0
+* @version    0.4.0
  *
  * @copyright  2017-2020 Kristuff
  */
@@ -25,7 +25,6 @@ use Kristuff\Patabase;
 use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Query\QueryBuilder;
 use Kristuff\Patabase\Driver\DatabaseDriver;
-use Kristuff\Patabase\Exception;
 
 /**
  * Class QueryFilter

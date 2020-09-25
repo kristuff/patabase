@@ -11,18 +11,21 @@
     <testsuite name="sqlite">
      <file>sqlite/SqliteDriverTest.php</file>
      <file>sqlite/SqliteDatabaseTest.php</file>
+     <file>sqlite/SqliteInjectionTest.php</file>
     </testsuite>
     <testsuite name="pgsql">
      <file>pgsql/PgsqlDriverTest.php</file>
      <file>pgsql/PgsqlServerTest.php</file>
      <file>pgsql/PgsqlDatabaseTest.php</file>
      <file>pgsql/PgsqlDropDatabaseTest.php</file>
+     <file>pgsql/PgsqlInjectionTest.php</file>
     </testsuite>
     <testsuite name="mysql">
      <file>mysql/MysqlDriverTest.php</file>
      <file>mysql/MysqlServerTest.php</file>
      <file>mysql/MysqlDatabaseTest.php</file>
      <file>mysql/MysqlDatabaseDropTest.php</file>
+     <file>mysql/MysqlInjectionTest.php</file>
     </testsuite>
      <testsuite name="mssql">
     </testsuite> 

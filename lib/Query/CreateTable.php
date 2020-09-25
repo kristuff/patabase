@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
-* @version    0.3.0
+* @version    0.4.0
  *
  * @copyright  2017-2020 Kristuff
  */
@@ -31,14 +31,14 @@ use Kristuff\Patabase\Driver\DatabaseDriver;
  *
  * Represents a [CREATE TABLE] SQL query
  */
-class CreateTable extends Query\QueryBuilder
+class CreateTable extends \Kristuff\Patabase\Query\QueryBuilder
 {
 
     /**
      * Supported string keywords for defaults values     
      *
      * @access private
-     * @var    string       $supportedDefaults
+     * @var    array       $supportedDefaults
      */
     private $supportedDefaults = array('NULL', 'CURRENT_TIMESTAMP');
 

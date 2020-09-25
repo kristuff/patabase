@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.3.0
+ * @version    0.4.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -38,6 +38,6 @@ class SqlException extends \Exception
     public function __construct($message, $code = 0, \Exception $previous = null) {
         
         // some drivers may return $code as string => force int 
-        parent::__construct($message, (int) $code, $previous);
+        parent::__construct($message, intval($code), $previous);
     }
 }

@@ -18,7 +18,7 @@ class MysqlServerTest extends ServerTest
             'username'  => 'root',
             'password'  => ''
         ];
-        self::$srv= new Server($settings);
+        self::$srv = new Server($settings);
         self::$srv->dropDatabase('patabase', true);
         self::$srv->dropDatabase('patabaseTest', true);
         self::$srv->dropUser('toto', true);

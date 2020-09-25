@@ -113,11 +113,24 @@ abstract class ServerTest extends TestCase
 
     public function testCreateDatabaseWithUser()
     {
-        $this->assertTrue(self::$srv->createDatabaseAndUser('patabaseTest','tototo', 'passss'));
+        //$this->assertEquals(' hello world', json_encode(self::$srv->getDatabases()));
+        self::$srv->dropUser('tototo', true);
+        self::$srv->dropDatabase('patabaseTest', true);
+
+        $created = self::$srv->createDatabaseAndUser('patabaseTest','tototo', 'passss');
+     
+        // debug
+        if (! $created) {
+            $this->assertEquals(' hello world', json_encode(self::$srv->getDatabases()));
+        }
+        $this->assertTrue($created);
+
+
     }
 
-    public function testDescructor()
-    {
-       self::$srv= null;
-    }
+   // not testable
+   // public function testDescructor()
+   // {
+   //    self::$srv= null;
+   // }
 }

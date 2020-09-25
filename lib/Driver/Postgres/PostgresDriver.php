@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.3.0
+ * @version    0.4.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -110,7 +110,10 @@ class PostgresDriver extends ServerDriver
             $settings['password'],
             array()
         );
-        //TODO options, shema
+
+        // make sure emulate prepare is false 
+        //$this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        //$this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     /**
@@ -218,12 +221,12 @@ class PostgresDriver extends ServerDriver
      *
      * @access public
      * @param  string   $databaseName   The database name
-     * @param  string   $owner          (optional) The database owner. 
+     * @param  string   $owner          The database owner. 
      * @param  string   $template       (optional) The template to use. Default is 'template0'
      *
      * @return bool     True if the database has been created, otherwise false.
      */
-    public function createDatabase($databaseName, $owner = null, $template = 'template0')
+    public function createDatabase($databaseName, $owner, $template = 'template0')
     {
         $sql = trim(sprintf('CREATE DATABASE %s %s TEMPLATE %s', 
             $this->escape($databaseName),

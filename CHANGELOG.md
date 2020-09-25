@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 
 
+## [v0.4] - 2020-09-25
+
+### Added
+- Support for MIN select query.
+- Support for MAX select query.
+
 ## [v0.3] - 2020-04-23
 
 ### Changed
@@ -22,5 +28,3 @@ All notable changes to this project will be documented in this file.
 
 ### Initial release
 - Support for Sqlite, Mysql, Postgresql
-
-

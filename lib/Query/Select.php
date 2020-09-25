@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.3.0
+ * @version    0.4.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -97,9 +97,23 @@ class Select extends SelectBase
                 // SUM() column
                 case 'sum':
                     $name       = $this->escape($val['name']);
-                    $alias      = isset($val['alias']) ? 'AS '. $this->escape($val['alias']) : '';
+                    $alias      = isset($val['alias']) ? ' AS '. $this->escape($val['alias']) : '';
                     $colsList[] = sprintf('SUM(%s)', $name) . $alias;
                     break;  
+
+                // MIN() column
+                case 'min':
+                    $name       = $this->escape($val['name']);
+                    $alias      = isset($val['alias']) ? ' AS '. $this->escape($val['alias']) : '';
+                    $colsList[] = sprintf('MIN(%s)', $name) . $alias;
+                    break;   
+                    
+                // max() column
+                case 'max':
+                    $name       = $this->escape($val['name']);
+                    $alias      = isset($val['alias']) ? ' AS '. $this->escape($val['alias']) : '';
+                    $colsList[] = sprintf('MAX(%s)', $name) . $alias;
+                    break;        
 
                 // sub query
                 case 'sub_query':

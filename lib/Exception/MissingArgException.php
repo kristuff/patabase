@@ -14,15 +14,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.3.0
+ * @version    0.4.0
  * @copyright  2017-2020 Kristuff
  */
 
 namespace Kristuff\Patabase\Exception;
 
-use Kristuff\Patabase\Exception\PatabaseException; 
-
 /**
  * Class MissingArgException
  */
-class MissingArgException extends PatabaseException { }
+class MissingArgException extends \Kristuff\Patabase\Exception\PatabaseException 
+{ 
+}
