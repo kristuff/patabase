@@ -25,30 +25,30 @@ namespace Kristuff\Patabase;
  * 
  * Define api output constant constants 
  */
-abstract class Output
+abstract class Outpout
 {
     /**
-     * Define the constant JSON for json Output
+     * Define the constant JSON for json outpout
      */
     const JSON = 'JSON';
 
     /**
-     * Define the constant JSON_PRETTY_PRINT for json pretty print Output
+     * Define the constant JSON_PRETTY_PRINT for json pretty print outpout
      */
     const JSON_PRETTY_PRINT = 'JSONPP';
 
     /**
-     * Define the constant OBJ for objects Output
+     * Define the constant OBJ for objects outpout
      */
     const OBJ = 'OBJ';
 
     /**
-     * Define the constant COLUMN for column Output
+     * Define the constant COLUMN for column outpout
      */
     const COLUMN = 'COLUMN';
 
     /**
-     * Define the constant ASSOC for associative array Output
+     * Define the constant ASSOC for associative array outpout
      */
     const ASSOC = 'ASSOC';
 }

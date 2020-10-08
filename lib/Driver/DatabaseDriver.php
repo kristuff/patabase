@@ -24,7 +24,7 @@ namespace Kristuff\Patabase\Driver;
 use Kristuff\Patabase;
 use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Exception;
-use Kristuff\Patabase\Output;
+use Kristuff\Patabase\Outpout;
 
 /**
  *  Class DatabaseDriver
@@ -65,7 +65,7 @@ abstract class DatabaseDriver
      * @access private
      * @var    string
      */
-    private $defaultOutputFormat = Output::ASSOC;
+    private $defaultOutputFormat = Outpout::ASSOC;
 
     /**
      * Options for CREATE TABLE 
