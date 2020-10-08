@@ -25,7 +25,7 @@ use Kristuff\Patabase\Query\QueryBase;
 use Kristuff\Patabase\Exception;
 use Kristuff\Patabase\SqlException;
 use Kristuff\Patabase\Driver;
-use Kristuff\Patabase\Outpout;
+use Kristuff\Patabase\Output;
 
 /**
  * Class QueryBuilder
@@ -299,20 +299,20 @@ abstract class QueryBuilder extends QueryBase
     {
         switch (strtoupper($outputFormat)){
 
-            case Outpout::ASSOC:    
+            case Output::ASSOC:    
                 return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
 
-            case Outpout::OBJ:    
+            case Output::OBJ:    
                 return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_OBJ) :    array();
 
-            case Outpout::COLUMN:    
+            case Output::COLUMN:    
                 return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_COLUMN) :  array();
 
-            case Outpout::JSON:
+            case Output::JSON:
                 $results = $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
                 return json_encode($results, JSON_NUMERIC_CHECK);   
 
-            case Outpout::JSON_PRETTY_PRINT:    
+            case Output::JSON_PRETTY_PRINT:    
                 $results = $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
                 return json_encode($results, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);   
                 
