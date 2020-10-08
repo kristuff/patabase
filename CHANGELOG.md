@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [v0.5] - 2020-10-08
+
+### Changed
+- **Possible break change** Fix typo with Output class (instead of Outpout)
 
 ## [v0.4] - 2020-09-25
 
