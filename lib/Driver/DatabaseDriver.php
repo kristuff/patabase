@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
-* @version    0.4.0
+* @version    0.5.0
  *
  * @copyright  2017-2020 Kristuff
  */
@@ -24,7 +24,7 @@ namespace Kristuff\Patabase\Driver;
 use Kristuff\Patabase;
 use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Exception;
-use Kristuff\Patabase\Outpout;
+use Kristuff\Patabase\Output;
 
 /**
  *  Class DatabaseDriver
@@ -65,7 +65,7 @@ abstract class DatabaseDriver
      * @access private
      * @var    string
      */
-    private $defaultOutputFormat = Outpout::ASSOC;
+    private $defaultOutputFormat = Output::ASSOC;
 
     /**
      * Options for CREATE TABLE 

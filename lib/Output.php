@@ -14,7 +14,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.4.0
+ * @version    0.5.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -25,30 +25,30 @@ namespace Kristuff\Patabase;
  * 
  * Define api output constant constants 
  */
-abstract class Outpout
+abstract class Output
 {
     /**
-     * Define the constant JSON for json outpout
+     * Define the constant JSON for json Output
      */
     const JSON = 'JSON';
 
     /**
-     * Define the constant JSON_PRETTY_PRINT for json pretty print outpout
+     * Define the constant JSON_PRETTY_PRINT for json pretty print Output
      */
     const JSON_PRETTY_PRINT = 'JSONPP';
 
     /**
-     * Define the constant OBJ for objects outpout
+     * Define the constant OBJ for objects Output
      */
     const OBJ = 'OBJ';
 
     /**
-     * Define the constant COLUMN for column outpout
+     * Define the constant COLUMN for column Output
      */
     const COLUMN = 'COLUMN';
 
     /**
-     * Define the constant ASSOC for associative array outpout
+     * Define the constant ASSOC for associative array Output
      */
     const ASSOC = 'ASSOC';
 }
