@@ -195,7 +195,7 @@ class Select extends SelectBase
        $format = ($outputFormat === 'default') ? $this->driver->defaultOutputFormat() : $outputFormat; 
 
         // return output
-        return QueryBuilder::fetchOutput($this, $exec, $format);
+        return $this->fetchOutput($exec, $format);
     }
 
     /**

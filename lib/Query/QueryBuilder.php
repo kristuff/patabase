@@ -247,7 +247,7 @@ abstract class QueryBuilder extends QueryBase
      * @access public
      * @return bool     true if the query is executed with success, otherwise false
      */
-    public function execute()
+    public function execute(): bool
     {
         try {
             // prepare bind execute
@@ -287,33 +287,31 @@ abstract class QueryBuilder extends QueryBase
     /**
      * Returns the sql query output in given format
      *
-     *  TODO: format constants 
-     *
      * @access public
-     * @param  QueryBuilder     $query              The QueryBuilder instance
-     * @param  string           $outputFormat       The output format
+     * @param bool             $executed           true if the query has been successfully executed
+     * @param string           $outputFormat       The output format
      * 
      * @return mixed                     
      */
-    protected static function fetchOutput(QueryBuilder $query, $executed, $outputFormat)
+    protected function fetchOutput(bool $executed, string $outputFormat)
     {
         switch (strtoupper($outputFormat)){
 
             case Output::ASSOC:    
-                return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
+                return $executed ? $this->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
 
             case Output::OBJ:    
-                return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_OBJ) :    array();
+                return $executed ? $this->pdoStatement->fetchAll(\PDO::FETCH_OBJ) :    array();
 
             case Output::COLUMN:    
-                return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_COLUMN) :  array();
+                return $executed ? $this->pdoStatement->fetchAll(\PDO::FETCH_COLUMN) :  array();
 
             case Output::JSON:
-                $results = $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
+                $results = $executed ? $this->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
                 return json_encode($results, JSON_NUMERIC_CHECK);   
 
             case Output::JSON_PRETTY_PRINT:    
-                $results = $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
+                $results = $executed ? $this->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
                 return json_encode($results, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);   
                 
             default:
