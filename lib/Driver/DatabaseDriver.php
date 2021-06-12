@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  *
  * @version    1.0.0
- * @copyright  2017-2020 Kristuff
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver;
@@ -32,7 +32,7 @@ abstract class DatabaseDriver
      * PDO connection
      *
      * @access protected
-     * @var PDO
+     * @var \PDO
      */
     protected $pdo = null;
 
@@ -63,28 +63,6 @@ abstract class DatabaseDriver
     private $defaultOutputFormat = Output::ASSOC;
 
     /**
-     * Options for CREATE TABLE 
-     *
-     * @access protected
-     * @var string
-     */
-    public function sqlCreateTableOptions()
-    {
-        return '';    
-    } 
-
-    /**
-     * Gets/returns the default output format 
-     *
-     * @access public
-     * @return string
-     */
-    public function defaultOutputFormat()
-    {
-        return $this->defaultOutputFormat;
-    }
-
-    /**
      * the current hostname
      *
      * @Var string 
@@ -99,12 +77,34 @@ abstract class DatabaseDriver
     private $driverName;
 
     /**
+     * Options for CREATE TABLE 
+     *
+     * @access protected
+     * @var string
+     */
+    public function sqlCreateTableOptions(): string
+    {
+        return '';    
+    } 
+
+    /**
+     * Gets/returns the default output format 
+     *
+     * @access public
+     * @return string
+     */
+    public function defaultOutputFormat(): string
+    {
+        return $this->defaultOutputFormat;
+    }
+
+    /**
      * Get the current hostname
      *
      * @access public
      * @return string
      */
-    public function getHostName()
+    public function getHostName(): string
     {
         return $this->hostname;    
     }
@@ -115,7 +115,7 @@ abstract class DatabaseDriver
      * @access public
      * @return string
      */
-    public function getDriverName()
+    public function getDriverName(): string
     {
         return $this->driverName;    
     }
@@ -128,7 +128,7 @@ abstract class DatabaseDriver
      *
      * @return string
      */
-    public function escape($str)
+    public function escape(string $str): string
     {
        $list = explode('.', $str);
        return implode('.', $this->escapeList($list));
@@ -142,7 +142,7 @@ abstract class DatabaseDriver
      *
      * @return array
      */
-    public function escapeList(array $values)
+    public function escapeList(array $values): array
     {
         $newList = array();
         foreach ($values as $identifier) {
@@ -187,7 +187,7 @@ abstract class DatabaseDriver
      * @access public
      * @return bool     True if the query has genaretd an error
      */
-    public function hasError()
+    public function hasError(): bool
     {
         return !empty($this->error);
     }
@@ -198,29 +198,29 @@ abstract class DatabaseDriver
      * @access public
      * @return void
      */
-    public function cleanError()
+    public function cleanError(): void
     {
         $this->error = array();
     }
 
     /**
-     * Errors
+     * Error Code
      *
      * @access public
-     * @return bool     True if the query has genaretd an error
+     * @return int
      */
-    public function errorCode()
+    public function errorCode(): int
     {
         return !empty($this->error) ? $this->error['code']: '';
     }
 
     /**
-     * Errors
+     * Error Message
      *
      * @access public
      * @return bool     True if the query has genaretd an error
      */
-    public function errorMessage()
+    public function errorMessage(): string
     {
         return !empty($this->error) ? $this->error['message'] : '';
     }
@@ -229,9 +229,9 @@ abstract class DatabaseDriver
      * Get the PDO connection
      *
      * @access public
-     * @return PDO
+     * @return \PDO
      */
-    public function getConnection()
+    public function getConnection(): \PDO
     {
         return $this->pdo;
     }
@@ -245,7 +245,7 @@ abstract class DatabaseDriver
      *
      * @return bool     true if the query is executed with success, otherwise false
      */
-    public function prepareAndExecuteSql($sql, array $parameters = [])
+    public function prepareAndExecuteSql(string $sql, array $parameters = []): bool
     {
         // clear the current errors
         $this->cleanError();
@@ -267,7 +267,7 @@ abstract class DatabaseDriver
      * @access public
      * @return void
      */
-    public function closeConnection()
+    public function closeConnection(): void
     {
         $this->pdo = null;
     }
@@ -280,7 +280,7 @@ abstract class DatabaseDriver
      *
      * @return void
      */
-    abstract protected function createConnection(array $settings);
+    abstract protected function createConnection(array $settings): void;
 
     /**
      * Escape identifier
@@ -290,7 +290,7 @@ abstract class DatabaseDriver
      *
      * @return string
      */
-    abstract public function escapeIdentifier($identifier);
+    abstract public function escapeIdentifier(string $identifier): string;
 
     /**
      * Escape value
@@ -300,15 +300,15 @@ abstract class DatabaseDriver
      *
      * @return string
      */
-    abstract public function escapeValue($value);
+    abstract public function escapeValue(string $value) : string;
    
     /**
      * Get last inserted id
      *
      * @access public
-     * @return integer
+     * @return string
      */
-    abstract public function lastInsertedId();
+    abstract public function lastInsertedId(): string;
 
     /**
      * Enable foreign keys
@@ -316,7 +316,7 @@ abstract class DatabaseDriver
      * @access public
      * @return void
      */
-    abstract public function enableForeignKeys();
+    abstract public function enableForeignKeys(): void;
 
     /**
      * Disable foreign keys
@@ -324,22 +324,15 @@ abstract class DatabaseDriver
      * @access public
      * @return void
      */
-    abstract public function disableForeignKeys();
+    abstract public function disableForeignKeys(): void;
 
     /**
      * Get whether foreign keys are enabled or not
-     *
-     * https://www.sqlite.org/foreignkeys.html
-     * Foreign key constraints are disabled by default (for backwards compatibility), so must be enabled separately for 
-     * each database connection. (Note, however, that future releases of SQLite might change so that foreign key constraints 
-     * enabled by default. Careful developers will not make any assumptions about whether or not foreign keys are enabled by 
-     * default but will instead enable or disable them as necessary.) The application can also use a PRAGMA foreign_keys statement 
-     * to determine if foreign keys are currently enabled.
      * 
      * @access public
      * @return bool     true if foreign keys are enabled, otherwise false
      */
-    abstract function isForeignKeyEnabled();
+    abstract function isForeignKeyEnabled() : bool;
 
     /**
      * Add a foreign key
@@ -353,7 +346,7 @@ abstract class DatabaseDriver
      *
      * @return bool    True if the foreign key has been created, otherwise false
      */
-    abstract public function addForeignKey($fkName, $srcTable, $srcColumn, $refTable, $refColumn);
+    abstract public function addForeignKey(string $fkName, string $srcTable, string $srcColumn, string $refTable, string $refColumn) : bool;
 
     /**
      * Drop a foreign key
@@ -364,7 +357,7 @@ abstract class DatabaseDriver
      *
      * @return bool    True if the foreign key has been dropped, otherwise false
      */
-    abstract public function dropForeignKey($fkName, $tableName);
+    abstract public function dropForeignKey(string $fkName, string $tableName): bool;
 
     /**
      * Get the SQL for show tables
@@ -372,7 +365,7 @@ abstract class DatabaseDriver
      * @access public
      * @return string
      */
-    abstract public function sqlShowTables();
+    abstract public function sqlShowTables(): string;
 
     /**
      * Get the SQL for RANDOM function
@@ -382,7 +375,7 @@ abstract class DatabaseDriver
      *
      * @return string
      */
-    abstract public function sqlRandom();
+    abstract public function sqlRandom(): string;
 
     /**
      * Get the SQL for auto increment column
@@ -392,5 +385,5 @@ abstract class DatabaseDriver
      *
      * @return string
      */
-    abstract public function sqlColumnAutoIncrement($type);
+    abstract public function sqlColumnAutoIncrement(string $type): string;
 }

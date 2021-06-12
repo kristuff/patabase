@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  *
  * @version    1.0.0
- * @copyright  2017-2020 Kristuff
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase;
@@ -21,6 +21,7 @@ namespace Kristuff\Patabase;
 use Kristuff\Patabase;
 use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Driver\DatabaseDriver;
+use Kristuff\Patabase\Driver\ServerDriver;
 
 /**
  * Class Datasource
@@ -89,7 +90,7 @@ abstract class Datasource
      * @access public
      * @return bool     True if the last query has generated an error
      */
-    public function hasError()
+    public function hasError(): bool
     {
         return $this->driver->hasError();
     }
@@ -100,7 +101,7 @@ abstract class Datasource
      * @access public
      * @return int    
      */
-    public function errorCode()
+    public function errorCode(): int
     {
         return $this->driver->errorCode();
     }
@@ -111,7 +112,7 @@ abstract class Datasource
      * @access public
      * @return string
      */
-    public function errorMessage()
+    public function errorMessage(): string
     {
         return $this->driver->errorMessage();
     }
@@ -133,7 +134,7 @@ abstract class Datasource
      * @access public
      * @return \PDO
      */
-    public function getConnection()
+    public function getConnection(): \PDO
     {
         return $this->driver->getConnection();
     }

@@ -1,5 +1,5 @@
-<?php
-
+<?php declare(strict_types=1);
+ 
 /** 
  *  ___      _        _
  * | _ \__ _| |_ __ _| |__  __ _ ___ ___
@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  *
  * @version    1.0.0
- * @copyright  2017-2020 Kristuff
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase;

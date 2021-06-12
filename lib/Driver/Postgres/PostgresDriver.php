@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  *
  * @version    1.0.0
- * @copyright  2017-2020 Kristuff
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver\Postgres;
@@ -70,7 +70,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return string
      */
-    public function escapeIdentifier($identifier)
+    public function escapeIdentifier(string $identifier) : string
     {
         return '"'.$identifier.'"';
     }
@@ -83,7 +83,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return string
      */
-    public function escapeValue($value)
+    public function escapeValue(string $value): string
     {
         return "'".$value."'";
     }
@@ -96,7 +96,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return void
      */
-    public function createConnection(array $settings)
+    public function createConnection(array $settings): void
     {
         $port    = !empty($settings['port'])     ?  ';port='.$settings['port']        : '';
         $dbname  = !empty($settings['database']) ?  ';dbname='.$settings['database']  : '';
@@ -118,9 +118,9 @@ class PostgresDriver extends ServerDriver
      * Get last inserted id
      *
      * @access public
-     * @return integer
+     * @return string
      */
-    public function lastInsertedId()
+    public function lastInsertedId(): string
     {
        // Postgres does not set pdo->lastInsertedId
        // use sequence
@@ -140,7 +140,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return void
      */
-    public function enableForeignKeys()
+    public function enableForeignKeys(): void
     {
     }
 
@@ -150,7 +150,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return void
      */
-    public function disableForeignKeys()
+    public function disableForeignKeys(): void
     {
     }
     
@@ -161,7 +161,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return bool     true if foreign keys are enabled, otherwise false
      */
-    public function isForeignKeyEnabled()
+    public function isForeignKeyEnabled(): bool
     {
         return false;
     }
@@ -178,7 +178,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return bool    True if the foreign key has been created, otherwise false
      */
-    public function addForeignKey($fkName, $srcTable, $srcColumn, $refTable, $refColumn)
+    public function addForeignKey(string $fkName, string $srcTable, string $srcColumn, string $refTable, string $refColumn): bool
     {
         $sql = sprintf('ALTER TABLE %s ADD CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)',
                        $this->escape($srcTable),
@@ -199,7 +199,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return bool    True if the foreign key has been dropped, otherwise false
      */
-    public function dropForeignKey($fkName, $tableName, $ifExists = false)
+    public function dropForeignKey(string $fkName, string $tableName, bool $ifExists = false): bool
     {
         $sql = sprintf('ALTER TABLE %s DROP CONSTRAINT %s %s',
                        $this->escape($tableName),
@@ -217,7 +217,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return bool     True if the given database exists, otherwise false.
      */
-    public function databaseExists($databaseName)
+    public function databaseExists(string $databaseName): bool
     {
         $sql = 'SELECT COUNT(*) FROM pg_database WHERE datname = :dbName'; 
         $query = $this->pdo->prepare($sql);
@@ -236,7 +236,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return bool     True if the database has been created, otherwise false.
      */
-    public function createDatabase($databaseName, $owner, $template = 'template0')
+    public function createDatabase(string $databaseName, ?string $owner= null, ?string $template = 'template0'): bool
     {
         $sql = trim(sprintf('CREATE DATABASE %s %s TEMPLATE %s', 
             $this->escape($databaseName),
@@ -255,7 +255,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return bool     True if the user has been created, otherwise false. 
      */
-    public function createUser($userName, $userPassword)
+    public function createUser(string $userName, string $userPassword): bool
     {
         $sql = trim(sprintf('CREATE USER %s PASSWORD %s', 
                     $this->escape($userName), 
@@ -273,7 +273,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return bool     True if the user has been dropped or does not exist when $ifExists is set to True, otherwise false. 
      */
-    public function dropUser($userName, $ifExists = false)
+    public function dropUser(string $userName, bool $ifExists = false): bool
     {
         $sql = trim(sprintf('DROP USER %s %s', 
                     $ifExists === true ? 'IF EXISTS': '',
@@ -291,7 +291,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return bool     True if the user has been granted, otherwise false. 
      */
-    public function grantUser($databaseName, $userName)
+    public function grantUser(string $databaseName, string $userName): bool
     {
         // ALL PRIVILEGES Grant all of the available privileges at once. The PRIVILEGES keyword 
         // is optional in PostgreSQL, though it is required by strict SQL.
@@ -311,7 +311,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return string
      */
-    public function sqlShowDatabases()
+    public function sqlShowDatabases(): string
     {
         return 'SELECT datname FROM pg_database WHERE datistemplate = false;';
     }
@@ -322,7 +322,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return string
      */
-    public function sqlShowTables()
+    public function sqlShowTables(): string
     {
         return "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type = 'BASE TABLE' ORDER BY table_name;";
     }
@@ -333,7 +333,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return string
      */
-    public function sqlShowUsers()
+    public function sqlShowUsers(): string
     {
         return 'SELECT usename FROM pg_user';
     }
@@ -348,7 +348,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return string         
      */
-    public function sqlRandom($seed = null)
+    public function sqlRandom($seed = null): string
     {
         return 'random()';   
     }
@@ -361,7 +361,7 @@ class PostgresDriver extends ServerDriver
      * 
      * @return string
      */
-    public function sqlColumnAutoIncrement($type)
+    public function sqlColumnAutoIncrement(string $type): string
     {
         // SERIAL/BIGSERIAL is a type in postgres
         return strtolower($type) === 'bigint' ? 'bigserial' : 'serial';

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  *
  * @version    1.0.0
- * @copyright  2017-2020 Kristuff
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver\Sqlite;
@@ -29,12 +29,12 @@ class SqliteDatabase extends Patabase\Database
      * Creates and returns an instance of SqliteDatabase using given filepath
      *
      * @access public
-     * @static method
+     * @static
      * @param string   $filePath       The full path to database.
      *
      * @return SqliteDatabase
      */
-    public static function createInstance($filePath)
+    public static function createInstance(string $filePath): SqliteDatabase
     {
         $settings = array('driver' => 'sqlite', 'database'  => $filePath);
         return new SqliteDatabase($settings);
@@ -44,11 +44,11 @@ class SqliteDatabase extends Patabase\Database
      * Creates and returns an instance of 'in memory' SqliteDatabase 
      *
      * @access public
-     * @static method
+     * @static
      *
      * @return SqliteDatabase
      */
-    public static function createMemoryInstance()
+    public static function createMemoryInstance(): SqliteDatabase
     {
         $settings = array('driver' => 'sqlite', 'database'  => ':memory:');
         return new SqliteDatabase($settings);
@@ -67,7 +67,7 @@ class SqliteDatabase extends Patabase\Database
      * @access public
      * @return bool     true if foreign keys are enabled, otherwise false
      */
-    public function isForeignKeyEnabled()
+    public function isForeignKeyEnabled(): bool
     {
         return $this->driver->isForeignKeyEnabled();
     }

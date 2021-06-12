@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -13,13 +13,18 @@
  * file that was distributed with this source code.
  *
  * @version    1.0.0
- * @copyright  2017-2020 Kristuff
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase;
 
 use Kristuff\Patabase\Database;
 use Kristuff\Patabase\Query;
+use Kristuff\Patabase\Query\CreateTable;
+use Kristuff\Patabase\Query\Delete;
+use Kristuff\Patabase\Query\Insert;
+use Kristuff\Patabase\Query\Select;
+use Kristuff\Patabase\Query\Update;
 
 /**
  * Class Table 
@@ -28,13 +33,13 @@ class Table
 {
     /**
      * @access protected
-     * @var    Database $database           The Database parent
+     * @var Database        $database           The Database parent
      */
     protected $database;
 
     /**
      * @access protected
-     * @var    string   $name               The Table Name
+     * @var string          $name               The Table Name
      */
     protected $name;
 
@@ -42,10 +47,10 @@ class Table
      * Constructor
      *
      * @access public
-     * @param  Database $database           The Database instance
-     * @param string   $tableName          The table name
+     * @param Database      $database           The Database instance
+     * @param string        $tableName          The table name
      */
-    public function __construct(Database $database, $tableName)
+    public function __construct(Database $database, string $tableName)
     {
         $this->database = $database;                 
         $this->name = $tableName;                 
@@ -57,7 +62,7 @@ class Table
      * @access public
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return $this->name;        
     }
@@ -68,9 +73,9 @@ class Table
      * @access public
      * @param array|string(s) (optional)  Column name(s), array of columns name / alias
      *    
-     * @return Query\Table\Select
+     * @return Select
      */
-    public function select()
+    public function select(): Select
     {
         $args = func_get_args();
         $query = new Query\Select($this->database->getDriver(), null, $args);
@@ -83,9 +88,9 @@ class Table
      *
      * @access public
      * @param array    $parameters (optional)     Array of columns name / values
-     * @return Query\Table\Update
+     * @return Update
      */
-    public function update(array $parameters = array())
+    public function update(array $parameters = array()): Update
     {
         $query = new Query\Update($this->database->getDriver(), $this->name);
         foreach ($parameters as $key => $val) {
@@ -98,9 +103,9 @@ class Table
      * Get a new Delete query instance
      *
      * @access public
-     * @return Query\Table\Delete
+     * @return Delete
      */
-    public function delete()
+    public function delete(): Delete
     {
         return new Query\Delete($this->database->getDriver(), $this->name);
     }
@@ -111,9 +116,9 @@ class Table
      * @access public
      * @param array    $parameters (optional)     Array of columns name / values
      *
-     * @return Query\Table\Insert
+     * @return Insert
      */
-    public function insert(array $parameters = array())
+    public function insert(array $parameters = array()): Insert
     {
         $query = new Query\Insert($this->database->getDriver(), $this->name);
         foreach ($parameters as $key => $val) {
@@ -126,9 +131,9 @@ class Table
      * Get a new CreateTable query instance
      *
      * @access public
-     * @return Query\Table\Create
+     * @return CreateTable
      */
-    public function create()
+    public function create(): CreateTable
     {
         return new Query\CreateTable($this->database->getDriver(), $this->name);
     }
@@ -139,7 +144,7 @@ class Table
      * @access public
      * @return bool     True if the table exists, otherwise false.
      */
-    public function exists()
+    public function exists(): bool
     {
         return $this->database->tableExists($this->name);
     }
@@ -150,7 +155,7 @@ class Table
      * @access public
      * @return bool     True if the table has been dropped, otherwise false.
      */
-    public function drop()
+    public function drop(): bool
     {
         return $this->database->dropTable($this->name);
     }
@@ -163,7 +168,7 @@ class Table
      *
      * @return bool     True if the table has been renamed, otherwise false.
      */
-    public function rename($newName)
+    public function rename($newName): bool
     {
        $result = $this->database->renameTable($this->name, $newName);
        if ($result){

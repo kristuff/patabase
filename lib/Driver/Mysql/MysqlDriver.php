@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -13,12 +13,13 @@
  * file that was distributed with this source code.
  *
  * @version    1.0.0
- * @copyright  2017-2020 Kristuff
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver\Mysql;
 
 use Kristuff\Patabase\Driver\ServerDriver;
+use phpDocumentor\Reflection\Types\String_;
 
 /**
  * Class MysqlDriver
@@ -54,7 +55,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return string
      */
-    public function escapeIdentifier($identifier)
+    public function escapeIdentifier(string $identifier): string
     {
         return '`' . $identifier .'`';
     }
@@ -67,7 +68,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return string
      */
-    public function escapeValue($value)
+    public function escapeValue(string $value): string
     {
         return "'".$value."'";
     }
@@ -80,7 +81,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return void
      */
-    public function createConnection(array $settings)
+    public function createConnection(array $settings): void
     {
         $charset = !empty($settings['charset'])  ?  ';charset='.$settings['charset']  : ';charset=utf8';
         $port    = !empty($settings['port'])     ?  ';port='.$settings['port']        : '';
@@ -106,9 +107,9 @@ class MysqlDriver extends ServerDriver
      * Get last inserted id
      *
      * @access public
-     * @return integer
+     * @return string
      */
-    public function lastInsertedId()
+    public function lastInsertedId(): string
     {
         return $this->pdo->lastInsertId();
     }
@@ -119,7 +120,7 @@ class MysqlDriver extends ServerDriver
      * @access public
      * @return void
      */
-    public function enableForeignKeys()
+    public function enableForeignKeys(): void
     {
         $this->pdo->exec('SET FOREIGN_KEY_CHECKS=1');
     }
@@ -130,7 +131,7 @@ class MysqlDriver extends ServerDriver
      * @access public
      * @return void
      */
-    public function disableForeignKeys()
+    public function disableForeignKeys(): void
     {
         $this->pdo->exec('SET FOREIGN_KEY_CHECKS=0');
     }
@@ -142,7 +143,7 @@ class MysqlDriver extends ServerDriver
      * @access public
      * @return bool     true if foreign keys are enabled, otherwise false
      */
-    public function isForeignKeyEnabled()
+    public function isForeignKeyEnabled(): bool
     {
         return false;
     }
@@ -159,7 +160,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return bool    True if the foreign key has been created, otherwise false
      */
-    public function addForeignKey($fkName, $srcTable, $srcColumn, $refTable, $refColumn)
+    public function addForeignKey(string $fkName, string $srcTable, string $srcColumn, string $refTable, string $refColumn): bool
     {
         $sql = sprintf('ALTER TABLE %s ADD CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)',
                        $this->escape($srcTable),
@@ -180,7 +181,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return bool    True if the foreign key has been dropped, otherwise false
      */
-    public function dropForeignKey($fkName, $tableName)
+    public function dropForeignKey(string $fkName, string $tableName): bool
     {
         $sql = sprintf('ALTER TABLE %s DROP FOREIGN KEY %s',
                        $this->escape($tableName),
@@ -197,7 +198,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return bool     True if the given database exists, otherwise false.
      */
-    public function databaseExists($databaseName)
+    public function databaseExists(string $databaseName) : bool
     {
         $sql = 'SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = :dbName'; 
         $query = $this->pdo->prepare($sql);
@@ -216,7 +217,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return bool     True if the database has been created, otherwise false.
      */
-    public function createDatabase($databaseName, $owner)
+    public function createDatabase(string $databaseName): bool
     {
         $sql = trim(sprintf('CREATE DATABASE %s',  $this->escape($databaseName)));
         return $this->prepareAndExecuteSql($sql);
@@ -231,7 +232,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return bool     True if the user has been created, otherwise false. 
      */
-    public function createUser($userName, $userPassword)
+    public function createUser(string $userName, string $userPassword) : bool
     {
         $sql = trim(sprintf('CREATE USER %s@%s IDENTIFIED BY %s', 
                     $this->escape($userName),
@@ -250,7 +251,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return bool     True if the user has been dropped or does not exist when $ifExists is set to True, otherwise false. 
      */
-    public function dropUser($userName, $ifExists = false)
+    public function dropUser(string $userName, bool $ifExists = false): bool
     {
         $sql = trim(sprintf('DROP USER %s %s@%s', 
                     $ifExists === true ? 'IF EXISTS': '',
@@ -269,7 +270,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return bool     True if the user has been granted, otherwise false. 
      */
-     public function grantUser($databaseName, $userName)
+     public function grantUser(string $databaseName, string $userName): bool
     {
         $sql = trim(sprintf('GRANT ALL ON %s.* TO %s@%s; FLUSH PRIVILEGES;', 
             $this->escape($databaseName),
@@ -285,7 +286,7 @@ class MysqlDriver extends ServerDriver
      * @access public
      * @return string
      */
-    public function sqlShowDatabases()
+    public function sqlShowDatabases(): string
     {
         return 'SHOW DATABASES';
     }
@@ -296,7 +297,7 @@ class MysqlDriver extends ServerDriver
      * @access public
      * @return string
      */
-    public function sqlShowTables()
+    public function sqlShowTables(): string
     {
         return 'SHOW TABLES';
     }
@@ -307,7 +308,7 @@ class MysqlDriver extends ServerDriver
      * @access public
      * @return string
      */
-    public function sqlShowUsers()
+    public function sqlShowUsers(): string
     {
         return 'SELECT DISTINCT user FROM mysql.user';
     }
@@ -318,7 +319,7 @@ class MysqlDriver extends ServerDriver
      * @access protected
      * @return string
      */
-    public function sqlCreateTableOptions() 
+    public function sqlCreateTableOptions(): string 
     {
         $engine =  !empty($settings['engine'])  ? $settings['engine']  : 'InnoDB';
         $charset = !empty($settings['charset']) ? $settings['charset'] : 'utf8';
@@ -334,7 +335,7 @@ class MysqlDriver extends ServerDriver
      *
      * @return string         
      */
-    public function sqlRandom($seed = null)
+    public function sqlRandom($seed = null): string
     {
         return sprintf('rand(%s)', !empty($seed) ? $seed : '');   
     }
@@ -347,7 +348,7 @@ class MysqlDriver extends ServerDriver
      * 
      * @return string
      */
-    public function sqlColumnAutoIncrement($type)
+    public function sqlColumnAutoIncrement(string $type): string
     {
         return $type .' AUTO_INCREMENT';
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  *
  * @version    1.0.0
- * @copyright  2017-2020 Kristuff
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver\Sqlite;
@@ -57,7 +57,7 @@ class SqliteDriver extends DatabaseDriver
      *
      * @return void
      */
-    public function createConnection(array $settings)
+    public function createConnection(array $settings): void
     {
         $this->pdo = new \PDO('sqlite:'.$settings['database']); 
 
@@ -78,7 +78,7 @@ class SqliteDriver extends DatabaseDriver
      *
      * @return string
      */
-    public function escapeIdentifier($identifier)
+    public function escapeIdentifier(string $identifier): string
     {
         return '"'.$identifier.'"';
     }
@@ -91,7 +91,7 @@ class SqliteDriver extends DatabaseDriver
      *
      * @return string
      */
-    public function escapeValue($value)
+    public function escapeValue(string $value): string
     {
         return '"'.$value.'"';
     }
@@ -100,9 +100,9 @@ class SqliteDriver extends DatabaseDriver
      * Get last inserted id
      *
      * @access public
-     * @return integer
+     * @return string
      */
-    public function lastInsertedId()
+    public function lastInsertedId(): string
     {
         return $this->pdo->lastInsertId();
     }
@@ -119,7 +119,7 @@ class SqliteDriver extends DatabaseDriver
      * @access public
      * @return bool True if foreign keys are enabled, otherwise false
      */
-    public function isForeignKeyEnabled()
+    public function isForeignKeyEnabled(): bool
     {
         $query = $this->pdo->prepare('PRAGMA foreign_keys');
         return  $query->execute() && (int) $query->fetchColumn() === 1;
@@ -131,7 +131,7 @@ class SqliteDriver extends DatabaseDriver
      * @access public
      * @return void
      */
-    public function enableForeignKeys()
+    public function enableForeignKeys(): void
     {
         $this->pdo->exec('PRAGMA foreign_keys = ON');
     }
@@ -142,7 +142,7 @@ class SqliteDriver extends DatabaseDriver
      * @access public
      * @return void
      */
-    public function disableForeignKeys()
+    public function disableForeignKeys(): void
     {
         $this->pdo->exec('PRAGMA foreign_keys = OFF');
     }
@@ -161,7 +161,7 @@ class SqliteDriver extends DatabaseDriver
      *
      * @return bool    True if the foreign key has been created, otherwise false
      */
-    public function addForeignKey($fkName, $srcTable, $srcColumn, $refTable, $refColumn)
+    public function addForeignKey(string $fkName, string $srcTable, string $srcColumn, string $refTable, string $refColumn): bool
     {
         return false;
     }
@@ -177,7 +177,7 @@ class SqliteDriver extends DatabaseDriver
      *
      * @return bool    True if the foreign key has been dropped, otherwise false
      */
-    public function dropForeignKey($fkName, $tableName)
+    public function dropForeignKey(string $fkName, string $tableName): bool
     {
         return false;
     }
@@ -188,7 +188,7 @@ class SqliteDriver extends DatabaseDriver
      * @access public
      * @return string
      */
-    public function sqlShowTables()
+    public function sqlShowTables(): string
     {
         return 'SELECT name FROM sqlite_master WHERE type = "table";';
     }
@@ -201,7 +201,7 @@ class SqliteDriver extends DatabaseDriver
      *
      * @return string         
      */
-    public function sqlRandom($seed = null)
+    public function sqlRandom($seed = null): string
     {
         $seed = !empty($seed) ? $seed : '';  
         return sprintf('random(%s)', $seed);   
@@ -215,7 +215,7 @@ class SqliteDriver extends DatabaseDriver
      * 
      * @return string
      */
-    public function sqlColumnAutoIncrement($type)
+    public function sqlColumnAutoIncrement(string $type): string
     {
         // http://www.sqlite.org/datatypes.html
         //  One exception to the typelessness of SQLite is a column whose type is INTEGER PRIMARY KEY. (And you 

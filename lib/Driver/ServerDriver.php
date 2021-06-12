@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  *
  * @version    1.0.0
- * @copyright  2017-2020 Kristuff
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver;
@@ -34,7 +34,7 @@ abstract class ServerDriver extends DatabaseDriver
      * @param array     $settings               The connection settings
      * @param bool      $isServerConnection     True for Server connection, default is false
      */
-    public function __construct(array $settings, $isServerConnection = false)
+    public function __construct(array $settings, bool $isServerConnection = false)
     {
         // remove database attribute for server connection
         if ($isServerConnection){
@@ -54,7 +54,7 @@ abstract class ServerDriver extends DatabaseDriver
      *
      * @return bool     True if the given database exists, otherwise false.
      */
-    abstract public function databaseExists($databaseName);
+    abstract public function databaseExists(string $databaseName): bool;
 
     /**
      * Create a database
@@ -62,10 +62,11 @@ abstract class ServerDriver extends DatabaseDriver
      * @access public
      * @param string    $databaseName   The database name.
      * @param string    $owner          The database owner. This parameter is honored in pgsql only.
+     * @param string    $template       (optional) The template to use. Default is 'template0'
      *
      * @return bool     True if the database has been created, otherwise false.
      */
-    abstract public function createDatabase($databaseName, $owner);
+    abstract public function createDatabase(string $databaseName, ?string $owner= null, ?string $template = null): bool;
 
     /**
      * Create a user
@@ -76,7 +77,7 @@ abstract class ServerDriver extends DatabaseDriver
      *
      * @return bool     True if the user has been created, otherwise false. 
      */
-    abstract public function createUser($userName, $userPassword);
+    abstract public function createUser(string $userName, string $userPassword): bool;
 
     /**
      * Drop a user
@@ -87,7 +88,7 @@ abstract class ServerDriver extends DatabaseDriver
      *
      * @return bool     True if the user has been dropped or does not exist when $ifExists is set to True, otherwise false. 
      */
-    abstract public function dropUser($userName, $ifExists = false);
+    abstract public function dropUser(string $userName, bool $ifExists = false): bool;
     
     /**
      * Grant user permissions on given database
@@ -98,7 +99,7 @@ abstract class ServerDriver extends DatabaseDriver
      *
      * @return bool     True if the user has been granted, otherwise false. 
      */
-    abstract public function grantUser($databaseName, $userName);
+    abstract public function grantUser(string $databaseName, string $userName): bool;
 
     /**
      * Get the SQL for show databases
@@ -106,7 +107,7 @@ abstract class ServerDriver extends DatabaseDriver
      * @access public
      * @return string
      */
-    abstract public function sqlShowDatabases();
+    abstract public function sqlShowDatabases(): string;
 
     /**
      * Get the SQL for show users
@@ -114,5 +115,5 @@ abstract class ServerDriver extends DatabaseDriver
      * @access public
      * @return string
      */
-    abstract public function sqlShowUsers();
+    abstract public function sqlShowUsers(): string;
 }

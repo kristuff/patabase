@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -13,7 +13,7 @@
  * file that was distributed with this source code.
  *
  * @version    1.0.0
- * @copyright  2017-2020 Kristuff
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase;
@@ -40,7 +40,7 @@ use Kristuff\Patabase\Datasource;
      * @access protected
      * @return void
      */
-    protected function openConnection()
+    protected function openConnection(): void
     {
         $this->driver = Driver\DriverFactory::getInstance($this->settings, true);
     }
@@ -51,7 +51,7 @@ use Kristuff\Patabase\Datasource;
      * @access public
      * @return array    A non indexed array containing databases names
      */
-    public function getDatabases()
+    public function getDatabases(): array
     {
         $sql = $this->driver->sqlShowDatabases();
         $query = $this->driver->getConnection()->prepare($sql);
@@ -65,7 +65,7 @@ use Kristuff\Patabase\Datasource;
      * @access public
      * @return array    A non indexed array containing users names
      */
-    public function getUsers()
+    public function getUsers(): array
     {
         $sql = $this->driver->sqlShowUsers();
         $query = $this->driver->getConnection()->prepare($sql);
@@ -81,7 +81,7 @@ use Kristuff\Patabase\Datasource;
      *
      * @return bool     True if the given database exists, otherwise false.
      */
-    public function databaseExists($databaseName)
+    public function databaseExists($databaseName): bool
     {
         return $this->driver->databaseExists($databaseName);
     }
@@ -94,7 +94,7 @@ use Kristuff\Patabase\Datasource;
      *
      * @return bool     True if the given user exists, otherwise false.
      */
-    public function userExists($userName)
+    public function userExists($userName): bool
     {
         $usrs = $this->getUsers();
         return in_array($userName, $usrs);
@@ -110,7 +110,7 @@ use Kristuff\Patabase\Datasource;
      *
      * @return bool     True if the database and user have been created, otherwise false.
      */ 
-    public function createDatabaseAndUser($databaseName, $userName, $password)
+    public function createDatabaseAndUser(string $databaseName, string $userName, string $password): bool
     {
         return $this->createUser($userName, $password)
                 && $this->createDatabase($databaseName)
@@ -126,7 +126,7 @@ use Kristuff\Patabase\Datasource;
      *
      * @return bool     True if the database has been created, otherwise false.
      */ 
-    public function createDatabase($databaseName, $owner = null)
+    public function createDatabase(string $databaseName, ?string $owner = null): bool
     {
         return $this->driver->createDatabase($databaseName, $owner);
     }
@@ -141,7 +141,7 @@ use Kristuff\Patabase\Datasource;
      * @return bool     True if the database has been dropped or does not exist when $ifExists 
      *                  is set to True, otherwise false. 
      */ 
-    public function dropDatabase($databaseName, $ifExists = false)
+    public function dropDatabase(string $databaseName, bool $ifExists = false): bool
     {
         $sql = trim(sprintf('DROP DATABASE %s %s', 
             $ifExists === true ? 'IF EXISTS': '',
@@ -158,7 +158,7 @@ use Kristuff\Patabase\Datasource;
      *
      * @return bool     True if the user has been created, otherwise false
      */
-    public function createUser($userName, $userPassword)
+    public function createUser(string $userName, string $userPassword): bool
     {
         return $this->driver->createUser($userName, $userPassword);
     }
@@ -169,9 +169,10 @@ use Kristuff\Patabase\Datasource;
      * @access public
      * @param string   $databaseName           The database name
      * @param string   $userName               The user name
+     * 
      * @return bool     True if the user has been granted, otherwise false
      */
-    public function grantUser($databaseName, $userName)
+    public function grantUser(string $databaseName, string $userName): bool
     {
         return $this->driver->grantUser($databaseName, $userName);
     }
@@ -186,7 +187,7 @@ use Kristuff\Patabase\Datasource;
      * @return bool     True if the user has been dropped or does not exist when $ifExists 
      *                  is set to True, otherwise false. 
      */
-    public function dropUser($userName, $ifExists = false)
+    public function dropUser(string $userName, bool $ifExists = false): bool
     {
         return $this->driver->dropUser($userName, $ifExists);
     }
