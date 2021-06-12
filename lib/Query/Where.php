@@ -1,20 +1,18 @@
 <?php
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
+ * @version    1.0.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -42,7 +40,7 @@ class Where extends QueryFilter
      * Equal to condition
      *
      * @access public
-     * @param  string   $column     The column name
+     * @param string   $column     The column name
      * @param  mixed    $value      The condition value
      * @return $this|QueryBuilder  
      */
@@ -56,7 +54,7 @@ class Where extends QueryFilter
      * NotEqual to condition
      *
      * @access public
-     * @param  string   $column     The column name
+     * @param string   $column     The column name
      * @param  mixed    $value      The condition value
      *
      * @return $this|QueryBuilder  
@@ -71,7 +69,7 @@ class Where extends QueryFilter
      * Greater than condition
      *
      * @access public
-     * @param  string   $column     The column name
+     * @param string   $column     The column name
      * @param  mixed    $value      The condition value
      *
      * @return $this|QueryBuilder  
@@ -86,7 +84,7 @@ class Where extends QueryFilter
      * Greater than or equal condition
      *
      * @access public
-     * @param  string   $column     The column name
+     * @param string   $column     The column name
      * @param  mixed    $value      The condition value
      *
      * @return $this|QueryBuilder  
@@ -101,7 +99,7 @@ class Where extends QueryFilter
      * Lower than condition
      *
      * @access public
-     * @param  string   $column     The column name
+     * @param string   $column     The column name
      * @param  mixed    $value      The condition value
      *
      * @return $this|QueryBuilder  
@@ -116,7 +114,7 @@ class Where extends QueryFilter
      * Lower than or equal condition
      *
      * @access public
-     * @param  string   $column     The column name
+     * @param string   $column     The column name
      * @param  mixed    $value      The condition value
      *
      * @return $this|QueryBuilder  
@@ -131,7 +129,7 @@ class Where extends QueryFilter
      * IS NULL condition
      *
      * @access public
-     * @param  string   $column     The column name
+     * @param string   $column     The column name
      *
      * @return $this|QueryBuilder  
      */
@@ -145,7 +143,7 @@ class Where extends QueryFilter
      * IS NOT NULL condition
      *
      * @access public
-     * @param  string   $column     The column name
+     * @param string   $column     The column name
      *
      * @return $this|QueryBuilder  
      */
@@ -159,8 +157,8 @@ class Where extends QueryFilter
      * IN condition
      *
      * @access public
-     * @param  string   $column     The column name
-     * @param  array    $values     The conditions values
+     * @param string   $column     The column name
+     * @param array    $values     The conditions values
      *
      * @return $this|QueryBuilder  
      */
@@ -176,8 +174,8 @@ class Where extends QueryFilter
      * NOT IN condition
      *
      * @access public
-     * @param  string   $column     The column name
-     * @param  array    $values     The conditions values
+     * @param string   $column     The column name
+     * @param array    $values     The conditions values
      *
      * @return $this|QueryBuilder  
      */
@@ -193,8 +191,8 @@ class Where extends QueryFilter
      * LIKE condition
      *
      * @access public
-     * @param  string   $column     The column name
-     * @param  string   $pattern    The condition pattern
+     * @param string   $column     The column name
+     * @param string   $pattern    The condition pattern
      *
      * @return $this|QueryBuilder  
      */
@@ -208,8 +206,8 @@ class Where extends QueryFilter
      * NOT LIKE condition
      *
      * @access public
-     * @param  string   $column     The column name
-     * @param  string   $pattern    The condition pattern
+     * @param string   $column     The column name
+     * @param string   $pattern    The condition pattern
      *
      * @return $this|QueryBuilder  
      */

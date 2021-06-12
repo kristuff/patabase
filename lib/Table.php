@@ -1,26 +1,23 @@
 <?php
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
+ * @version    1.0.0
  * @copyright  2017-2020 Kristuff
  */
 
 namespace Kristuff\Patabase;
 
-use Kristuff\Patabase;
 use Kristuff\Patabase\Database;
 use Kristuff\Patabase\Query;
 
@@ -46,7 +43,7 @@ class Table
      *
      * @access public
      * @param  Database $database           The Database instance
-     * @param  string   $tableName          The table name
+     * @param string   $tableName          The table name
      */
     public function __construct(Database $database, $tableName)
     {
@@ -69,7 +66,7 @@ class Table
      * Get a new Select query instance
      *
      * @access public
-     * @param  array|string(s) (optional)  Column name(s), array of columns name / alias
+     * @param array|string(s) (optional)  Column name(s), array of columns name / alias
      *    
      * @return Query\Table\Select
      */
@@ -85,7 +82,7 @@ class Table
      * Get a new Update query instance
      *
      * @access public
-     * @param  array    $parameters (optional)     Array of columns name / values
+     * @param array    $parameters (optional)     Array of columns name / values
      * @return Query\Table\Update
      */
     public function update(array $parameters = array())
@@ -112,7 +109,7 @@ class Table
      * Get a new Insert query instance
      *
      * @access public
-     * @param  array    $parameters (optional)     Array of columns name / values
+     * @param array    $parameters (optional)     Array of columns name / values
      *
      * @return Query\Table\Insert
      */
@@ -162,7 +159,7 @@ class Table
      * Rename the table
      *
      * @access public
-     * @param  string   $newName        The new table name
+     * @param string   $newName        The new table name
      *
      * @return bool     True if the table has been renamed, otherwise false.
      */

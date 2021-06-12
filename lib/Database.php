@@ -1,20 +1,18 @@
 <?php
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
+ * @version    1.0.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -47,7 +45,7 @@ class Database extends Datasource
      * Get a new instance of Table object
      *
      * @access public
-     * @param  string       $tableName      The name of the table
+     * @param string       $tableName      The name of the table
      *
      * @return Table
      */
@@ -60,7 +58,7 @@ class Database extends Datasource
      * Get a new CreateTable instance 
      *
      * @access public
-     * @param  string       $tableName      The name of the table
+     * @param string       $tableName      The name of the table
      * @return Query\CreateTable
      */
     public function createTable($tableName)
@@ -72,7 +70,7 @@ class Database extends Datasource
      * Checks if the a table exists
      * 
      * @access public
-     * @param  string       $tableName      The name of the table
+     * @param string       $tableName      The name of the table
      *
      * @return bool         True if the table exists, otherwise false.
      */
@@ -91,7 +89,7 @@ class Database extends Datasource
      * Drop a table
      *
      * @access public
-     * @param  string       $tableName      The name of the table
+     * @param string       $tableName      The name of the table
      * @return bool         True if the table has been dropped, otherwise false
       */
     public function dropTable($tableName)
@@ -104,8 +102,8 @@ class Database extends Datasource
      * Rename a table
      *
      * @access public
-     * @param  string   $currentName     The current name of the table to rename
-     * @param  string   $newName         The new table name
+     * @param string   $currentName     The current name of the table to rename
+     * @param string   $newName         The new table name
      *
      * @return bool     True if the table has been renamed, otherwise false.
      */
@@ -155,11 +153,11 @@ class Database extends Datasource
      * Add a foreign key
      * 
      * @access public
-     * @param  string   $fkName          The constraint name
-     * @param  string   $srcTable        The source table
-     * @param  string   $srcColumn       The source column 
-     * @param  string   $refTable        The referenced table
-     * @param  string   $refColumn       The referenced column
+     * @param string   $fkName          The constraint name
+     * @param string   $srcTable        The source table
+     * @param string   $srcColumn       The source column 
+     * @param string   $refTable        The referenced table
+     * @param string   $refColumn       The referenced column
      *
      * @return bool     True if the foreign key has been added, otherwise false
      */
@@ -172,8 +170,8 @@ class Database extends Datasource
      * Drop a foreign key
      * 
      * @access public
-     * @param  string   $fkName         The constraint name
-     * @param  string   $tableName      The source table
+     * @param string   $fkName         The constraint name
+     * @param string   $tableName      The source table
      *
      * @return bool     True if the foreign key has been dropped, otherwise false
      */
@@ -186,7 +184,7 @@ class Database extends Datasource
      * Get a new Insert query instance
      *
      * @access public
-     * @param  string   $tableName      The table in wich insert to
+     * @param string   $tableName      The table in wich insert to
      *
      * @return Query\Table\Insert
      */
@@ -215,7 +213,7 @@ class Database extends Datasource
      * Get a new Update query instance
      *
      * @access public
-     * @param  string   $tableName      The name of the table
+     * @param string   $tableName      The name of the table
      *
      * @return Query\Table\Update
      */
@@ -229,7 +227,7 @@ class Database extends Datasource
      * Get a new Delete query instance
      *
      * @access public
-     * @param  string   $tableName      The name of the table
+     * @param string   $tableName      The name of the table
      *
      * @return Query\Table\Delete
      */

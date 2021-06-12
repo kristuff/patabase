@@ -1,31 +1,24 @@
 <?php
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
+ * @version    1.0.0
  * @copyright  2017-2020 Kristuff
  */
 
 namespace Kristuff\Patabase\Query;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Database;
-use Kristuff\Patabase\Query;
-use Kristuff\Patabase\Query\QueryBuilder;
 use Kristuff\Patabase\Query\SelectBase;
-use Kristuff\Patabase\Exception;
 
 /**
  * Class Select
@@ -50,7 +43,7 @@ class Select extends SelectBase
      * Make sure the argument name is unique to Avoid collision in query parameters.
      *
      * @access protected
-     * @param  string   $column     The column name or base name
+     * @param string   $column     The column name or base name
      *
      * @return string
      */
@@ -223,7 +216,7 @@ class Select extends SelectBase
     public function getColumn()
     {
         $this->limit(1);
-        return $this->execute() ? $this->pdoStatement->fetchColumn() : NULL ;
+        return $this->execute() ? $this->pdoStatement->fetchColumn() : null;
     }
 
 }

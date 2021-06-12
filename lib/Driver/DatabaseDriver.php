@@ -1,28 +1,23 @@
 <?php
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
-* @version    0.5.0
- *
+ * @version    1.0.0
  * @copyright  2017-2020 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Exception;
 use Kristuff\Patabase\Output;
 
@@ -129,7 +124,7 @@ abstract class DatabaseDriver
      * Escape a given string with driver escape chars
      * 
      * @access public
-     * @param  string   $str  The value to escape
+     * @param string   $str  The value to escape
      *
      * @return string
      */
@@ -143,7 +138,7 @@ abstract class DatabaseDriver
      * Escape an array of string with driver escape chars
      *
      * @access public
-     * @param  array    $values  The array of values
+     * @param array    $values  The array of values
      *
      * @return array
      */
@@ -160,7 +155,7 @@ abstract class DatabaseDriver
      * Constructor
      *
      * @access public
-     * @param  array    $settings               The connection settings
+     * @param array    $settings               The connection settings
      */
     public function __construct(array $settings)
     {
@@ -245,8 +240,8 @@ abstract class DatabaseDriver
      * Prepare and execute a query 
      *
      * @access public
-     * @param  string   $sql            The SQL query
-     * @param  array    $parameters     The SQL parameters
+     * @param string   $sql            The SQL query
+     * @param array    $parameters     The SQL parameters
      *
      * @return bool     true if the query is executed with success, otherwise false
      */
@@ -281,7 +276,7 @@ abstract class DatabaseDriver
      * Create a PDO connection from given settings
      *
      * @access public
-     * @param  array    $settings
+     * @param array    $settings
      *
      * @return void
      */
@@ -291,7 +286,7 @@ abstract class DatabaseDriver
      * Escape identifier
      *
      * @access public
-     * @param  string   $identifier
+     * @param string   $identifier
      *
      * @return string
      */
@@ -301,7 +296,7 @@ abstract class DatabaseDriver
      * Escape value
      *
      * @access public
-     * @param  string   $value
+     * @param string   $value
      *
      * @return string
      */
@@ -332,14 +327,29 @@ abstract class DatabaseDriver
     abstract public function disableForeignKeys();
 
     /**
+     * Get whether foreign keys are enabled or not
+     *
+     * https://www.sqlite.org/foreignkeys.html
+     * Foreign key constraints are disabled by default (for backwards compatibility), so must be enabled separately for 
+     * each database connection. (Note, however, that future releases of SQLite might change so that foreign key constraints 
+     * enabled by default. Careful developers will not make any assumptions about whether or not foreign keys are enabled by 
+     * default but will instead enable or disable them as necessary.) The application can also use a PRAGMA foreign_keys statement 
+     * to determine if foreign keys are currently enabled.
+     * 
+     * @access public
+     * @return bool     true if foreign keys are enabled, otherwise false
+     */
+    abstract function isForeignKeyEnabled();
+
+    /**
      * Add a foreign key
      * 
      * @access public
-     * @param  string   $fkName         The constraint name
-     * @param  string   $srcTable       The source table
-     * @param  string   $srcColumn      The source column 
-     * @param  string   $refTable       The referenced table
-     * @param  string   $refColumn      The referenced column
+     * @param string   $fkName         The constraint name
+     * @param string   $srcTable       The source table
+     * @param string   $srcColumn      The source column 
+     * @param string   $refTable       The referenced table
+     * @param string   $refColumn      The referenced column
      *
      * @return bool    True if the foreign key has been created, otherwise false
      */
@@ -349,8 +359,8 @@ abstract class DatabaseDriver
      * Drop a foreign key
      * 
      * @access public
-     * @param  string   $fkName         The constraint name
-     * @param  string   $tableName      The source table
+     * @param string   $fkName         The constraint name
+     * @param string   $tableName      The source table
      *
      * @return bool    True if the foreign key has been dropped, otherwise false
      */
@@ -378,7 +388,7 @@ abstract class DatabaseDriver
      * Get the SQL for auto increment column
      *
      * @access public
-     * @param  string   $type   The sql column type
+     * @param string   $type   The sql column type
      *
      * @return string
      */

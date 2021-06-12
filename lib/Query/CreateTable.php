@@ -1,29 +1,23 @@
 <?php
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
-* @version    0.5.0
- *
+ * @version    1.0.0
  * @copyright  2017-2020 Kristuff
  */
 
 namespace Kristuff\Patabase\Query;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Database;
-use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Driver\DatabaseDriver;
 
 /**
@@ -79,7 +73,7 @@ class CreateTable extends \Kristuff\Patabase\Query\QueryBuilder
      *
      * @access public
      * @param  DatabaseDriver   $driver         The driver instance
-     * @param  string       $tableName      The table name
+     * @param string       $tableName      The table name
      */
     public function __construct(DatabaseDriver $driver, $tableName)
     {
@@ -117,12 +111,12 @@ class CreateTable extends \Kristuff\Patabase\Query\QueryBuilder
      * Add a foreign key contraint
      *
      * @access public
-     * @param  string       $fkName         The name for the foreign key
-     * @param  string       $srcColumn      The column in main table
-     * @param  string       $refTable       The referenced table
-     * @param  string       $refColumn      The column in referenced table
-     * @param  string       $onUpdate       (optional) The on update rule. Default is CASCADE
-     * @param  string       $onDelete       (optional) The on delete rule. Default is RESTRICT
+     * @param string       $fkName         The name for the foreign key
+     * @param string       $srcColumn      The column in main table
+     * @param string       $refTable       The referenced table
+     * @param string       $refColumn      The column in referenced table
+     * @param string       $onUpdate       (optional) The on update rule. Default is CASCADE
+     * @param string       $onDelete       (optional) The on delete rule. Default is RESTRICT
      *
      * @return $this
      */

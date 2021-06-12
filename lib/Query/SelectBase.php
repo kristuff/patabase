@@ -1,20 +1,18 @@
 <?php
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
+ * @version    1.0.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -109,7 +107,7 @@ abstract class SelectBase extends QueryBuilder
      * @access public
      * @param  Driver\DatabaseDriver   $driver   The driver instance
      * @param  Query        $query    The top query parent in case of subquery. Default is NULL
-     * @param  array        $args     Columns arguments. Default is empty array
+     * @param array        $args     Columns arguments. Default is empty array
      */
     public function __construct($driver, $query = null, $args = array())
     {
@@ -162,8 +160,8 @@ abstract class SelectBase extends QueryBuilder
      * Add an output column for the select
      *
      * @access public
-     * @param  string   $column    The column name, could be Table.ColumnName format
-     * @param  string   $alias     The alias for this column
+     * @param string   $column    The column name, could be Table.ColumnName format
+     * @param string   $alias     The alias for this column
      * 
      * @return $this
      */
@@ -194,7 +192,7 @@ abstract class SelectBase extends QueryBuilder
      * Add a COUNT(*) column for the select
      *
      * @access public
-     * @param  string   $alias     The alias for this column
+     * @param string   $alias     The alias for this column
      * 
      * @return $this
      */
@@ -211,8 +209,8 @@ abstract class SelectBase extends QueryBuilder
      * Add a SUM(column) for the select
      *
      * @access public
-     * @param  string $column   The column to sum
-     * @param  string $alias    The alias for this column 
+     * @param string $column   The column to sum
+     * @param string $alias    The alias for this column 
      * @return $this
      */
     public function sum($column, $alias)
@@ -229,8 +227,8 @@ abstract class SelectBase extends QueryBuilder
      * Add a MIN(column) for the select
      *
      * @access public
-     * @param  string $column   The column to sum
-     * @param  string $alias    The alias for this column 
+     * @param string $column   The column to sum
+     * @param string $alias    The alias for this column 
      * @return $this
      */
     public function min($column, $alias)
@@ -247,8 +245,8 @@ abstract class SelectBase extends QueryBuilder
      * Add a MAX(column) for the select
      *
      * @access public
-     * @param  string $column   The column to sum
-     * @param  string $alias    The alias for this column 
+     * @param string $column   The column to sum
+     * @param string $alias    The alias for this column 
      * @return $this
      */
     public function max($column, $alias)
@@ -265,7 +263,7 @@ abstract class SelectBase extends QueryBuilder
      * Create and returns a new sub Select instance
      *
      * @access public
-     * @param  string $alias    The alias for this query 
+     * @param string $alias    The alias for this query 
      *
      * @return Query\Select 
      */
@@ -284,7 +282,7 @@ abstract class SelectBase extends QueryBuilder
      * Define the FROM tableName
      *
      * @access public
-     * @param  string   $tableName      The table name
+     * @param string   $tableName      The table name
      *
      * @return $this
      */
@@ -298,10 +296,10 @@ abstract class SelectBase extends QueryBuilder
      * Left join
      *
      * @access public
-     * @param  string   $externalTable    Join table
-     * @param  string   $externalColumn   Foreign key on the join table
-     * @param  string   $localTable       Local table
-     * @param  string   $localColumn      Local column
+     * @param string   $externalTable    Join table
+     * @param string   $externalColumn   Foreign key on the join table
+     * @param string   $localTable       Local table
+     * @param string   $localColumn      Local column
      *
      * @return $this
      */
@@ -320,10 +318,10 @@ abstract class SelectBase extends QueryBuilder
      * Right join
      *
      * @access public
-     * @param  string   $externalTable    Join table
-     * @param  string   $externalColumn   Foreign key on the join table
-     * @param  string   $localTable       Local table
-     * @param  string   $localColumn      Local column
+     * @param string   $externalTable    Join table
+     * @param string   $externalColumn   Foreign key on the join table
+     * @param string   $localTable       Local table
+     * @param string   $localColumn      Local column
      *
      * @return $this
      */
@@ -342,10 +340,10 @@ abstract class SelectBase extends QueryBuilder
      * Full join
      *
      * @access public
-     * @param  string   $externalTable    Join table
-     * @param  string   $externalColumn   Foreign key on the join table
-     * @param  string   $localTable       Local table
-     * @param  string   $localColumn      Local column
+     * @param string   $externalTable    Join table
+     * @param string   $externalColumn   Foreign key on the join table
+     * @param string   $localTable       Local table
+     * @param string   $localColumn      Local column
      *
      * @return $this
      */
@@ -364,10 +362,10 @@ abstract class SelectBase extends QueryBuilder
      * Inner join
      *
      * @access public
-     * @param  string   $externalTable    Join table
-     * @param  string   $externalColumn   Foreign key on the join table
-     * @param  string   $localTable       Local table
-     * @param  string   $localColumn      Local column
+     * @param string   $externalTable    Join table
+     * @param string   $externalColumn   Foreign key on the join table
+     * @param string   $localTable       Local table
+     * @param string   $localColumn      Local column
      *
      * @return $this
      */
@@ -386,10 +384,10 @@ abstract class SelectBase extends QueryBuilder
      * join (alias for innerJoin)
      *
      * @access public
-     * @param  string   $externalTable    Join table
-     * @param  string   $externalColumn   Foreign key on the join table
-     * @param  string   $localTable       Local table
-     * @param  string   $localColumn      Local column
+     * @param string   $externalTable    Join table
+     * @param string   $externalColumn   Foreign key on the join table
+     * @param string   $localTable       Local table
+     * @param string   $localColumn      Local column
      *
      * @return $this
      */
@@ -456,8 +454,8 @@ abstract class SelectBase extends QueryBuilder
      * Add an ORDER BY statement
      *
      * @access public
-     * @param  string   $column    Column name
-     * @param  string   $order     Direction ASC or DESC or custom function
+     * @param string   $column    Column name
+     * @param string   $order     Direction ASC or DESC or custom function
      *
      * @return $this
      */
@@ -474,7 +472,7 @@ abstract class SelectBase extends QueryBuilder
      * Add an ORDER BY [X] ASC statement
      *
      * @access public
-     * @param  string   $column    The column name
+     * @param string   $column    The column name
      * @return $this
      */
     public function orderAsc($column)
@@ -487,7 +485,7 @@ abstract class SelectBase extends QueryBuilder
      * Add an ORDER BY [X] DESC statement
      *
      * @access public
-     * @param  string   $column    The column name
+     * @param string   $column    The column name
      * @return $this
      */
     public function orderDesc($column)

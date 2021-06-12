@@ -1,20 +1,18 @@
 <?php
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
+ * @version    1.0.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -104,7 +102,7 @@ abstract class QueryBuilder extends QueryBase
      * Escape a given string with driver escape chars
      * 
      * @access public
-     * @param  string   $str        The value to escape
+     * @param string   $str        The value to escape
      *
      * @return string
      */
@@ -117,7 +115,7 @@ abstract class QueryBuilder extends QueryBase
      * Escape an array of string with driver escape chars
      *
      * @access public
-     * @param  array    $values     The array of values
+     * @param array    $values     The array of values
      *
      * @return array
      */
@@ -157,7 +155,7 @@ abstract class QueryBuilder extends QueryBase
      * Define a key/value parameter
      *
      * @access public
-     * @param  string       $columName          The name
+     * @param string       $columName          The name
      * @param  mixed        $value              The value
      * @return void
      */
@@ -170,7 +168,7 @@ abstract class QueryBuilder extends QueryBase
      * Get whether a parameter with given name exists
      *
      * @access protected
-     * @param  string       $name               the column name
+     * @param string       $name               the column name
      *
      * @return bool
      */

@@ -1,20 +1,18 @@
 <?php
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
+ * @version    1.0.0
  * @copyright  2017-2020 Kristuff
  */
 
@@ -68,7 +66,7 @@ class PostgresDriver extends ServerDriver
      * Escape an identifier
      *
      * @access public
-     * @param  string  $identifier
+     * @param string  $identifier
      *
      * @return string
      */
@@ -81,7 +79,7 @@ class PostgresDriver extends ServerDriver
      * Escape a value
      *
      * @access public
-     * @param  string  $value
+     * @param string  $value
      *
      * @return string
      */
@@ -94,7 +92,7 @@ class PostgresDriver extends ServerDriver
      * Create a new PDO connection
      *
      * @access public
-     * @param  array   $settings
+     * @param array   $settings
      *
      * @return void
      */
@@ -155,16 +153,28 @@ class PostgresDriver extends ServerDriver
     public function disableForeignKeys()
     {
     }
+    
+    /**
+     * Get whether foreign keys are enabled or not
+     * For compatibility with Sqlite, not implemented in that driver, return false 
+
+     * @access public
+     * @return bool     true if foreign keys are enabled, otherwise false
+     */
+    public function isForeignKeyEnabled()
+    {
+        return false;
+    }
 
     /**
      * Add a foreign key
      * 
      * @access public
-     * @param  string   $fkName         The constraint name
-     * @param  string   $srcTable       The source table
-     * @param  string   $srcColumn      The source column 
-     * @param  string   $refTable       The referenced table
-     * @param  string   $refColumn      The referenced column
+     * @param string   $fkName         The constraint name
+     * @param string   $srcTable       The source table
+     * @param string   $srcColumn      The source column 
+     * @param string   $refTable       The referenced table
+     * @param string   $refColumn      The referenced column
      *
      * @return bool    True if the foreign key has been created, otherwise false
      */
@@ -184,8 +194,8 @@ class PostgresDriver extends ServerDriver
      * Drop a foreign key
      * 
      * @access public
-     * @param  string   $fkName         The constraint name
-     * @param  string   $tableName      The source table
+     * @param string   $fkName         The constraint name
+     * @param string   $tableName      The source table
      *
      * @return bool    True if the foreign key has been dropped, otherwise false
      */
@@ -203,7 +213,7 @@ class PostgresDriver extends ServerDriver
      * Checks if a database exists
      *
      * @access public
-     * @param  string   $databaseName   The database name
+     * @param string   $databaseName   The database name
      *
      * @return bool     True if the given database exists, otherwise false.
      */
@@ -220,9 +230,9 @@ class PostgresDriver extends ServerDriver
      * Create a database
      *
      * @access public
-     * @param  string   $databaseName   The database name
-     * @param  string   $owner          The database owner. 
-     * @param  string   $template       (optional) The template to use. Default is 'template0'
+     * @param string   $databaseName   The database name
+     * @param string   $owner          The database owner. 
+     * @param string   $template       (optional) The template to use. Default is 'template0'
      *
      * @return bool     True if the database has been created, otherwise false.
      */
@@ -240,8 +250,8 @@ class PostgresDriver extends ServerDriver
      * Create a user
      *
      * @access public
-     * @param  string   $userName       The user name
-     * @param  string   $userpassword   The user password
+     * @param string   $userName       The user name
+     * @param string   $userpassword   The user password
      *
      * @return bool     True if the user has been created, otherwise false. 
      */
@@ -258,8 +268,8 @@ class PostgresDriver extends ServerDriver
      * Drop a user
      *
      * @access public
-     * @param  string   $userName       The user name
-     * @param  bool     $ifExists       (optional) True if the user must be deleted only when exists. Default is false.
+     * @param string   $userName       The user name
+     * @param bool     $ifExists       (optional) True if the user must be deleted only when exists. Default is false.
      *
      * @return bool     True if the user has been dropped or does not exist when $ifExists is set to True, otherwise false. 
      */
@@ -276,8 +286,8 @@ class PostgresDriver extends ServerDriver
      * Grant user permissions on given database
      *
      * @access public
-     * @param  string   $databaseName   The database name
-     * @param  string   $userName       The user name
+     * @param string   $databaseName   The database name
+     * @param string   $userName       The user name
      *
      * @return bool     True if the user has been granted, otherwise false. 
      */
@@ -347,7 +357,7 @@ class PostgresDriver extends ServerDriver
      * Get the SQL for auto increment column
      *
      * @access public
-     * @param  string   $type   The sql column type
+     * @param string   $type   The sql column type
      * 
      * @return string
      */
@@ -356,4 +366,7 @@ class PostgresDriver extends ServerDriver
         // SERIAL/BIGSERIAL is a type in postgres
         return strtolower($type) === 'bigint' ? 'bigserial' : 'serial';
     }
+
+
+
 }
