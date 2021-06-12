@@ -127,7 +127,8 @@ class PostgresDriver extends ServerDriver
        try {
             $rq = $this->pdo->prepare('SELECT LASTVAL()');
             $rq->execute();
-            return $rq->fetchColumn();
+            // return string 
+            return strval($rq->fetchColumn());
         }
         catch (\PDOException $e) {
             return 0;

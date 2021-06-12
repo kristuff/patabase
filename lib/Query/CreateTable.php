@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -72,10 +72,10 @@ class CreateTable extends \Kristuff\Patabase\Query\QueryBuilder
      * Constructor
      *
      * @access public
-     * @param  DatabaseDriver   $driver         The driver instance
-     * @param string       $tableName      The table name
+     * @param DatabaseDriver    $driver         The driver instance
+     * @param string            $tableName      The table name
      */
-    public function __construct(DatabaseDriver $driver, $tableName)
+    public function __construct(DatabaseDriver $driver, string $tableName)
     {
         parent::__construct($driver);
         $this->tableName = $tableName;
