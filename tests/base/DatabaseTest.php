@@ -880,6 +880,7 @@ abstract class DatabaseTest extends TestCase
             $this->assertTrue(self::$db->delete('user')->whereEqual('id', 7)->execute());
         
         } else {
+            
           //  $this->assertFalse(self::$db->disableForeignKeys());
         }
     }
@@ -915,8 +916,12 @@ abstract class DatabaseTest extends TestCase
      */
     public function testCreatefk()
     {
+
         // not supported in sqlite / 
-        if(self::$db->getDriver()->getDriverName() != 'sqlite'){
+        if(self::$db->getDriver()->getDriverName() === 'sqlite'){
+
+        }else {
+
             // raise error
             $this->assertFalse(self::$db->addForeignKey('fk_XXX', 'user', 'role', 'user_role', 'role_id'));
             // pass if recreate ref

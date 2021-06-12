@@ -1,21 +1,19 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver\Postgres;
@@ -68,11 +66,11 @@ class PostgresDriver extends ServerDriver
      * Escape an identifier
      *
      * @access public
-     * @param  string  $identifier
+     * @param string  $identifier
      *
      * @return string
      */
-    public function escapeIdentifier($identifier)
+    public function escapeIdentifier(string $identifier) : string
     {
         return '"'.$identifier.'"';
     }
@@ -81,11 +79,11 @@ class PostgresDriver extends ServerDriver
      * Escape a value
      *
      * @access public
-     * @param  string  $value
+     * @param string  $value
      *
      * @return string
      */
-    public function escapeValue($value)
+    public function escapeValue(string $value): string
     {
         return "'".$value."'";
     }
@@ -94,11 +92,11 @@ class PostgresDriver extends ServerDriver
      * Create a new PDO connection
      *
      * @access public
-     * @param  array   $settings
+     * @param array   $settings
      *
      * @return void
      */
-    public function createConnection(array $settings)
+    public function createConnection(array $settings): void
     {
         $port    = !empty($settings['port'])     ?  ';port='.$settings['port']        : '';
         $dbname  = !empty($settings['database']) ?  ';dbname='.$settings['database']  : '';
@@ -120,16 +118,17 @@ class PostgresDriver extends ServerDriver
      * Get last inserted id
      *
      * @access public
-     * @return integer
+     * @return string
      */
-    public function lastInsertedId()
+    public function lastInsertedId(): string
     {
        // Postgres does not set pdo->lastInsertedId
        // use sequence
        try {
             $rq = $this->pdo->prepare('SELECT LASTVAL()');
             $rq->execute();
-            return $rq->fetchColumn();
+            // return string 
+            return strval($rq->fetchColumn());
         }
         catch (\PDOException $e) {
             return 0;
@@ -142,7 +141,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return void
      */
-    public function enableForeignKeys()
+    public function enableForeignKeys(): void
     {
     }
 
@@ -152,23 +151,35 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return void
      */
-    public function disableForeignKeys()
+    public function disableForeignKeys(): void
     {
+    }
+    
+    /**
+     * Get whether foreign keys are enabled or not
+     * For compatibility with Sqlite, not implemented in that driver, return false 
+
+     * @access public
+     * @return bool     true if foreign keys are enabled, otherwise false
+     */
+    public function isForeignKeyEnabled(): bool
+    {
+        return false;
     }
 
     /**
      * Add a foreign key
      * 
      * @access public
-     * @param  string   $fkName         The constraint name
-     * @param  string   $srcTable       The source table
-     * @param  string   $srcColumn      The source column 
-     * @param  string   $refTable       The referenced table
-     * @param  string   $refColumn      The referenced column
+     * @param string   $fkName         The constraint name
+     * @param string   $srcTable       The source table
+     * @param string   $srcColumn      The source column 
+     * @param string   $refTable       The referenced table
+     * @param string   $refColumn      The referenced column
      *
      * @return bool    True if the foreign key has been created, otherwise false
      */
-    public function addForeignKey($fkName, $srcTable, $srcColumn, $refTable, $refColumn)
+    public function addForeignKey(string $fkName, string $srcTable, string $srcColumn, string $refTable, string $refColumn): bool
     {
         $sql = sprintf('ALTER TABLE %s ADD CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)',
                        $this->escape($srcTable),
@@ -184,12 +195,12 @@ class PostgresDriver extends ServerDriver
      * Drop a foreign key
      * 
      * @access public
-     * @param  string   $fkName         The constraint name
-     * @param  string   $tableName      The source table
+     * @param string   $fkName         The constraint name
+     * @param string   $tableName      The source table
      *
      * @return bool    True if the foreign key has been dropped, otherwise false
      */
-    public function dropForeignKey($fkName, $tableName, $ifExists = false)
+    public function dropForeignKey(string $fkName, string $tableName, bool $ifExists = false): bool
     {
         $sql = sprintf('ALTER TABLE %s DROP CONSTRAINT %s %s',
                        $this->escape($tableName),
@@ -203,11 +214,11 @@ class PostgresDriver extends ServerDriver
      * Checks if a database exists
      *
      * @access public
-     * @param  string   $databaseName   The database name
+     * @param string   $databaseName   The database name
      *
      * @return bool     True if the given database exists, otherwise false.
      */
-    public function databaseExists($databaseName)
+    public function databaseExists(string $databaseName): bool
     {
         $sql = 'SELECT COUNT(*) FROM pg_database WHERE datname = :dbName'; 
         $query = $this->pdo->prepare($sql);
@@ -220,13 +231,13 @@ class PostgresDriver extends ServerDriver
      * Create a database
      *
      * @access public
-     * @param  string   $databaseName   The database name
-     * @param  string   $owner          The database owner. 
-     * @param  string   $template       (optional) The template to use. Default is 'template0'
+     * @param string   $databaseName   The database name
+     * @param string   $owner          The database owner. 
+     * @param string   $template       The template to use. Default is 'template0'
      *
      * @return bool     True if the database has been created, otherwise false.
      */
-    public function createDatabase($databaseName, $owner, $template = 'template0')
+    public function createDatabase(string $databaseName, ?string $owner= null, ?string $template = 'template0'): bool
     {
         $sql = trim(sprintf('CREATE DATABASE %s %s TEMPLATE %s', 
             $this->escape($databaseName),
@@ -240,12 +251,12 @@ class PostgresDriver extends ServerDriver
      * Create a user
      *
      * @access public
-     * @param  string   $userName       The user name
-     * @param  string   $userpassword   The user password
+     * @param string   $userName       The user name
+     * @param string   $userpassword   The user password
      *
      * @return bool     True if the user has been created, otherwise false. 
      */
-    public function createUser($userName, $userPassword)
+    public function createUser(string $userName, string $userPassword): bool
     {
         $sql = trim(sprintf('CREATE USER %s PASSWORD %s', 
                     $this->escape($userName), 
@@ -258,12 +269,12 @@ class PostgresDriver extends ServerDriver
      * Drop a user
      *
      * @access public
-     * @param  string   $userName       The user name
-     * @param  bool     $ifExists       (optional) True if the user must be deleted only when exists. Default is false.
+     * @param string   $userName       The user name
+     * @param bool     $ifExists       (optional) True if the user must be deleted only when exists. Default is false.
      *
      * @return bool     True if the user has been dropped or does not exist when $ifExists is set to True, otherwise false. 
      */
-    public function dropUser($userName, $ifExists = false)
+    public function dropUser(string $userName, bool $ifExists = false): bool
     {
         $sql = trim(sprintf('DROP USER %s %s', 
                     $ifExists === true ? 'IF EXISTS': '',
@@ -276,12 +287,12 @@ class PostgresDriver extends ServerDriver
      * Grant user permissions on given database
      *
      * @access public
-     * @param  string   $databaseName   The database name
-     * @param  string   $userName       The user name
+     * @param string   $databaseName   The database name
+     * @param string   $userName       The user name
      *
      * @return bool     True if the user has been granted, otherwise false. 
      */
-    public function grantUser($databaseName, $userName)
+    public function grantUser(string $databaseName, string $userName): bool
     {
         // ALL PRIVILEGES Grant all of the available privileges at once. The PRIVILEGES keyword 
         // is optional in PostgreSQL, though it is required by strict SQL.
@@ -301,7 +312,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return string
      */
-    public function sqlShowDatabases()
+    public function sqlShowDatabases(): string
     {
         return 'SELECT datname FROM pg_database WHERE datistemplate = false;';
     }
@@ -312,7 +323,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return string
      */
-    public function sqlShowTables()
+    public function sqlShowTables(): string
     {
         return "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type = 'BASE TABLE' ORDER BY table_name;";
     }
@@ -323,7 +334,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @return string
      */
-    public function sqlShowUsers()
+    public function sqlShowUsers(): string
     {
         return 'SELECT usename FROM pg_user';
     }
@@ -338,7 +349,7 @@ class PostgresDriver extends ServerDriver
      *
      * @return string         
      */
-    public function sqlRandom($seed = null)
+    public function sqlRandom($seed = null): string
     {
         return 'random()';   
     }
@@ -347,13 +358,16 @@ class PostgresDriver extends ServerDriver
      * Get the SQL for auto increment column
      *
      * @access public
-     * @param  string   $type   The sql column type
+     * @param string   $type   The sql column type
      * 
      * @return string
      */
-    public function sqlColumnAutoIncrement($type)
+    public function sqlColumnAutoIncrement(string $type): string
     {
         // SERIAL/BIGSERIAL is a type in postgres
         return strtolower($type) === 'bigint' ? 'bigserial' : 'serial';
     }
+
+
+
 }

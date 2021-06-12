@@ -1,29 +1,26 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
-* @version    0.5.0
- *
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Driver\DatabaseDriver;
+use Kristuff\Patabase\Driver\ServerDriver;
+use PDO;
 
 /**
  * Class Datasource
@@ -51,7 +48,7 @@ abstract class Datasource
      * @access protected
      * @return void
      */
-    abstract protected function openConnection();
+    abstract protected function openConnection(): void;
 
     /**
      * Get the current driver name
@@ -59,7 +56,7 @@ abstract class Datasource
      * @access public
      * @return string
      */
-    public function getDriverName()
+    public function getDriverName(): string
     {
         return $this->driver->getDriverName();    
     }
@@ -68,7 +65,7 @@ abstract class Datasource
      * Initialize the database object by creating a driver
      *
      * @access public
-     * @param  array   $settings
+     * @param array   $settings
      */
     public function __construct(array $settings = array())
     {
@@ -92,7 +89,7 @@ abstract class Datasource
      * @access public
      * @return bool     True if the last query has generated an error
      */
-    public function hasError()
+    public function hasError(): bool
     {
         return $this->driver->hasError();
     }
@@ -103,7 +100,7 @@ abstract class Datasource
      * @access public
      * @return int    
      */
-    public function errorCode()
+    public function errorCode(): int
     {
         return $this->driver->errorCode();
     }
@@ -114,7 +111,7 @@ abstract class Datasource
      * @access public
      * @return string
      */
-    public function errorMessage()
+    public function errorMessage(): string
     {
         return $this->driver->errorMessage();
     }
@@ -134,9 +131,9 @@ abstract class Datasource
      * Get the PDO connection
      *
      * @access public
-     * @return \PDO
+     * @return PDO
      */
-    public function getConnection()
+    public function getConnection(): PDO
     {
         return $this->driver->getConnection();
     }
@@ -147,7 +144,7 @@ abstract class Datasource
      * @access public
      * @return void
      */
-    public function closeConnection()
+    public function closeConnection(): void
     {
         if ($this->driver){
             $this->driver->closeConnection();

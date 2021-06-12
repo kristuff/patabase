@@ -1,25 +1,24 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Query;
 
+use Kristuff\Patabase\Driver\DatabaseDriver;
 use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Query\QueryBuilder;
 
@@ -35,7 +34,7 @@ abstract class SelectBase extends QueryBuilder
      * Use DISTINCT or not?
      *
      * @access protected
-     * @var    boolean
+     * @var boolean
      */
     protected $distinct = false;
 
@@ -43,7 +42,7 @@ abstract class SelectBase extends QueryBuilder
      * Columns list for SELECT query
      *
      * @access protected
-     * @var    array
+     * @var array
      */
     protected $columns = array();
 
@@ -51,7 +50,7 @@ abstract class SelectBase extends QueryBuilder
      * Table source for SELECT query
      *
      * @access protected
-     * @var    array
+     * @var string
      */
     protected $fromTable = '';
 
@@ -59,7 +58,7 @@ abstract class SelectBase extends QueryBuilder
      * SQL JOINS internal list
      *
      * @access protected
-     * @var    array
+     * @var array
      */
     protected $joins = array();
 
@@ -67,7 +66,7 @@ abstract class SelectBase extends QueryBuilder
      * SQL GROUP BY internal list
      *
      * @access protected
-     * @var    array
+     * @var array
      */
     protected $groupBy = array();
 
@@ -75,7 +74,7 @@ abstract class SelectBase extends QueryBuilder
      * SQL ORDER BY internal list
      *
      * @access protected
-     * @var    array
+     * @var array
      */
     protected $orderBy = array();
 
@@ -83,7 +82,7 @@ abstract class SelectBase extends QueryBuilder
      * Limit for the SELECT query
      *
      * @access protected
-     * @var    int
+     * @var int
      */
     protected $limit = 0;
 
@@ -91,7 +90,7 @@ abstract class SelectBase extends QueryBuilder
      * Offset for the SELECT query
      *
      * @access protected
-     * @var    int
+     * @var int
      */
     protected $offset = 0;
 
@@ -99,7 +98,7 @@ abstract class SelectBase extends QueryBuilder
      * The top QueryBuilder instance, in case of subquery
      *
      * @access protected
-     * @var    QueryBuilder
+     * @var QueryBuilder
      */
      protected $topQuery = null;
 
@@ -107,11 +106,11 @@ abstract class SelectBase extends QueryBuilder
      * Constructor
      *
      * @access public
-     * @param  Driver\DatabaseDriver   $driver   The driver instance
-     * @param  Query        $query    The top query parent in case of subquery. Default is NULL
-     * @param  array        $args     Columns arguments. Default is empty array
+     * @param DatabaseDriver    $driver   The driver instance
+     * @param Query             $query    The top query parent in case of subquery. Default is NULL
+     * @param array             $args     Columns arguments. Default is empty array
      */
-    public function __construct($driver, $query = null, $args = array())
+    public function __construct(DatabaseDriver $driver, $query = null, $args = array())
     {
         parent::__construct($driver);
         $this->topQuery = $query;
@@ -126,7 +125,7 @@ abstract class SelectBase extends QueryBuilder
      * Parse the columns arguments for the select query
      *
      * @access protected
-     * @param  mixed        $args       The output columns argument
+     * @param mixed             $args       The output columns argument
      *
      * @return void
      */
@@ -162,12 +161,12 @@ abstract class SelectBase extends QueryBuilder
      * Add an output column for the select
      *
      * @access public
-     * @param  string   $column    The column name, could be Table.ColumnName format
-     * @param  string   $alias     The alias for this column
+     * @param string   $column    The column name, could be Table.ColumnName format
+     * @param string   $alias     The alias for this column
      * 
      * @return $this
      */
-    public function column($column, $alias = null)
+    public function column(string $column, ?string $alias = null)
     {
         $this->columns[] = array(
             'type'  => 'column',
@@ -194,11 +193,11 @@ abstract class SelectBase extends QueryBuilder
      * Add a COUNT(*) column for the select
      *
      * @access public
-     * @param  string   $alias     The alias for this column
+     * @param string   $alias     The alias for this column
      * 
      * @return $this
      */
-    public function count($alias)
+    public function count(string $alias)
     {
          $this->columns[] = array(
             'type'  => 'count',
@@ -211,11 +210,11 @@ abstract class SelectBase extends QueryBuilder
      * Add a SUM(column) for the select
      *
      * @access public
-     * @param  string $column   The column to sum
-     * @param  string $alias    The alias for this column 
+     * @param string $column   The column to sum
+     * @param string $alias    The alias for this column 
      * @return $this
      */
-    public function sum($column, $alias)
+    public function sum(string $column, string $alias)
     {
          $this->columns[] = array(
             'type'  => 'sum',
@@ -229,11 +228,11 @@ abstract class SelectBase extends QueryBuilder
      * Add a MIN(column) for the select
      *
      * @access public
-     * @param  string $column   The column to sum
-     * @param  string $alias    The alias for this column 
+     * @param string $column   The column to sum
+     * @param string $alias    The alias for this column 
      * @return $this
      */
-    public function min($column, $alias)
+    public function min(string $column, string $alias)
     {
          $this->columns[] = array(
             'type'  => 'min',
@@ -247,11 +246,11 @@ abstract class SelectBase extends QueryBuilder
      * Add a MAX(column) for the select
      *
      * @access public
-     * @param  string $column   The column to sum
-     * @param  string $alias    The alias for this column 
+     * @param string $column   The column to sum
+     * @param string $alias    The alias for this column 
      * @return $this
      */
-    public function max($column, $alias)
+    public function max(string $column, string $alias)
     {
          $this->columns[] = array(
             'type'  => 'max',
@@ -265,11 +264,11 @@ abstract class SelectBase extends QueryBuilder
      * Create and returns a new sub Select instance
      *
      * @access public
-     * @param  string $alias    The alias for this query 
+     * @param string $alias    The alias for this query 
      *
      * @return Query\Select 
      */
-    public function select($alias)
+    public function select(string $alias)
     {
         $query = new Select($this->driver, $this);
         $this->columns[] = array(
@@ -284,11 +283,11 @@ abstract class SelectBase extends QueryBuilder
      * Define the FROM tableName
      *
      * @access public
-     * @param  string   $tableName      The table name
+     * @param string   $tableName      The table name
      *
      * @return $this
      */
-    public function from($tableName)
+    public function from(string $tableName)
     {
         $this->fromTable = $tableName;
         return $this;       
@@ -298,14 +297,14 @@ abstract class SelectBase extends QueryBuilder
      * Left join
      *
      * @access public
-     * @param  string   $externalTable    Join table
-     * @param  string   $externalColumn   Foreign key on the join table
-     * @param  string   $localTable       Local table
-     * @param  string   $localColumn      Local column
+     * @param string   $externalTable    Join table
+     * @param string   $externalColumn   Foreign key on the join table
+     * @param string   $localTable       Local table
+     * @param string   $localColumn      Local column
      *
      * @return $this
      */
-    public function leftJoin($externalTable, $externalColumn, $localTable, $localColumn)
+    public function leftJoin(string $externalTable, string $externalColumn, string $localTable, string $localColumn)
     {
         $this->joins[] = sprintf(
             'LEFT OUTER JOIN %s ON %s=%s',
@@ -320,14 +319,14 @@ abstract class SelectBase extends QueryBuilder
      * Right join
      *
      * @access public
-     * @param  string   $externalTable    Join table
-     * @param  string   $externalColumn   Foreign key on the join table
-     * @param  string   $localTable       Local table
-     * @param  string   $localColumn      Local column
+     * @param string   $externalTable    Join table
+     * @param string   $externalColumn   Foreign key on the join table
+     * @param string   $localTable       Local table
+     * @param string   $localColumn      Local column
      *
      * @return $this
      */
-    public function rightJoin($externalTable, $externalColumn, $localTable, $localColumn)
+    public function rightJoin(string $externalTable, string $externalColumn, string $localTable, string $localColumn)
     {
         $this->joins[] = sprintf(
             'RIGHT OUTER JOIN %s ON %s=%s',
@@ -342,14 +341,14 @@ abstract class SelectBase extends QueryBuilder
      * Full join
      *
      * @access public
-     * @param  string   $externalTable    Join table
-     * @param  string   $externalColumn   Foreign key on the join table
-     * @param  string   $localTable       Local table
-     * @param  string   $localColumn      Local column
+     * @param string   $externalTable    Join table
+     * @param string   $externalColumn   Foreign key on the join table
+     * @param string   $localTable       Local table
+     * @param string   $localColumn      Local column
      *
      * @return $this
      */
-    public function fullJoin($externalTable, $externalColumn, $localTable, $localColumn)
+    public function fullJoin(string $externalTable, string $externalColumn, string $localTable, string $localColumn)
     {
         $this->joins[] = sprintf(
             'FULL OUTER JOIN %s ON %s=%s',
@@ -364,14 +363,14 @@ abstract class SelectBase extends QueryBuilder
      * Inner join
      *
      * @access public
-     * @param  string   $externalTable    Join table
-     * @param  string   $externalColumn   Foreign key on the join table
-     * @param  string   $localTable       Local table
-     * @param  string   $localColumn      Local column
+     * @param string   $externalTable    Join table
+     * @param string   $externalColumn   Foreign key on the join table
+     * @param string   $localTable       Local table
+     * @param string   $localColumn      Local column
      *
      * @return $this
      */
-    public function innerJoin($externalTable, $externalColumn, $localTable, $localColumn)
+    public function innerJoin(string $externalTable, string $externalColumn, string $localTable, string $localColumn)
     {
         $this->joins[] = sprintf(
             'INNER JOIN %s ON %s=%s',
@@ -386,14 +385,14 @@ abstract class SelectBase extends QueryBuilder
      * join (alias for innerJoin)
      *
      * @access public
-     * @param  string   $externalTable    Join table
-     * @param  string   $externalColumn   Foreign key on the join table
-     * @param  string   $localTable       Local table
-     * @param  string   $localColumn      Local column
+     * @param string   $externalTable    Join table
+     * @param string   $externalColumn   Foreign key on the join table
+     * @param string   $localTable       Local table
+     * @param string   $localColumn      Local column
      *
      * @return $this
      */
-    public function join($externalTable, $externalColumn, $localTable, $localColumn)
+    public function join(string $externalTable, string $externalColumn, string $localTable, string $localColumn)
     {
         return $this->innerJoin($externalTable, $externalColumn, $localTable, $localColumn);
     }
@@ -402,9 +401,9 @@ abstract class SelectBase extends QueryBuilder
      * Get a WHERE statement object
      *
      * @access public
-     * @return Query\Where
+     * @return Where
      */
-    public function where()
+    public function where(): Where
     {
         if (!isset($this->where)){
             $this->where = new Query\Where($this, $this->driver, $this->topQuery);
@@ -417,9 +416,12 @@ abstract class SelectBase extends QueryBuilder
      * It's an alias for ->where()->equal($column, $value)
      * 
      * @access public
-     * @return Query\Where
+     * @param string    $column     The column name
+     * @param mixed     $value      The condition value
+     * 
+     * @return $this
      */
-    public function whereEqual($column, $value)
+    public function whereEqual(string $column, $value)
     {
         $this->where()->equal($column, $value);
         return $this;
@@ -429,9 +431,9 @@ abstract class SelectBase extends QueryBuilder
      * Get an HAVING statement object
      *
      * @access public
-     * @return Query\Having
+     * @return Having
      */
-    public function having()
+    public function having(): Having
     {
         if (!isset($this->having)){
             $this->having = new Query\Having($this, $this->driver, $this->topQuery);
@@ -456,8 +458,8 @@ abstract class SelectBase extends QueryBuilder
      * Add an ORDER BY statement
      *
      * @access public
-     * @param  string   $column    Column name
-     * @param  string   $order     Direction ASC or DESC or custom function
+     * @param string   $column    Column name
+     * @param string   $order     Direction ASC or DESC or custom function
      *
      * @return $this
      */
@@ -474,7 +476,7 @@ abstract class SelectBase extends QueryBuilder
      * Add an ORDER BY [X] ASC statement
      *
      * @access public
-     * @param  string   $column    The column name
+     * @param string   $column    The column name
      * @return $this
      */
     public function orderAsc($column)
@@ -487,7 +489,7 @@ abstract class SelectBase extends QueryBuilder
      * Add an ORDER BY [X] DESC statement
      *
      * @access public
-     * @param  string   $column    The column name
+     * @param string   $column    The column name
      * @return $this
      */
     public function orderDesc($column)

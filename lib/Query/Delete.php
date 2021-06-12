@@ -1,27 +1,24 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Query;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Database;
+use Kristuff\Patabase\Driver\DatabaseDriver;
 use Kristuff\Patabase\Query;
 
 /**
@@ -47,10 +44,10 @@ class Delete extends Query\QueryBuilder
      * Constructor
      *
      * @access public
-     * @param  DatabaseDriver   $driver         The driver instance
-     * @param  string       $tableName      The table name
+     * @param DatabaseDriver    $driver         The driver instance
+     * @param string            $tableName      The table name
      */
-    public function __construct($driver, $tableName)
+    public function __construct(DatabaseDriver $driver, string $tableName)
     {
         parent::__construct($driver);
         $this->tableName = $tableName;
@@ -60,9 +57,9 @@ class Delete extends Query\QueryBuilder
      * Get a WHERE stamement object
      *
      * @access public
-     * @return Query\Where
+     * @return Where
      */
-    public function where()
+    public function where(): Where
     {
         if (!isset($this->where)){
             $this->where = new Query\Where($this, $this->driver);
@@ -74,9 +71,12 @@ class Delete extends Query\QueryBuilder
      * Add a WHERE column = value condition
      *
      * @access public
-     * @return Query\Where
+     * @param string            $column         The columnn name
+     * @param mixed             $value      
+     * 
+     * @return $this
      */
-    public function whereEqual($column, $value)
+    public function whereEqual(string $column, $value)
     {
         $this->where()->equal($column, $value);
         return $this;
@@ -88,7 +88,7 @@ class Delete extends Query\QueryBuilder
      * @access public
      * @return string
      */
-    public function sql()
+    public function sql(): string
     {
        // Build sql where and escape table name
        $sqlWhere = (isset($this->where)) ? $this->where->sql() : '';

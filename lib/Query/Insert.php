@@ -1,21 +1,19 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Query;
@@ -33,7 +31,7 @@ class Insert extends \Kristuff\Patabase\Query\InsertBase
      * @access public
      * @return string
      */
-    public function sql()
+    public function sql(): string
     {
         $columnsNames   = array();
         $columnsValues  = array();
@@ -55,9 +53,9 @@ class Insert extends \Kristuff\Patabase\Query\InsertBase
      * Bind values parameters
      *
      * @access public
-     * @return $this
+     * @return void
      */
-    public function bindValues()
+    public function bindValues(): void
     {
         foreach ($this->parameters as $key => $val) {
             $arg = $this->getArgName($key);
@@ -71,7 +69,7 @@ class Insert extends \Kristuff\Patabase\Query\InsertBase
      * This function returns false if there is no executed query.
      *
      * @access public
-     * @return int|false     The last inserted id if found, otherwise false.
+     * @return string|false     The last inserted id if found, otherwise false.
      */
     public function lastId()
     {

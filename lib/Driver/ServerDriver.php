@@ -1,28 +1,24 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver;
 
-use Kristuff\Patabase;
 use Kristuff\Patabase\Driver\DatabaseDriver;
-use Kristuff\Patabase\Exception;
 
 /**
  *  Class ServerDriver
@@ -35,10 +31,10 @@ abstract class ServerDriver extends DatabaseDriver
      * Constructor
      *
      * @access public
-     * @param  array    $settings               The connection settings
-     * @param  bool     $isServerConnection     True for Server connection, default is false
+     * @param array     $settings               The connection settings
+     * @param bool      $isServerConnection     True for Server connection, default is false
      */
-    public function __construct(array $settings, $isServerConnection = false)
+    public function __construct(array $settings, bool $isServerConnection = false)
     {
         // remove database attribute for server connection
         if ($isServerConnection){
@@ -54,55 +50,56 @@ abstract class ServerDriver extends DatabaseDriver
      * Check if database exists
      *
      * @access public
-     * @param  string   $databaseName   The database name
+     * @param string    $databaseName   The database name
      *
      * @return bool     True if the given database exists, otherwise false.
      */
-    abstract public function databaseExists($databaseName);
+    abstract public function databaseExists(string $databaseName): bool;
 
     /**
      * Create a database
      *
      * @access public
-     * @param  string   $databaseName   The database name.
-     * @param  string   $owner          The database owner. This parameter is honored in pgsql only.
+     * @param string    $databaseName   The database name.
+     * @param string    $owner          The database owner. This parameter is honored in pgsql only.
+     * @param string    $template       (optional) The template to use. Default is 'template0'
      *
      * @return bool     True if the database has been created, otherwise false.
      */
-    abstract public function createDatabase($databaseName, $owner);
+    abstract public function createDatabase(string $databaseName, ?string $owner= null, ?string $template = null): bool;
 
     /**
      * Create a user
      *
      * @access public
-     * @param  string   $userName       The user name
-     * @param  string   $userpassword   The user password
+     * @param string    $userName       The user name
+     * @param string    $userpassword   The user password
      *
      * @return bool     True if the user has been created, otherwise false. 
      */
-    abstract public function createUser($userName, $userPassword);
+    abstract public function createUser(string $userName, string $userPassword): bool;
 
     /**
      * Drop a user
      *
      * @access public
-     * @param  string   $userName       The user name
-     * @param  bool     $ifExists       (optional) True if the user must be deleted only when exists. Default is false.
+     * @param string    $userName       The user name
+     * @param bool      $ifExists       (optional) True if the user must be deleted only when exists. Default is false.
      *
      * @return bool     True if the user has been dropped or does not exist when $ifExists is set to True, otherwise false. 
      */
-    abstract public function dropUser($userName, $ifExists = false);
+    abstract public function dropUser(string $userName, bool $ifExists = false): bool;
     
     /**
      * Grant user permissions on given database
      *
      * @access public
-     * @param  string   $databaseName   The database name
-     * @param  string   $userName       The user name
+     * @param string    $databaseName   The database name
+     * @param string    $userName       The user name
      *
      * @return bool     True if the user has been granted, otherwise false. 
      */
-    abstract public function grantUser($databaseName, $userName);
+    abstract public function grantUser(string $databaseName, string $userName): bool;
 
     /**
      * Get the SQL for show databases
@@ -110,7 +107,7 @@ abstract class ServerDriver extends DatabaseDriver
      * @access public
      * @return string
      */
-    abstract public function sqlShowDatabases();
+    abstract public function sqlShowDatabases(): string;
 
     /**
      * Get the SQL for show users
@@ -118,5 +115,5 @@ abstract class ServerDriver extends DatabaseDriver
      * @access public
      * @return string
      */
-    abstract public function sqlShowUsers();
+    abstract public function sqlShowUsers(): string;
 }

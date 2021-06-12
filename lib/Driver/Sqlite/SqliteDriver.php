@@ -1,21 +1,19 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver\Sqlite;
@@ -55,11 +53,11 @@ class SqliteDriver extends DatabaseDriver
      * Create a new PDO connection
      *
      * @access public
-     * @param  array   $settings
+     * @param array   $settings
      *
      * @return void
      */
-    public function createConnection(array $settings)
+    public function createConnection(array $settings): void
     {
         $this->pdo = new \PDO('sqlite:'.$settings['database']); 
 
@@ -76,11 +74,11 @@ class SqliteDriver extends DatabaseDriver
      * Escape an identifier
      *
      * @access public
-     * @param  string  $identifier
+     * @param string  $identifier
      *
      * @return string
      */
-    public function escapeIdentifier($identifier)
+    public function escapeIdentifier(string $identifier): string
     {
         return '"'.$identifier.'"';
     }
@@ -89,11 +87,11 @@ class SqliteDriver extends DatabaseDriver
      * Escape a value
      *
      * @access public
-     * @param  string  $value
+     * @param string  $value
      *
      * @return string
      */
-    public function escapeValue($value)
+    public function escapeValue(string $value): string
     {
         return '"'.$value.'"';
     }
@@ -102,9 +100,9 @@ class SqliteDriver extends DatabaseDriver
      * Get last inserted id
      *
      * @access public
-     * @return integer
+     * @return string
      */
-    public function lastInsertedId()
+    public function lastInsertedId(): string
     {
         return $this->pdo->lastInsertId();
     }
@@ -121,7 +119,7 @@ class SqliteDriver extends DatabaseDriver
      * @access public
      * @return bool True if foreign keys are enabled, otherwise false
      */
-    public function isForeignKeyEnabled()
+    public function isForeignKeyEnabled(): bool
     {
         $query = $this->pdo->prepare('PRAGMA foreign_keys');
         return  $query->execute() && (int) $query->fetchColumn() === 1;
@@ -133,7 +131,7 @@ class SqliteDriver extends DatabaseDriver
      * @access public
      * @return void
      */
-    public function enableForeignKeys()
+    public function enableForeignKeys(): void
     {
         $this->pdo->exec('PRAGMA foreign_keys = ON');
     }
@@ -144,7 +142,7 @@ class SqliteDriver extends DatabaseDriver
      * @access public
      * @return void
      */
-    public function disableForeignKeys()
+    public function disableForeignKeys(): void
     {
         $this->pdo->exec('PRAGMA foreign_keys = OFF');
     }
@@ -155,15 +153,15 @@ class SqliteDriver extends DatabaseDriver
      * This is not supported on sqlite and returns false.
      * 
      * @access public
-     * @param  string   $fkName         The constraint name
-     * @param  string   $srcTable       The source table
-     * @param  string   $srcColumn      The source column 
-     * @param  string   $refTable       The referenced table
-     * @param  string   $refColumn      The referenced column
+     * @param string   $fkName         The constraint name
+     * @param string   $srcTable       The source table
+     * @param string   $srcColumn      The source column 
+     * @param string   $refTable       The referenced table
+     * @param string   $refColumn      The referenced column
      *
      * @return bool    True if the foreign key has been created, otherwise false
      */
-    public function addForeignKey($fkName, $srcTable, $srcColumn, $refTable, $refColumn)
+    public function addForeignKey(string $fkName, string $srcTable, string $srcColumn, string $refTable, string $refColumn): bool
     {
         return false;
     }
@@ -174,12 +172,12 @@ class SqliteDriver extends DatabaseDriver
      * This is not supported on sqlite and returns false.
      * 
      * @access public
-     * @param  string  $fkName          The constraint name
-     * @param  string  $tableName       The source table
+     * @param string  $fkName          The constraint name
+     * @param string  $tableName       The source table
      *
      * @return bool    True if the foreign key has been dropped, otherwise false
      */
-    public function dropForeignKey($fkName, $tableName)
+    public function dropForeignKey(string $fkName, string $tableName): bool
     {
         return false;
     }
@@ -190,7 +188,7 @@ class SqliteDriver extends DatabaseDriver
      * @access public
      * @return string
      */
-    public function sqlShowTables()
+    public function sqlShowTables(): string
     {
         return 'SELECT name FROM sqlite_master WHERE type = "table";';
     }
@@ -203,7 +201,7 @@ class SqliteDriver extends DatabaseDriver
      *
      * @return string         
      */
-    public function sqlRandom($seed = null)
+    public function sqlRandom($seed = null): string
     {
         $seed = !empty($seed) ? $seed : '';  
         return sprintf('random(%s)', $seed);   
@@ -213,11 +211,11 @@ class SqliteDriver extends DatabaseDriver
      * Get the SQL for auto increment column
      *
      * @access public
-     * @param  string   $type   The sql column type
+     * @param string   $type   The sql column type
      * 
      * @return string
      */
-    public function sqlColumnAutoIncrement($type)
+    public function sqlColumnAutoIncrement(string $type): string
     {
         // http://www.sqlite.org/datatypes.html
         //  One exception to the typelessness of SQLite is a column whose type is INTEGER PRIMARY KEY. (And you 

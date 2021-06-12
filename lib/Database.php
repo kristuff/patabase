@@ -1,28 +1,31 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase;
 
-use Kristuff\Patabase;
 use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Datasource;
+use Kristuff\Patabase\Query;
+use Kristuff\Patabase\Query\CreateTable;
+use Kristuff\Patabase\Query\Delete;
+use Kristuff\Patabase\Query\Insert;
+use Kristuff\Patabase\Query\Select;
+use Kristuff\Patabase\Query\Update;
 
 /**
  * Class Database
@@ -38,7 +41,7 @@ class Database extends Datasource
      * @access protected
      * @return void
      */
-    protected function openConnection()
+    protected function openConnection(): void
     {
         $this->driver = Driver\DriverFactory::getInstance($this->settings, false);
     }
@@ -47,11 +50,11 @@ class Database extends Datasource
      * Get a new instance of Table object
      *
      * @access public
-     * @param  string       $tableName      The name of the table
+     * @param string    $tableName      The name of the table
      *
      * @return Table
      */
-    public function table($tableName)
+    public function table($tableName): Table
     {
         return new Table($this, $tableName);
     }
@@ -60,10 +63,10 @@ class Database extends Datasource
      * Get a new CreateTable instance 
      *
      * @access public
-     * @param  string       $tableName      The name of the table
+     * @param string    $tableName      The name of the table
      * @return Query\CreateTable
      */
-    public function createTable($tableName)
+    public function createTable($tableName): CreateTable
     {
         return new Query\CreateTable($this->getDriver(), $tableName);
     }
@@ -72,11 +75,11 @@ class Database extends Datasource
      * Checks if the a table exists
      * 
      * @access public
-     * @param  string       $tableName      The name of the table
+     * @param string    $tableName      The name of the table
      *
-     * @return bool         True if the table exists, otherwise false.
+     * @return bool     True if the table exists, otherwise false.
      */
-    public function tableExists($tableName)
+    public function tableExists($tableName): bool
     {
         $sql = trim(sprintf('SELECT 1 FROM %s LIMIT 1', $tableName));
         try {
@@ -91,10 +94,11 @@ class Database extends Datasource
      * Drop a table
      *
      * @access public
-     * @param  string       $tableName      The name of the table
-     * @return bool         True if the table has been dropped, otherwise false
+     * @param string    $tableName      The name of the table
+     * 
+     * @return bool     True if the table has been dropped, otherwise false
       */
-    public function dropTable($tableName)
+    public function dropTable(string $tableName): bool
     {
         $sql = trim(sprintf('DROP TABLE %s', $tableName));
         return $this->driver->prepareAndExecuteSql($sql);
@@ -104,12 +108,12 @@ class Database extends Datasource
      * Rename a table
      *
      * @access public
-     * @param  string   $currentName     The current name of the table to rename
-     * @param  string   $newName         The new table name
+     * @param string    $currentName     The current name of the table to rename
+     * @param string    $newName         The new table name
      *
      * @return bool     True if the table has been renamed, otherwise false.
      */
-    public function renameTable($currentName, $newName)
+    public function renameTable(string $currentName, string $newName): bool
     {
         $sql = trim(sprintf('ALTER TABLE %s RENAME TO %s', $currentName, $newName));
         return $this->driver->prepareAndExecuteSql($sql);
@@ -121,7 +125,7 @@ class Database extends Datasource
      * @access public
      * @return array    A non indexed array containing tables names
      */
-    public function getTables()
+    public function getTables(): array
     {
         $sql = $this->driver->sqlShowTables();
         $query = $this->getConnection()->prepare($sql);
@@ -135,7 +139,7 @@ class Database extends Datasource
      * @access public
      * @return void
      */
-    public function enableForeignKeys()
+    public function enableForeignKeys(): void
     {
         $this->driver->enableForeignKeys();
     }
@@ -146,7 +150,7 @@ class Database extends Datasource
      * @access public
      * @return void
      */
-    public function disableForeignKeys()
+    public function disableForeignKeys(): void
     {
         $this->driver->disableForeignKeys();
     }
@@ -155,15 +159,15 @@ class Database extends Datasource
      * Add a foreign key
      * 
      * @access public
-     * @param  string   $fkName          The constraint name
-     * @param  string   $srcTable        The source table
-     * @param  string   $srcColumn       The source column 
-     * @param  string   $refTable        The referenced table
-     * @param  string   $refColumn       The referenced column
+     * @param string    $fkName          The constraint name
+     * @param string    $srcTable        The source table
+     * @param string    $srcColumn       The source column 
+     * @param string    $refTable        The referenced table
+     * @param string    $refColumn       The referenced column
      *
      * @return bool     True if the foreign key has been added, otherwise false
      */
-    public function addForeignKey($fkName, $srcTable, $srcColumn, $refTable, $refColumn)
+    public function addForeignKey(string $fkName, string $srcTable, string $srcColumn, string $refTable, string $refColumn): bool
     {
         return $this->driver->addForeignKey($fkName, $srcTable, $srcColumn, $refTable, $refColumn);
     }
@@ -172,12 +176,12 @@ class Database extends Datasource
      * Drop a foreign key
      * 
      * @access public
-     * @param  string   $fkName         The constraint name
-     * @param  string   $tableName      The source table
+     * @param string    $fkName         The constraint name
+     * @param string    $tableName      The source table
      *
      * @return bool     True if the foreign key has been dropped, otherwise false
      */
-    public function dropForeignKey($fkName, $tableName)
+    public function dropForeignKey(string $fkName, string $tableName): bool
     {
         return $this->driver->dropForeignKey($fkName, $tableName);
     }
@@ -186,11 +190,11 @@ class Database extends Datasource
      * Get a new Insert query instance
      *
      * @access public
-     * @param  string   $tableName      The table in wich insert to
+     * @param string   $tableName      The table in wich insert to
      *
-     * @return Query\Table\Insert
+     * @return Query\Insert
      */
-    public function insert($tableName)
+    public function insert(string $tableName): Insert
     {
         $query = new Query\Insert($this->driver, $tableName);
         return $query;
@@ -200,11 +204,11 @@ class Database extends Datasource
      * Get a new Select query instance
      *
      * @access public
-     * @param  mixed        
+     * @param mixed        
      *
-     * @return Query\Table\Select
+     * @return Query\Select
      */
-    public function select()
+    public function select(): Select
     {
         $args = func_get_args();
         $query = new Query\Select($this->driver, null, $args);
@@ -215,11 +219,11 @@ class Database extends Datasource
      * Get a new Update query instance
      *
      * @access public
-     * @param  string   $tableName      The name of the table
+     * @param string   $tableName      The name of the table
      *
-     * @return Query\Table\Update
+     * @return Query\Update
      */
-    public function update($tableName)
+    public function update(string $tableName): Update
     {
         $query = new Query\Update($this->driver, $tableName);
         return $query;
@@ -229,11 +233,11 @@ class Database extends Datasource
      * Get a new Delete query instance
      *
      * @access public
-     * @param  string   $tableName      The name of the table
+     * @param string   $tableName      The name of the table
      *
      * @return Query\Table\Delete
      */
-    public function delete($tableName)
+    public function delete(string $tableName): Delete
     {
         return new Query\Delete($this->driver, $tableName);
     }
@@ -244,7 +248,7 @@ class Database extends Datasource
      * @access public
      * @return bool     True if the driver is in transaction, otherwise false
      */
-    public function inTransaction()
+    public function inTransaction(): bool
     {
         return $this->getConnection()->inTransaction();
     }
@@ -255,7 +259,7 @@ class Database extends Datasource
      * @access public
      * @return void
      */
-    public function beginTransaction()
+    public function beginTransaction(): void
     {
         if (! $this->inTransaction()) {
             $this->getConnection()->beginTransaction();
@@ -268,7 +272,7 @@ class Database extends Datasource
      * @access public
      * @return void
      */
-    public function commit()
+    public function commit(): void
     {
         if ($this->inTransaction()) {
             $this->getConnection()->commit();
@@ -281,7 +285,7 @@ class Database extends Datasource
      * @access public
      * @return void
      */
-    public function rollback()
+    public function rollback(): void
     {
         $this->getConnection()->rollback();
     }   

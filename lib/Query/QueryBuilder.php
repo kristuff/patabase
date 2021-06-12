@@ -1,21 +1,19 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Query;
@@ -25,7 +23,10 @@ use Kristuff\Patabase\Query\QueryBase;
 use Kristuff\Patabase\Exception;
 use Kristuff\Patabase\SqlException;
 use Kristuff\Patabase\Driver;
+use Kristuff\Patabase\Driver\DatabaseDriver;
 use Kristuff\Patabase\Output;
+use PDOStatement;
+
 
 /**
  * Class QueryBuilder
@@ -48,7 +49,7 @@ abstract class QueryBuilder extends QueryBase
      * PDO Statement object
      *
      * @access protected
-     * @var    PDO                  $pdoStatement
+     * @var PDOStatement        $pdoStatement
      */
     protected $pdoStatement = null;
 
@@ -56,7 +57,7 @@ abstract class QueryBuilder extends QueryBase
      * List of parameters passed to PDO statement
      *
      * @access public
-     * @var    array                $pdoParameters
+     * @var array                $pdoParameters
      */
     protected $pdoParameters = array();
 
@@ -64,7 +65,7 @@ abstract class QueryBuilder extends QueryBase
      * List of parameters passed to query
      *
      * @access public
-     * @var    array                $parameters
+     * @var array                $parameters
      */
     protected $parameters = array();
 
@@ -72,7 +73,7 @@ abstract class QueryBuilder extends QueryBase
      * Where conditions object
      *
      * @access protected
-     * @var    Query\Where          $where
+     * @var Query\Where          $where
      */
     protected $where = null;
     
@@ -80,7 +81,7 @@ abstract class QueryBuilder extends QueryBase
      * Having conditions object
      *
      * @access protected
-     * @var    Query\Having         $having
+     * @var Query\Having         $having
      */ 
     protected $having = null;
 
@@ -88,7 +89,7 @@ abstract class QueryBuilder extends QueryBase
      * The Driver instance
      *
      * @access protected
-     * @var    Driver\DatabaseDriver    $driver 
+     * @var Driver\DatabaseDriver    $driver 
      */
     protected $driver = null;
 
@@ -104,11 +105,11 @@ abstract class QueryBuilder extends QueryBase
      * Escape a given string with driver escape chars
      * 
      * @access public
-     * @param  string   $str        The value to escape
+     * @param string   $str        The value to escape
      *
      * @return string
      */
-    public function escape($str)
+    public function escape(string $str): string
     {
        return $this->driver->escape($str);
     }
@@ -117,11 +118,11 @@ abstract class QueryBuilder extends QueryBase
      * Escape an array of string with driver escape chars
      *
      * @access public
-     * @param  array    $values     The array of values
+     * @param array    $values     The array of values
      *
      * @return array
      */
-    public function escapeList(array $values)
+    public function escapeList(array $values): array
     {
         $newList = array();
         foreach ($values as $identifier) {
@@ -134,11 +135,11 @@ abstract class QueryBuilder extends QueryBase
      * Constructor, init the query by define the driver
      *
      * @access public
-     * @param  Driver\DatabaseDriver    $driver         The driver instance
+     * @param  DatabaseDriver    $driver         The driver instance
      *
      * @return string
      */
-    public function __construct( $driver)
+    public function __construct(DatabaseDriver $driver)
     {
         $this->driver = $driver;
     }
@@ -157,11 +158,11 @@ abstract class QueryBuilder extends QueryBase
      * Define a key/value parameter
      *
      * @access public
-     * @param  string       $columName          The name
-     * @param  mixed        $value              The value
+     * @param string       $columName          The name
+     * @param mixed        $value              The value
      * @return void
      */
-    public function setSqlParameter($name, $value)
+    public function setSqlParameter(string $name, $value): void
     {
         $this->pdoParameters[$name] = $value;    
     }
@@ -170,11 +171,11 @@ abstract class QueryBuilder extends QueryBase
      * Get whether a parameter with given name exists
      *
      * @access protected
-     * @param  string       $name               the column name
+     * @param string       $name               the column name
      *
      * @return bool
      */
-    public function sqlParameterExists($name)
+    public function sqlParameterExists(string $name): bool
     {
         return array_key_exists($name, $this->pdoParameters);
     }
@@ -183,7 +184,7 @@ abstract class QueryBuilder extends QueryBase
      * Prepare the SQL query
      *
      * @access public
-     * @return void
+     * @return bool
      */
     public function prepare()
     {
@@ -192,7 +193,7 @@ abstract class QueryBuilder extends QueryBase
             // an exception when prepareing the statement (with invalid table name for example)
             // when mysql and postres wont. 
             $this->pdoStatement = $this->driver->getConnection()->prepare($this->sql());
-            return TRUE;
+            return true;
 
         } catch (\PDOException $e) {
 
@@ -214,7 +215,7 @@ abstract class QueryBuilder extends QueryBase
      * @access protected
      * @return void
      */
-    protected function bindValues()
+    protected function bindValues(): void
     {
         // pdo statement may be not set at this stage if prepare failed
         if (isset($this->pdoStatement)) {
@@ -247,7 +248,7 @@ abstract class QueryBuilder extends QueryBase
      * @access public
      * @return bool     true if the query is executed with success, otherwise false
      */
-    public function execute()
+    public function execute(): bool
     {
         try {
             // prepare bind execute
@@ -287,33 +288,31 @@ abstract class QueryBuilder extends QueryBase
     /**
      * Returns the sql query output in given format
      *
-     *  TODO: format constants 
-     *
      * @access public
-     * @param  QueryBuilder     $query              The QueryBuilder instance
-     * @param  string           $outputFormat       The output format
+     * @param bool             $executed           true if the query has been successfully executed
+     * @param string           $outputFormat       The output format
      * 
      * @return mixed                     
      */
-    protected static function fetchOutput(QueryBuilder $query, $executed, $outputFormat)
+    protected function fetchOutput(bool $executed, string $outputFormat)
     {
         switch (strtoupper($outputFormat)){
 
             case Output::ASSOC:    
-                return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
+                return $executed ? $this->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
 
             case Output::OBJ:    
-                return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_OBJ) :    array();
+                return $executed ? $this->pdoStatement->fetchAll(\PDO::FETCH_OBJ) :    array();
 
             case Output::COLUMN:    
-                return $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_COLUMN) :  array();
+                return $executed ? $this->pdoStatement->fetchAll(\PDO::FETCH_COLUMN) :  array();
 
             case Output::JSON:
-                $results = $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
+                $results = $executed ? $this->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
                 return json_encode($results, JSON_NUMERIC_CHECK);   
 
             case Output::JSON_PRETTY_PRINT:    
-                $results = $executed ? $query->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
+                $results = $executed ? $this->pdoStatement->fetchAll(\PDO::FETCH_ASSOC) :  array();
                 return json_encode($results, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);   
                 
             default:

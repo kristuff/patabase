@@ -1,28 +1,24 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    0.5.0
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Driver\Sqlite;
 
 use Kristuff\Patabase;
-use Kristuff\Patabase\Database;
-use Kristuff\Patabase\Driver;
 
 /**
  * Class SqliteDatabase 
@@ -33,12 +29,12 @@ class SqliteDatabase extends Patabase\Database
      * Creates and returns an instance of SqliteDatabase using given filepath
      *
      * @access public
-     * @static method
-     * @param  string   $filePath       The full path to database.
+     * @static
+     * @param string   $filePath       The full path to database.
      *
      * @return SqliteDatabase
      */
-    public static function createInstance($filePath)
+    public static function createInstance(string $filePath): SqliteDatabase
     {
         $settings = array('driver' => 'sqlite', 'database'  => $filePath);
         return new SqliteDatabase($settings);
@@ -48,11 +44,11 @@ class SqliteDatabase extends Patabase\Database
      * Creates and returns an instance of 'in memory' SqliteDatabase 
      *
      * @access public
-     * @static method
+     * @static
      *
      * @return SqliteDatabase
      */
-    public static function createMemoryInstance()
+    public static function createMemoryInstance(): SqliteDatabase
     {
         $settings = array('driver' => 'sqlite', 'database'  => ':memory:');
         return new SqliteDatabase($settings);
@@ -71,7 +67,7 @@ class SqliteDatabase extends Patabase\Database
      * @access public
      * @return bool     true if foreign keys are enabled, otherwise false
      */
-    public function isForeignKeyEnabled()
+    public function isForeignKeyEnabled(): bool
     {
         return $this->driver->isForeignKeyEnabled();
     }

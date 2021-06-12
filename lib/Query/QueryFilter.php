@@ -1,22 +1,19 @@
-<?php
+<?php declare(strict_types=1);
 
-/*
- *   ____         _          _
- *  |  _ \  __ _ | |_  __ _ | |__    __ _  ___   ___
- *  | |_) |/ _` || __|/ _` || '_ \  / _` |/ __| / _ \
- *  |  __/| (_| || |_| (_| || |_) || (_| |\__ \|  __/
- *  |_|    \__,_| \__|\__,_||_.__/  \__,_||___/ \___|
- *  
+/** 
+ *  ___      _        _
+ * | _ \__ _| |_ __ _| |__  __ _ ___ ___
+ * |  _/ _` |  _/ _` | '_ \/ _` (_-</ -_)
+ * |_| \__,_|\__\__,_|_.__/\__,_/__/\___|
+ * 
  * This file is part of Kristuff\Patabase.
- *
- * (c) Kristuff <contact@kristuff.fr>
+ * (c) Kristuff <kristuff@kristuff.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
-* @version    0.5.0
- *
- * @copyright  2017-2020 Kristuff
+ * @version    1.0.0
+ * @copyright  2017-2021 Kristuff
  */
 
 namespace Kristuff\Patabase\Query;
@@ -93,7 +90,7 @@ abstract class QueryFilter
      *
      * @return void
      */
-    protected function addCondition($type, $sql, $column, $value, $operator = '')
+    protected function addCondition(string $type, string $sql, ?string $column, $value, ?string $operator = ''): void
     {
         $this->conditions[] = array(
             'type'     =>  $type,
@@ -109,11 +106,11 @@ abstract class QueryFilter
      * Make sure the argument name is unique to Avoid collision in query parameters.
      *
      * @access private
-     * @param  string   $column     The column name
+     * @param string   $column     The column name
      *
      * @return string
      */
-    private function getArgumentName($column)
+    private function getArgumentName(string $column): string
     {
         $arg = ':__' . str_replace('.', '_', $column); 
         return $this->topQuery->sqlParameterExists($arg) ? $arg . uniqid() : $arg;
@@ -177,7 +174,7 @@ abstract class QueryFilter
      * @access public
      * @return QueryBuilder
      */
-    public function closeAnd()
+    public function closeAnd(): QueryBuilder
     {
         return $this->closeGroup();
     }
@@ -188,7 +185,7 @@ abstract class QueryFilter
      * @access public
      * @return QueryBuilder
      */
-    public function closeGroup()
+    public function closeGroup(): QueryBuilder
     {
         $this->addCondition('group_end', ')', null, null);
         $this->isGroupOpen = false;
@@ -210,11 +207,11 @@ abstract class QueryFilter
      * Construct and returns the sql for IN or NOT IN statement
      *
      * @access protected
-     * @param  array    $item       The filter item
+     * @param array    $item       The filter item
      *
      * @return string
      */
-    protected function getSqlInOrNotIn(array $item)
+    protected function getSqlInOrNotIn(array $item): string
     {
         // define argument for each values
         $valueArgs = array();
@@ -236,7 +233,7 @@ abstract class QueryFilter
      * @access public
      * @return string 
      */
-    public function sql()
+    public function sql(): string
     {
         $sql = '';
         if (!empty($this->conditions)) {
