@@ -32,7 +32,7 @@ class Where extends QueryFilter
      * sql base: WHERE or HAVING
      *
      * @access protected
-     * @var    string
+     * @var string
      */
     protected $sqlBase = 'WHERE';   
 
@@ -40,11 +40,11 @@ class Where extends QueryFilter
      * Equal to condition
      *
      * @access public
-     * @param string   $column     The column name
-     * @param  mixed    $value      The condition value
+     * @param string    $column     The column name
+     * @param mixed     $value      The condition value
      * @return $this|QueryBuilder  
      */
-    public function equal($column, $value)
+    public function equal(string $column, $value)
     {
         $this->addCondition('EQUAL', $this->query->escape($column).' = ', $column, $value);
         return $this->returnFunction();
@@ -54,12 +54,12 @@ class Where extends QueryFilter
      * NotEqual to condition
      *
      * @access public
-     * @param string   $column     The column name
-     * @param  mixed    $value      The condition value
+     * @param string    $column     The column name
+     * @param mixed     $value      The condition value
      *
      * @return $this|QueryBuilder  
      */
-    public function notEqual($column, $value)
+    public function notEqual(string $column, $value)
     {
         $this->addCondition('NOT_EQUAL', $this->query->escape($column).' != ', $column, $value);
         return $this->returnFunction();
@@ -69,12 +69,12 @@ class Where extends QueryFilter
      * Greater than condition
      *
      * @access public
-     * @param string   $column     The column name
-     * @param  mixed    $value      The condition value
+     * @param string    $column     The column name
+     * @param mixed     $value      The condition value
      *
      * @return $this|QueryBuilder  
      */
-    public function greater($column, $value)
+    public function greater(string $column, $value)
     {
         $this->addCondition('SUP', $this->query->escape($column).' > ', $column, $value);
         return $this->returnFunction();
@@ -84,12 +84,12 @@ class Where extends QueryFilter
      * Greater than or equal condition
      *
      * @access public
-     * @param string   $column     The column name
-     * @param  mixed    $value      The condition value
+     * @param string    $column     The column name
+     * @param mixed     $value      The condition value
      *
      * @return $this|QueryBuilder  
      */
-    public function greaterEqual($column, $value)
+    public function greaterEqual(string $column, $value)
     {
         $this->addCondition('SUP_EQUAL', $this->query->escape($column).' >= ', $column, $value);
         return $this->returnFunction();
@@ -99,12 +99,12 @@ class Where extends QueryFilter
      * Lower than condition
      *
      * @access public
-     * @param string   $column     The column name
-     * @param  mixed    $value      The condition value
+     * @param string    $column     The column name
+     * @param mixed     $value      The condition value
      *
      * @return $this|QueryBuilder  
      */
-    public function lower($column, $value)
+    public function lower(string $column, $value)
     {
         $this->addCondition('INF', $this->query->escape($column).' < ', $column, $value);
         return $this->returnFunction();
@@ -114,12 +114,12 @@ class Where extends QueryFilter
      * Lower than or equal condition
      *
      * @access public
-     * @param string   $column     The column name
-     * @param  mixed    $value      The condition value
+     * @param string    $column     The column name
+     * @param mixed     $value      The condition value
      *
      * @return $this|QueryBuilder  
      */
-    public function lowerEqual($column, $value)
+    public function lowerEqual(string $column, $value)
     {
         $this->addCondition('INF_EQUAL', $this->query->escape($column).' <= ', $column, $value);
         return $this->returnFunction();
@@ -129,11 +129,11 @@ class Where extends QueryFilter
      * IS NULL condition
      *
      * @access public
-     * @param string   $column     The column name
+     * @param string    $column     The column name
      *
      * @return $this|QueryBuilder  
      */
-    public function isNull($column)
+    public function isNull(string $column)
     {
         $this->addCondition('NULL', $this->query->escape($column).' IS NULL ', $column, null);
         return $this->returnFunction();
@@ -143,11 +143,11 @@ class Where extends QueryFilter
      * IS NOT NULL condition
      *
      * @access public
-     * @param string   $column     The column name
+     * @param string    $column     The column name
      *
      * @return $this|QueryBuilder  
      */
-    public function notNull($column)
+    public function notNull(string $column)
     {
         $this->addCondition('NOT_NULL', $this->query->escape($column).' IS NOT NULL ', $column, null);
         return $this->returnFunction();
@@ -157,12 +157,12 @@ class Where extends QueryFilter
      * IN condition
      *
      * @access public
-     * @param string   $column     The column name
-     * @param array    $values     The conditions values
+     * @param string    $column     The column name
+     * @param array     $values     The conditions values
      *
      * @return $this|QueryBuilder  
      */
-    public function in($column, array $values)
+    public function in(string $column, array $values)
     {
         if (! empty($values)) {
             $this->addCondition('IN', $this->query->escape($column).' IN ', $column, $values);
@@ -179,7 +179,7 @@ class Where extends QueryFilter
      *
      * @return $this|QueryBuilder  
      */
-    public function notIn($column, array $values)
+    public function notIn(string $column, array $values)
     {
         if (! empty($values)) {
             $this->addCondition('NOT_IN', $this->query->escape($column).' NOT IN ', $column, $values);
@@ -196,7 +196,7 @@ class Where extends QueryFilter
      *
      * @return $this|QueryBuilder  
      */
-    public function like($column, $pattern)
+    public function like(string $column, string $pattern)
     {
         $this->addCondition('LIKE', $this->query->escape($column).' LIKE ', $column, $pattern);
         return $this->returnFunction();
@@ -211,7 +211,7 @@ class Where extends QueryFilter
      *
      * @return $this|QueryBuilder  
      */
-    public function notLike($column, $pattern)
+    public function notLike(string $column, string $pattern)
     {
         $this->addCondition('NOT_LIKE', $this->query->escape($column).' NOT LIKE ', $column, $pattern);
         return $this->returnFunction();

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -31,7 +31,7 @@ class Insert extends \Kristuff\Patabase\Query\InsertBase
      * @access public
      * @return string
      */
-    public function sql()
+    public function sql(): string
     {
         $columnsNames   = array();
         $columnsValues  = array();
@@ -53,9 +53,9 @@ class Insert extends \Kristuff\Patabase\Query\InsertBase
      * Bind values parameters
      *
      * @access public
-     * @return $this
+     * @return void
      */
-    public function bindValues()
+    public function bindValues(): void
     {
         foreach ($this->parameters as $key => $val) {
             $arg = $this->getArgName($key);
@@ -69,7 +69,7 @@ class Insert extends \Kristuff\Patabase\Query\InsertBase
      * This function returns false if there is no executed query.
      *
      * @access public
-     * @return int|false     The last inserted id if found, otherwise false.
+     * @return string|false     The last inserted id if found, otherwise false.
      */
     public function lastId()
     {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -23,7 +23,10 @@ use Kristuff\Patabase\Query\QueryBase;
 use Kristuff\Patabase\Exception;
 use Kristuff\Patabase\SqlException;
 use Kristuff\Patabase\Driver;
+use Kristuff\Patabase\Driver\DatabaseDriver;
 use Kristuff\Patabase\Output;
+use PDOStatement;
+
 
 /**
  * Class QueryBuilder
@@ -46,7 +49,7 @@ abstract class QueryBuilder extends QueryBase
      * PDO Statement object
      *
      * @access protected
-     * @var    PDO                  $pdoStatement
+     * @var PDOStatement        $pdoStatement
      */
     protected $pdoStatement = null;
 
@@ -54,7 +57,7 @@ abstract class QueryBuilder extends QueryBase
      * List of parameters passed to PDO statement
      *
      * @access public
-     * @var    array                $pdoParameters
+     * @var array                $pdoParameters
      */
     protected $pdoParameters = array();
 
@@ -62,7 +65,7 @@ abstract class QueryBuilder extends QueryBase
      * List of parameters passed to query
      *
      * @access public
-     * @var    array                $parameters
+     * @var array                $parameters
      */
     protected $parameters = array();
 
@@ -70,7 +73,7 @@ abstract class QueryBuilder extends QueryBase
      * Where conditions object
      *
      * @access protected
-     * @var    Query\Where          $where
+     * @var Query\Where          $where
      */
     protected $where = null;
     
@@ -78,7 +81,7 @@ abstract class QueryBuilder extends QueryBase
      * Having conditions object
      *
      * @access protected
-     * @var    Query\Having         $having
+     * @var Query\Having         $having
      */ 
     protected $having = null;
 
@@ -86,7 +89,7 @@ abstract class QueryBuilder extends QueryBase
      * The Driver instance
      *
      * @access protected
-     * @var    Driver\DatabaseDriver    $driver 
+     * @var Driver\DatabaseDriver    $driver 
      */
     protected $driver = null;
 
@@ -106,7 +109,7 @@ abstract class QueryBuilder extends QueryBase
      *
      * @return string
      */
-    public function escape($str)
+    public function escape(string $str): string
     {
        return $this->driver->escape($str);
     }
@@ -119,7 +122,7 @@ abstract class QueryBuilder extends QueryBase
      *
      * @return array
      */
-    public function escapeList(array $values)
+    public function escapeList(array $values): array
     {
         $newList = array();
         foreach ($values as $identifier) {
@@ -132,11 +135,11 @@ abstract class QueryBuilder extends QueryBase
      * Constructor, init the query by define the driver
      *
      * @access public
-     * @param  Driver\DatabaseDriver    $driver         The driver instance
+     * @param  DatabaseDriver    $driver         The driver instance
      *
      * @return string
      */
-    public function __construct( $driver)
+    public function __construct(DatabaseDriver $driver)
     {
         $this->driver = $driver;
     }
@@ -156,10 +159,10 @@ abstract class QueryBuilder extends QueryBase
      *
      * @access public
      * @param string       $columName          The name
-     * @param  mixed        $value              The value
+     * @param mixed        $value              The value
      * @return void
      */
-    public function setSqlParameter($name, $value)
+    public function setSqlParameter(string $name, $value): void
     {
         $this->pdoParameters[$name] = $value;    
     }
@@ -172,7 +175,7 @@ abstract class QueryBuilder extends QueryBase
      *
      * @return bool
      */
-    public function sqlParameterExists($name)
+    public function sqlParameterExists(string $name): bool
     {
         return array_key_exists($name, $this->pdoParameters);
     }
@@ -181,7 +184,7 @@ abstract class QueryBuilder extends QueryBase
      * Prepare the SQL query
      *
      * @access public
-     * @return void
+     * @return bool
      */
     public function prepare()
     {
@@ -190,7 +193,7 @@ abstract class QueryBuilder extends QueryBase
             // an exception when prepareing the statement (with invalid table name for example)
             // when mysql and postres wont. 
             $this->pdoStatement = $this->driver->getConnection()->prepare($this->sql());
-            return TRUE;
+            return true;
 
         } catch (\PDOException $e) {
 
@@ -212,7 +215,7 @@ abstract class QueryBuilder extends QueryBase
      * @access protected
      * @return void
      */
-    protected function bindValues()
+    protected function bindValues(): void
     {
         // pdo statement may be not set at this stage if prepare failed
         if (isset($this->pdoStatement)) {

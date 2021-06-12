@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -36,8 +36,6 @@ use Kristuff\Patabase\Query\SelectBase;
  */
 class Select extends SelectBase
 {
-  
-    
     /**
      * Get an argument name based on column name
      * Make sure the argument name is unique to Avoid collision in query parameters.
@@ -47,7 +45,7 @@ class Select extends SelectBase
      *
      * @return string
      */
-    protected function getArgumentName($column)
+    protected function getArgumentName(string $column): string
     {
         $topQuery = $this->topQuery ?: $this;  
         $arg = ':_' . str_replace('.', '_', $column); 
@@ -60,7 +58,7 @@ class Select extends SelectBase
      * @access private
      * @return string
      */
-    private function sqlColumns()
+    private function sqlColumns(): string
     {
         // no columns givens select all (SELECT *)
         if (!count($this->columns) > 0 ) {
@@ -123,7 +121,7 @@ class Select extends SelectBase
      * @access public
      * @return string
      */
-    public function sql()
+    public function sql(): string
     {
         $topQuery = $this->topQuery ?: $this;  
         $sqlJoins = empty($this->joins) ? '' : implode(' ', $this->joins) ; 
@@ -218,5 +216,4 @@ class Select extends SelectBase
         $this->limit(1);
         return $this->execute() ? $this->pdoStatement->fetchColumn() : null;
     }
-
 }

@@ -20,6 +20,7 @@ namespace Kristuff\Patabase\Driver;
 
 use Kristuff\Patabase\Exception;
 use Kristuff\Patabase\Output;
+use PDO;
 
 /**
  *  Class DatabaseDriver
@@ -229,9 +230,9 @@ abstract class DatabaseDriver
      * Get the PDO connection
      *
      * @access public
-     * @return \PDO
+     * @return PDO
      */
-    public function getConnection(): \PDO
+    public function getConnection(): PDO
     {
         return $this->pdo;
     }

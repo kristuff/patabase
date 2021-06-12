@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -17,10 +17,6 @@
  */
 
 namespace Kristuff\Patabase\Query;
-
-use Kristuff\Patabase\Query;
-use Kristuff\Patabase\Exception;
-use Kristuff\Patabase\SqlException;
 
 /**
  * Class QueryBuilder
@@ -43,7 +39,7 @@ abstract class QueryBase
      * @access public
      * @return bool             True if the last query execution has genaretd an error
      */
-    public function hasError()
+    public function hasError(): bool
     {
         return !empty($this->error);
     }
@@ -52,7 +48,7 @@ abstract class QueryBase
      * Error code
      *
      * @access public
-     * @return string|null      The last error code reported if any, otherwise null. 
+     * @return mixed|null      The last error code reported if any, otherwise null. 
      */
     public function errorCode()
     {

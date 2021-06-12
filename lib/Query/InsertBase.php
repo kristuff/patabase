@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -59,7 +59,7 @@ abstract class InsertBase extends QueryBuilder
      * @access public
      * @return string
      */
-    protected function getArgName($column)
+    protected function getArgName(string $column): string
     {
          return '_' . str_replace('.', '_', $column);
     }
@@ -68,7 +68,7 @@ abstract class InsertBase extends QueryBuilder
      * Prepare the INSERT query
      * 
      * @access public
-     * @param string(s) column names
+     * @param string    column names
      *
      * @return $this
      */
@@ -95,9 +95,9 @@ abstract class InsertBase extends QueryBuilder
      * Bind values parameters
      *
      * @access public
-     * @return $this
+     * @return void
      */
-    public function bindValues()
+    public function bindValues(): void
     {
         foreach ($this->parameters as $key => $val) {
             $arg = $this->getArgName($key);
@@ -110,12 +110,12 @@ abstract class InsertBase extends QueryBuilder
      * Set a Name/Value Parameter
      *
      * @access public
-     * @param string       $columName          The column name
-     * @param  mixed        $value              The column value
+     * @param string        $columName          The column name
+     * @param mixed         $value              The column value
      *
      * @return $this
      */
-    public function setValue($columName, $value)
+    public function setValue(string $columName, $value)
     {
         $this->parameters[$columName] = $value;
         return $this;
@@ -126,6 +126,7 @@ abstract class InsertBase extends QueryBuilder
      *
      * @access public
      * @param array       $values              The key/values array
+     * 
      * @return $this
      */
     public function values(array $values)

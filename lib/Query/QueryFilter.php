@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -90,7 +90,7 @@ abstract class QueryFilter
      *
      * @return void
      */
-    protected function addCondition($type, $sql, $column, $value, $operator = '')
+    protected function addCondition(string $type, string $sql, ?string $column, $value, ?string $operator = ''): void
     {
         $this->conditions[] = array(
             'type'     =>  $type,
@@ -110,7 +110,7 @@ abstract class QueryFilter
      *
      * @return string
      */
-    private function getArgumentName($column)
+    private function getArgumentName(string $column): string
     {
         $arg = ':__' . str_replace('.', '_', $column); 
         return $this->topQuery->sqlParameterExists($arg) ? $arg . uniqid() : $arg;
@@ -174,7 +174,7 @@ abstract class QueryFilter
      * @access public
      * @return QueryBuilder
      */
-    public function closeAnd()
+    public function closeAnd(): QueryBuilder
     {
         return $this->closeGroup();
     }
@@ -185,7 +185,7 @@ abstract class QueryFilter
      * @access public
      * @return QueryBuilder
      */
-    public function closeGroup()
+    public function closeGroup(): QueryBuilder
     {
         $this->addCondition('group_end', ')', null, null);
         $this->isGroupOpen = false;
@@ -211,7 +211,7 @@ abstract class QueryFilter
      *
      * @return string
      */
-    protected function getSqlInOrNotIn(array $item)
+    protected function getSqlInOrNotIn(array $item): string
     {
         // define argument for each values
         $valueArgs = array();
@@ -233,7 +233,7 @@ abstract class QueryFilter
      * @access public
      * @return string 
      */
-    public function sql()
+    public function sql(): string
     {
         $sql = '';
         if (!empty($this->conditions)) {

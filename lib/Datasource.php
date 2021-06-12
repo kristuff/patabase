@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -18,10 +18,9 @@
 
 namespace Kristuff\Patabase;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Driver\DatabaseDriver;
 use Kristuff\Patabase\Driver\ServerDriver;
+use PDO;
 
 /**
  * Class Datasource
@@ -49,7 +48,7 @@ abstract class Datasource
      * @access protected
      * @return void
      */
-    abstract protected function openConnection();
+    abstract protected function openConnection(): void;
 
     /**
      * Get the current driver name
@@ -57,7 +56,7 @@ abstract class Datasource
      * @access public
      * @return string
      */
-    public function getDriverName()
+    public function getDriverName(): string
     {
         return $this->driver->getDriverName();    
     }
@@ -132,9 +131,9 @@ abstract class Datasource
      * Get the PDO connection
      *
      * @access public
-     * @return \PDO
+     * @return PDO
      */
-    public function getConnection(): \PDO
+    public function getConnection(): PDO
     {
         return $this->driver->getConnection();
     }
@@ -145,7 +144,7 @@ abstract class Datasource
      * @access public
      * @return void
      */
-    public function closeConnection()
+    public function closeConnection(): void
     {
         if ($this->driver){
             $this->driver->closeConnection();

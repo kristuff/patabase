@@ -120,7 +120,7 @@ class CreateTable extends \Kristuff\Patabase\Query\QueryBuilder
      *
      * @return $this
      */
-    public function fk($fkName, $srcColumn, $refTable, $refColumn, $onUpdate = 'CASCADE', $onDelete = 'RESTRICT')
+    public function fk(string $fkName, string $srcColumn, string $refTable, string $refColumn, ?string $onUpdate = 'CASCADE', ?string $onDelete = 'RESTRICT')
     {
        $this->foreignKeys[] = array(
             'name'          => $fkName,
@@ -139,7 +139,7 @@ class CreateTable extends \Kristuff\Patabase\Query\QueryBuilder
      * @access public
      * @return string
      */
-    private function sqlColumns()
+    private function sqlColumns(): string
     {
         $result = array();
         foreach ($this->columns as $col){
@@ -259,7 +259,7 @@ class CreateTable extends \Kristuff\Patabase\Query\QueryBuilder
      * @access public
      * @return string
      */
-    public function sql()
+    public function sql(): string
     {
         $sqlTableName = $this->driver->escape($this->tableName);
         $sqlIfNotExists =  $this->isNotExists === true ? 'IF NOT EXISTS' : '';

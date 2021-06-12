@@ -168,7 +168,7 @@ class Table
      *
      * @return bool     True if the table has been renamed, otherwise false.
      */
-    public function rename($newName): bool
+    public function rename(string $newName): bool
     {
        $result = $this->database->renameTable($this->name, $newName);
        if ($result){

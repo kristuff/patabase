@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -18,11 +18,8 @@
 
 namespace Kristuff\Patabase\Query;
 
-use Kristuff\Patabase;
 use Kristuff\Patabase\Query\QueryBuilder;
 use Kristuff\Patabase\Query\QueryFilter;
-use Kristuff\Patabase\Query\Select;
-use Kristuff\Patabase\Driver\DatabaseDriver;
 
 /**
  * Handle SQL HAVING conditions
@@ -42,14 +39,14 @@ class Having extends QueryFilter
      * Add an HAVING function filter 
      *
      * @access public
-     * @param string   $function   The function name without parenthesis  ('SUM', 'COUNT', ...) 
-     * @param string   $column     The column name
-     * @param string   $operator   The logic operator (example '=', '<', ...)
+     * @param string    $function   The function name without parenthesis  ('SUM', 'COUNT', ...) 
+     * @param string    $column     The column name
+     * @param string    $operator   The logic operator (example '=', '<', ...)
      * @param  mixed    $value      The condition value 
      *
      * @return $this|QueryBuilder  
      */
-    public function fn($function, $column, $operator, $value)
+    public function fn(string $function, string $column, string $operator, $value)
     {
         $sql = $function .'('. ($column ? $this->query->escape($column): '') . ') ' . $operator . ' ';
         $this->addCondition($function, $sql, $column, $value);
@@ -60,12 +57,12 @@ class Having extends QueryFilter
      * Add an HAVING COUNT() filter 
      *
      * @access public
-     * @param string   $operator   The logic operator (example '=', '<', ...)
-     * @param  mixed    $value      The condition value
+     * @param string    $operator   The logic operator (example '=', '<', ...)
+     * @param mixed     $value      The condition value
      * 
      * @return $this|QueryBuilder  
      */
-    public function count($operator, $value)
+    public function count(string $operator, $value)
     {
         $sql = 'COUNT(*) '. $operator. ' ';
         $this->addCondition('COUNT', $sql, 'COUNT', $value);
@@ -76,13 +73,13 @@ class Having extends QueryFilter
      * Add an HAVING SUM() filter 
      *
      * @access public
-     * @param string   $column     The column name
-     * @param string   $operator   The logic operator (example '=', '<', ...)
-     * @param  mixed    $value      The condition value
+     * @param string    $column     The column name
+     * @param string    $operator   The logic operator (example '=', '<', ...)
+     * @param mixed     $value      The condition value
      *
      * @return $this|QueryBuilder  
      */
-    public function sum($column, $operator, $value)
+    public function sum(string $column, string $operator, $value)
     {
         $this->fn('SUM', $column, $operator, $value);
         return $this->returnFunction();

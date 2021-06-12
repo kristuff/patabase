@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /** 
  *  ___      _        _
@@ -18,8 +18,7 @@
 
 namespace Kristuff\Patabase\Query;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Database;
+use Kristuff\Patabase\Driver\DatabaseDriver;
 use Kristuff\Patabase\Query;
 
 /**
@@ -45,10 +44,10 @@ class Delete extends Query\QueryBuilder
      * Constructor
      *
      * @access public
-     * @param  DatabaseDriver   $driver         The driver instance
-     * @param string       $tableName      The table name
+     * @param DatabaseDriver    $driver         The driver instance
+     * @param string            $tableName      The table name
      */
-    public function __construct($driver, $tableName)
+    public function __construct(DatabaseDriver $driver, string $tableName)
     {
         parent::__construct($driver);
         $this->tableName = $tableName;
@@ -58,9 +57,9 @@ class Delete extends Query\QueryBuilder
      * Get a WHERE stamement object
      *
      * @access public
-     * @return Query\Where
+     * @return Where
      */
-    public function where()
+    public function where(): Where
     {
         if (!isset($this->where)){
             $this->where = new Query\Where($this, $this->driver);
@@ -72,9 +71,12 @@ class Delete extends Query\QueryBuilder
      * Add a WHERE column = value condition
      *
      * @access public
-     * @return Query\Where
+     * @param string            $column         The columnn name
+     * @param mixed             $value      
+     * 
+     * @return $this
      */
-    public function whereEqual($column, $value)
+    public function whereEqual(string $column, $value)
     {
         $this->where()->equal($column, $value);
         return $this;
@@ -86,7 +88,7 @@ class Delete extends Query\QueryBuilder
      * @access public
      * @return string
      */
-    public function sql()
+    public function sql(): string
     {
        // Build sql where and escape table name
        $sqlWhere = (isset($this->where)) ? $this->where->sql() : '';

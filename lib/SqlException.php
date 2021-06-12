@@ -29,11 +29,12 @@ class SqlException extends \Exception
      * Converts the error code to int in case driver returns it as string.  
      *
      * @access public
-     * @param string       $message
-     * @param  int          $code
-     * @param  Exception    $previous
+     * @param string        $message
+     * @param int           $code
+     * @param \Exception    $previous
      */
-    public function __construct($message, $code = 0, \Exception $previous = null) {
+    public function __construct(string $message, int $code = 0, ?\Exception $previous = null)
+    {
         
         // some drivers may return $code as string => force int 
         parent::__construct($message, intval($code), $previous);
