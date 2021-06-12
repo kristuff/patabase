@@ -19,7 +19,6 @@
 namespace Kristuff\Patabase\Driver\Mysql;
 
 use Kristuff\Patabase\Driver\ServerDriver;
-use phpDocumentor\Reflection\Types\String_;
 
 /**
  * Class MysqlDriver
@@ -212,12 +211,12 @@ class MysqlDriver extends ServerDriver
      *
      * @access public
      * @param string   $databaseName   The database name
-     * @param string   $owner          The database owner. This parameter is not honored in Mysql 
-     *                                  but needed for compatibility.
+     * @param string   $owner          The database owner. This parameter is not honored in Mysql. Default is null
+     * @param string   $template       The template to use. This parameter is not honored in Mysql. Default is null
      *
      * @return bool     True if the database has been created, otherwise false.
      */
-    public function createDatabase(string $databaseName): bool
+    public function createDatabase(string $databaseName, ?string $owner = null, ?string $template = null): bool
     {
         $sql = trim(sprintf('CREATE DATABASE %s',  $this->escape($databaseName)));
         return $this->prepareAndExecuteSql($sql);

@@ -232,7 +232,7 @@ class PostgresDriver extends ServerDriver
      * @access public
      * @param string   $databaseName   The database name
      * @param string   $owner          The database owner. 
-     * @param string   $template       (optional) The template to use. Default is 'template0'
+     * @param string   $template       The template to use. Default is 'template0'
      *
      * @return bool     True if the database has been created, otherwise false.
      */
