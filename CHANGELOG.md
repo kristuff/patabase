@@ -4,8 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [v1.0] - 2021-06-12
 
 ### Changed
-- **Possible break change** PHP Strict types
-
+- **Possible break change** PHP Strict types.
+- New `DatabaseDriver::isForeignKeyEnabled()` method (`bool`) added for compatibility (implemented on sqlite, return false by other drivers).
 
 ## [v0.5] - 2020-10-08
 
