@@ -32,6 +32,12 @@ class MysqlDriverTest extends TestCase
         new Kristuff\Patabase\Driver\Mysql\MysqlDriver(array());
     }
 
+
+    public function testIsFkEnabled()
+    {
+        $this->assertTrue(self::$srv->getDriver()->isForeignKeyEnabled());
+    }
+
     public function testEscape()
     {
         $this->assertEquals('`a`', self::$srv->getDriver()->escape('a'));

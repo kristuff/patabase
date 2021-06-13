@@ -157,14 +157,14 @@ class PostgresDriver extends ServerDriver
     
     /**
      * Get whether foreign keys are enabled or not
-     * For compatibility with Sqlite, not implemented in that driver, return false 
+     * For compatibility with Sqlite, not implemented in that driver (allways enabled), return true 
 
      * @access public
      * @return bool     true if foreign keys are enabled, otherwise false
      */
     public function isForeignKeyEnabled(): bool
     {
-        return false;
+        return true;
     }
 
     /**

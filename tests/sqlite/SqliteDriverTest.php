@@ -26,6 +26,7 @@ class SqliteDriverTest extends TestCase
         new Kristuff\Patabase\Driver\Sqlite\SqliteDriver(array());
     }
 
+  
     public function testEscape()
     {
         $this->assertEquals('"a"', self::$db->getDriver()->escape('a'));
