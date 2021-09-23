@@ -18,9 +18,6 @@
 
 namespace Kristuff\Patabase\Query;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Database;
-use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Query\QueryBuilder;
 use Kristuff\Patabase\Driver\DatabaseDriver;
 
@@ -44,8 +41,8 @@ abstract class InsertBase extends QueryBuilder
      * Constructor
      *
      * @access public
-     * @param  Driver\DatabaseDriver    $driver         The driver instance
-     * @param string                   $tableName      The table name
+     * @param DatabaseDriver    $driver         The driver instance
+     * @param string            $tableName      The table name
      */
     public function __construct(DatabaseDriver $driver, $tableName)
     {

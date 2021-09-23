@@ -148,7 +148,7 @@ abstract class QueryFilter
      * Close OR group condition
      *
      * @access public
-     * @return $this 
+     * @return QueryBuilder
      */
     public function closeOr()
     {

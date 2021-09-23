@@ -18,8 +18,9 @@
 
 namespace Kristuff\Patabase;
 
-use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Datasource;
+use Kristuff\Patabase\Driver;
+use Kristuff\Patabase\Driver\ServerDriver;
 
 /**
  * Class Server

@@ -235,7 +235,7 @@ class Database extends Datasource
      * @access public
      * @param string   $tableName      The name of the table
      *
-     * @return Query\Table\Delete
+     * @return Query\Delete
      */
     public function delete(string $tableName): Delete
     {

@@ -97,7 +97,6 @@ class CreateTable extends \Kristuff\Patabase\Query\QueryBuilder
      * Add a column to the list of column definition
      *
      * @access public
-     * @param  mixed column definition
      *
      * @return $this
      */

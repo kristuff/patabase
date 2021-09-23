@@ -71,7 +71,7 @@ class Table
      * Get a new Select query instance
      *
      * @access public
-     * @param array|string(s) (optional)  Column name(s), array of columns name / alias
+     * @param array|string(s) $columns      (optional) Column name(s), array of columns name / alias
      *    
      * @return Select
      */
@@ -164,7 +164,7 @@ class Table
      * Rename the table
      *
      * @access public
-     * @param string   $newName        The new table name
+     * @param string    $newName        The new table name
      *
      * @return bool     True if the table has been renamed, otherwise false.
      */
