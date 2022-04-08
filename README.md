@@ -4,9 +4,8 @@
 
 A database/server SQL query builder for PHP.
 
-[![Code Climate](https://codeclimate.com/github/kristuff/patabase/badges/gpa.svg)](https://codeclimate.com/github/kristuff/patabase)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kristuff/patabase/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kristuff/patabase/?branch=master)
 [![Build Status](https://travis-ci.com/kristuff/patabase.svg?branch=master)](https://travis-ci.com/kristuff/patabase)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kristuff/patabase/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kristuff/patabase/?branch=master)
 [![codecov](https://codecov.io/gh/kristuff/patabase/branch/master/graph/badge.svg)](https://codecov.io/gh/kristuff/patabase)
 [![Latest Stable Version](https://poser.pugx.org/kristuff/patabase/v/stable)](https://packagist.org/packages/kristuff/patabase)
 [![License](https://poser.pugx.org/kristuff/patabase/license)](https://packagist.org/packages/kristuff/patabase)
@@ -93,7 +92,7 @@ License
 
 The MIT License (MIT)
 
-Copyright (c) 2017-2021 Kristuff
+Copyright (c) 2017-2022 Christophe Buliard
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
