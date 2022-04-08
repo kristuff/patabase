@@ -12,8 +12,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    1.0.0
- * @copyright  2017-2021 Kristuff
+ * @version    1.0.1
+ * @copyright  2017-2022 Christophe Buliard
  */
 
 namespace Kristuff\Patabase;
@@ -235,7 +235,7 @@ class Database extends Datasource
      * @access public
      * @param string   $tableName      The name of the table
      *
-     * @return Query\Table\Delete
+     * @return Query\Delete
      */
     public function delete(string $tableName): Delete
     {

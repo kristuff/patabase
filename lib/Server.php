@@ -12,14 +12,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    1.0.0
- * @copyright  2017-2021 Kristuff
+ * @version    1.0.1
+ * @copyright  2017-2022 Christophe Buliard
  */
 
 namespace Kristuff\Patabase;
 
-use Kristuff\Patabase\Driver;
 use Kristuff\Patabase\Datasource;
+use Kristuff\Patabase\Driver;
+use Kristuff\Patabase\Driver\ServerDriver;
 
 /**
  * Class Server

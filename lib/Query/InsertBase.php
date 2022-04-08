@@ -12,15 +12,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    1.0.0
- * @copyright  2017-2021 Kristuff
+ * @version    1.0.1
+ * @copyright  2017-2022 Christophe Buliard
  */
 
 namespace Kristuff\Patabase\Query;
 
-use Kristuff\Patabase;
-use Kristuff\Patabase\Database;
-use Kristuff\Patabase\Query;
 use Kristuff\Patabase\Query\QueryBuilder;
 use Kristuff\Patabase\Driver\DatabaseDriver;
 
@@ -44,8 +41,8 @@ abstract class InsertBase extends QueryBuilder
      * Constructor
      *
      * @access public
-     * @param  Driver\DatabaseDriver    $driver         The driver instance
-     * @param string                   $tableName      The table name
+     * @param DatabaseDriver    $driver         The driver instance
+     * @param string            $tableName      The table name
      */
     public function __construct(DatabaseDriver $driver, $tableName)
     {

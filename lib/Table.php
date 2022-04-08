@@ -12,8 +12,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @version    1.0.0
- * @copyright  2017-2021 Kristuff
+ * @version    1.0.1
+ * @copyright  2017-2022 Christophe Buliard
  */
 
 namespace Kristuff\Patabase;
@@ -71,7 +71,7 @@ class Table
      * Get a new Select query instance
      *
      * @access public
-     * @param array|string(s) (optional)  Column name(s), array of columns name / alias
+     * @param array|string(s) $columns      (optional) Column name(s), array of columns name / alias
      *    
      * @return Select
      */
@@ -164,7 +164,7 @@ class Table
      * Rename the table
      *
      * @access public
-     * @param string   $newName        The new table name
+     * @param string    $newName        The new table name
      *
      * @return bool     True if the table has been renamed, otherwise false.
      */
